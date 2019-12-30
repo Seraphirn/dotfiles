@@ -106,7 +106,8 @@ endfunction
 "autocmd VimLeave * NERDTreeTabsClose
 "autocmd VimLeave * if argc() == 0 | mksession! $VIMFILES/last.session | endif
 "
-autocmd WinLeave * NERDTreeClose
+
+"autocmd WinLeave * NERDTreeClose
 
 " I don't want the docstring window to popup during completion
 "autocmd FileType python setlocal completeopt-=preview

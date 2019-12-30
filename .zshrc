@@ -18,18 +18,14 @@ MAGIC_ENTER_OTHER_COMMAND="lsda && echo -e '\n'"
 
 plugins=(git 
          alias-tips
-         dirhistory
          extract
          sudo 
-         pip 
          fzf
-         python 
          vi-mode 
          magic-enter
          fast-syntax-highlighting
          zsh-autosuggestions
-         globalias
-         alias-tips
+         #globalias
          web-search)
 
 
@@ -120,7 +116,7 @@ POWERLEVEL9K_MODE="nerdfont-complete"
 source $ZSH/oh-my-zsh.sh
 
 # Aliases
-alias cat="bat"
+#alias cat="bat"
 alias ccp="clipcopy"
 alias cp="cp -irv"
 alias cpa="clippaste"
@@ -136,14 +132,6 @@ alias lsda="lsd -A --group-dirs first --classify"
 alias lsdo="lsd -A --group-dirs first --classify --recursive --depth=2"
 alias mv="mv -iv"
 alias ncdu="ncdu --color=dark -x"
-alias open="xdg-open"
-alias pacai="pacaur -S"
-alias pacas="pacaur -Ss"
-alias paci="sudo pacman -S"
-alias pacq="pacman -Qi"
-alias pacr="sudo pacman -R"
-alias pacs="pacman -Ss"
-alias pacu="sudo pacman -Syu"
 alias pp="prettyping --nolegend"
 alias q="exit"
 alias rm="rm -irv"
@@ -161,26 +149,11 @@ alias triu="trizen -Syu --noedit"
 alias vimrc="vim ~/.vimrc"
 alias yayi="yay -S"
 alias yayu="yay -Syu"
-alias ytdl="youtube-dl"
 alias zshrc="vim ~/.zshrc"
 
-if hash grc 2>/dev/null; then
-    alias df="grc df"
-    alias gcc="grc gcc"
-    alias iwconfig="grc iwconfig"
-    alias last="grc last"
-    alias make="grc make"
-    alias mount="grc mount"
-    alias mtr="grc mtr"
-    alias ping="grc ping"
-    alias ps="grc ps"
-    alias traceroute="grc traceroute"
-    alias wdiff="grc wdiff"
-fi
+alias ggl="google"
+alias ya="yandex"
 
-if hash kdeconnect-cli 2>/dev/null; then
-    alias send="kdeconnect-cli -d "$(kdeconnect-cli -a --id-only)" --share"
-fi
 
 # Commands
 export EDITOR=vim 
