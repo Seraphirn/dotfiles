@@ -1,6 +1,6 @@
 [user]
   email = s.s.yukhimets@gmail.com
-  name = Sergey Yukhiment
+  name = Sergey Yukhimets
 [credential]
   helper = cache --timeout 3600
 [core]
