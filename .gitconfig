@@ -1,12 +1,9 @@
 [user]
-	email = keshri.abhishek63@gmail.com
-    name = Abhishek Keshri 
+  email = s.s.yukhimets@gmail.com
+  name = Sergey Yukhiment
 [credential]
-	helper = cache --timeout 3600
-[pager]
-       diff = diff-so-fancy | less --tabs=1,5 -RFX
-       show = diff-so-fancy | less --tabs=1,5 -RFX
+  helper = cache --timeout 3600
 [core]
-	editor = vim
+  editor = vim
 [color]
-	ui = true
+  ui = true

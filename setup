@@ -26,6 +26,8 @@ case $option in
     git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
     git clone https://github.com/zdharma/fast-syntax-highlighting.git ~/.oh-my-zsh/custom/plugins/fast-syntax-highlighting
     git clone https://github.com/djui/alias-tips.git ~/.oh-my-zsh/custom/plugins/alias-tips
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install
     ;;
 
 "3")echo -e "\u001b[7m Installing vim plugins... \u001b[0m"
@@ -57,6 +59,7 @@ case $option in
         mv -iv ~/.tmux.conf ~/.tmux.conf.old
         mv -iv ~/.vimrc ~/.vimrc.old
         mv -iv ~/.zshrc ~/.zshrc.old
+        mv -iv ~/.p10k.zsh ~/.p10k.zsh.old
         echo -e "\u001b[36;1m Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old'. \u001b[0m"
     else
         echo -e "\u001b[36;1m Skipping backups. \u001b[0m"
@@ -74,7 +77,11 @@ case $option in
     cp -ivr "$PWD/.local/share/konsole/" ~/.local/share/
     ln -sfnv "$PWD/.tmux.conf" ~/.tmux.conf
     ln -sfnv "$PWD/.vimrc" ~/.vimrc
+    if [ ! -f ~/.vimrc.local ]; then
+        cp $PWD/.vimrc.local ~/.vimrc.local
+    fi
     ln -sfnv "$PWD/.zshrc" ~/.zshrc
+    ln -sfnv "$PWD/.p10k.zsh" ~/.p10k.zsh
     ;;
 
 "0")echo -e "\u001b[32;1m Bye! \u001b[0m"
