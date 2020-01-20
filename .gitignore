@@ -7,4 +7,5 @@
 
 *.pyo
 
-
+# vim tmp files
+*.sw*

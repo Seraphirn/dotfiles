@@ -279,8 +279,8 @@ map <Leader> <Plug>(easymotion-prefix)
 nmap <C-]> g<C-]>
 nmap <C-p> :CtrlP getcwd()<CR>
 nmap <A-f> :tab Grep<Space>
-" update CtrlP cache and update ctgs
-nmap <Leader>re :CtrlPClearAllCache<CR>:exe ':!ctags -R -f "'.$VIMFILES.'/tags.txt" --exclude="*pyvenv*" --exclude="*.min.js" --exclude="*node_modules*" --exclude="*build*" --exclude="*dist*" -F "'.getcwd().'"'<CR>
+" updat CtrlP cache and update ctgs
+nmap <Leader>re :CtrlPClearAllCache<CR>:exe ':!ctags -R -f ' . $VIMFILES . '/tags.txt --exclude="*pyvenv*" --exclude="*.min.js" --exclude="*node_modules*" --exclude=build --exclude=dist -F "'.getcwd().'"'<CR>
 nmap <Leader>tf :NERDTreeFind<CR>
 nmap <Leader>z :1,1000bw<CR>
 map <Leader>y "+y
@@ -324,10 +324,7 @@ if filereadable(glob("~/.vimrc.local"))
     source ~/.vimrc.local
 endif
 
-if exists("$WORKDIR")
-  " clear useless spaces
-  autocmd BufWrite $WORKDIR/* :%s/\s\+$//ge
-  " before tab too
-  autocmd BufWrite $WORKDIR/* :%s/\ \+\t/\t/ge
-endif
-
+" clear useless spaces
+autocmd BufWrite *.py,*.php,*.html,*.js,*.txt :%s/\s\+$//ge
+" before tab too
+autocmd BufWrite *.py,*.php,*.html,*.js,*.txt :%s/\ \+\t/\t/ge
