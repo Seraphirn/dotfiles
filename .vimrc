@@ -213,6 +213,8 @@ let g:syntastic_javascript_checkers = ['eslint']
 " -Syntactic
 "let g:syntastic_ignore_files = ['kdp_attack_manager']
 
+let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --exclude=pyvenv --exclude="*.min.js" --exclude=node_modules --exclude=build --exclude=dist {DIRECTORY} 2>/dev/null'
+
 
 set ff=unix
 set ffs=unix,dos
@@ -259,7 +261,6 @@ set ignorecase
 set laststatus=2
 set guifont=:h13:cRUSSIAN
 set guifont=Dejavu\ Sans\ Mono\ 13
-set tags+=$VIMFILES/tags.txt
 "set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz
 
 "func! MyFoldText()
@@ -280,7 +281,7 @@ nmap <C-]> g<C-]>
 nmap <C-p> :CtrlP getcwd()<CR>
 nmap <A-f> :tab Grep<Space>
 " updat CtrlP cache and update ctgs
-nmap <Leader>re :CtrlPClearAllCache<CR>:exe ':!ctags -R -f ' . $VIMFILES . '/tags.txt --exclude="*pyvenv*" --exclude="*.min.js" --exclude="*node_modules*" --exclude=build --exclude=dist -F "'.getcwd().'"'<CR>
+nmap <Leader>re :CtrlPClearAllCache<CR>
 nmap <Leader>tf :NERDTreeFind<CR>
 nmap <Leader>z :1,1000bw<CR>
 map <Leader>y "+y
@@ -305,6 +306,9 @@ nmap <leader>s :vertical res 120<CR>
 nmap <leader>n :lnext<CR>
 nmap <leader>N :lprevious<CR>
 nmap <leader>m :ll<CR>
+
+nmap <leader>st :SyntasticToggleMode<CR>
+nmap <leader>sc :SyntasticCheck<CR>
 
 nmap <leader><leader>w :tabnew<CR>:Welcome<CR>
 nmap <leader><leader>W :tabnew<CR>:Welcome<CR>
