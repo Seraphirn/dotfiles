@@ -6,7 +6,9 @@ My personal config files for everyone to use. Sadly this repo gets frequent comm
 
 ## Setup
 
-Run `./setup` for setting up, it shows a menu from where you can install required components.
+* Run `./setup` for setting up, it shows a menu from where you can install required components.
+* Install Vimium extension on your firefox and import vimium-options.json
+
 
 ### Requirements
 
