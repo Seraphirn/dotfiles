@@ -28,6 +28,10 @@ Plugin 'git://github.com/tpope/vim-repeat'
 Plugin 'git://github.com/Houl/vim-repmo'
 Plugin 'git://github.com/tpope/vim-surround'
 Plugin 'git://github.com/christoomey/vim-tmux-navigator'
+
+"Plugin 'git://github.com/szymonmaszke/vimpyter'
+Plugin 'git://github.com/goerz/jupytext.vim'
+
 "Plugin 'git://github.com/mtscout6/syntastic-local-eslint.vim'
 
 "Plugin 'garbas/vim-snipmate'            " Snippets manager
@@ -48,10 +52,13 @@ Plugin 'git://github.com/Vimjas/vim-python-pep8-indent'
 "Plugin 'git://github.com/StanAngeloff/php.vim.git'
 
 "-----Js---
-"Plugin 'git://github.com/mxw/vim-jsx'
+Plugin 'git://github.com/mxw/vim-jsx'
 "Plugin 'git://github.com/elzr/vim-json'
-"Plugin 'git://github.com/pangloss/vim-javascript'
+Plugin 'git://github.com/pangloss/vim-javascript'
 "Plugin 'git://github.com/mtscout6/syntastic-local-eslint.vim'
+"
+Plugin 'git://github.com/leafgarland/typescript-vim'
+Plugin 'git://github.com/peitalin/vim-jsx-typescript'
 
 call vundle#end()            " required
 
@@ -215,7 +222,6 @@ let g:syntastic_javascript_checkers = ['eslint']
 
 let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --exclude=pyvenv --exclude="*.min.js" --exclude=node_modules --exclude=build --exclude=dist {DIRECTORY} 2>/dev/null'
 
-
 set ff=unix
 set ffs=unix,dos
 "set ffs=unix,dos
@@ -329,6 +335,6 @@ if filereadable(glob("~/.vimrc.local"))
 endif
 
 " clear useless spaces
-autocmd BufWrite *.py,*.php,*.html,*.js,*.txt :%s/\s\+$//ge
+autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md :%s/\s\+$//ge
 " before tab too
-autocmd BufWrite *.py,*.php,*.html,*.js,*.txt :%s/\ \+\t/\t/ge
+autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md :%s/\ \+\t/\t/ge

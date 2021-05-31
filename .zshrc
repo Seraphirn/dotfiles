@@ -16,12 +16,12 @@ SAVEHIST=99999
 MAGIC_ENTER_GIT_COMMAND="git status -v && exag && echo -e '\n'"
 MAGIC_ENTER_OTHER_COMMAND="lsda && echo -e '\n'"
 
-plugins=(git 
+plugins=(git
          alias-tips
          extract
-         sudo 
+         sudo
          fzf
-         vi-mode 
+         vi-mode
          magic-enter
          fast-syntax-highlighting
          zsh-autosuggestions
@@ -156,7 +156,7 @@ alias ya="yandex"
 
 
 # Commands
-export EDITOR=vim 
+export EDITOR=vim
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
 export FZF_BASE='~/.fzf'
 export GREP_COLOR="1;32"
@@ -207,3 +207,6 @@ function tmux-clean() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+setopt noautomenu
+setopt nomenucomplete
