@@ -30,7 +30,10 @@ Plugin 'git://github.com/tpope/vim-surround'
 Plugin 'git://github.com/christoomey/vim-tmux-navigator'
 
 "Plugin 'git://github.com/szymonmaszke/vimpyter'
-Plugin 'git://github.com/goerz/jupytext.vim'
+"Plugin 'git://github.com/goerz/jupytext.vim'
+Plugin 'git://github.com/gabenespoli/vim-jupycent'
+
+"Plugin 'git://github.com/szymonmaszke/vimpyter'
 
 "Plugin 'git://github.com/mtscout6/syntastic-local-eslint.vim'
 
@@ -59,6 +62,8 @@ Plugin 'git://github.com/pangloss/vim-javascript'
 "
 Plugin 'git://github.com/leafgarland/typescript-vim'
 Plugin 'git://github.com/peitalin/vim-jsx-typescript'
+Plugin 'git://github.com/tell-k/vim-autopep8'
+
 
 call vundle#end()            " required
 
@@ -194,11 +199,11 @@ set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
-let g:syntastic_loc_list_height = 10
+let g:syntastic_loc_list_height = 4 
 
 let g:syntastic_error_symbol = '❌'
 let g:syntastic_style_error_symbol = '⁉️'
@@ -214,6 +219,11 @@ highlight link SyntasticStyleWarningSign SignColumn
 let g:syntastic_python_checkers = ['flake8', 'bandit']
 let g:syntastic_php_checkers = ['php', 'phpcs']
 autocmd FileType php let g:syntastic_php_phpcs_args = '--standard=' . getcwd() . '/.phpstandart.xml'
+" E501 -  is for line lenght warning
+"autocmd FileType py let g:syntastic_python_flake8_args = '--ignore=E501'
+let g:syntastic_python_flake8_args = '--ignore=E501'
+"let g:syntastic_python_flake8_ignore = 'E501'
+
 let g:syntastic_javascript_checkers = ['eslint']
 "let g:syntastic_javascript_eslint_exe='$(npm bin)/eslint'
 "let g:syntastic_javascript_eslint_exe = 'npm run lint --'
@@ -221,6 +231,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 "let g:syntastic_ignore_files = ['kdp_attack_manager']
 
 let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --exclude=pyvenv --exclude="*.min.js" --exclude=node_modules --exclude=build --exclude=dist {DIRECTORY} 2>/dev/null'
+let g:autopep8_aggressive=1
 
 set ff=unix
 set ffs=unix,dos
@@ -311,17 +322,19 @@ nmap <leader>qa :%s/\s\+$//ge<CR>:%s/\ \+\t/\t/ge<CR>
 nmap <leader>s :vertical res 120<CR>
 nmap <leader>n :lnext<CR>
 nmap <leader>N :lprevious<CR>
-nmap <leader>m :ll<CR>
-
-nmap <leader>st :SyntasticToggleMode<CR>
-nmap <leader>sc :SyntasticCheck<CR>
+nmap <leader>lo :lopen 4<CR>
+nmap <leader>lc :lclose<CR>
 
 nmap <leader><leader>w :tabnew<CR>:Welcome<CR>
 nmap <leader><leader>W :tabnew<CR>:Welcome<CR>
 
+nmap <leader>st :SyntasticToggleMode<CR>
+nmap <leader>sc :SyntasticCheck<CR>
 nmap <leader>ts :SyntasticToggleMode<CR>
-nmap <leader>c :SyntasticCheck<CR>
 nmap <F2> :SyntasticCheck<CR>
+
+nmap <leader>ap :Autopep8<CR>
+nmap <F3> :Autopep8 --ignore=E501<CR>
 
 command W write
 

@@ -1,34 +1,26 @@
 # Dotfiles
 
-My personal config files for everyone to use. Sadly this repo gets frequent commits. 😌😉
+My personal config files for everyone to use.
 
 ![Terminal](https://i.imgur.com/XOJlQXU.png)
 
 ## Setup
 
 * Run `./setup` for setting up, it shows a menu from where you can install required components.
-* Install Vimium extension on your firefox and import vimium-options.json
+* Install Vimium extension on your firefox and import vimium-c-options.json
 
 
 ### Requirements
 
-For installation `git` `curl` & `zsh` are must, other tools are mentioned below.
+For installation `git` `curl` `zsh` `vim` `tmux` `xclip` are must, other tools are mentioned below.
 
 Powerline patched fonts are required for glyphs. I'll recommend [Nerd Fonts](https://www.nerdfonts.com/).
 
 ### Included Configurations
 
 This repo contains configurations for following tools.
-Most of their symlinks are set up by default but for tools like  `conky` and `compiz` you have to follow additional steps mentioned below.
+Most of their symlinks are set up by default but for tools like  `conky` you have to follow additional steps mentioned below.
 Check respective tools documentation for more info.
-
-* compiz : [~/.config/compiz.profile](https://github.com/2KAbhishek/Dotfiles/blob/master/.config/compiz.profile)
-
-> Import the compiz profile using `ccsm`.
-
-* conky : [~/.config/conky_sysinfo](https://github.com/2KAbhishek/Dotfiles/blob/master/.config/conky_sysinfo)
-
-> Run conky with `conky -c ~/.config/conky_sysinfo`.
 
 * dmenu : [~/.dmenurc](https://github.com/2KAbhishek/Dotfiles/blob/master/.dmenurc)
 * git : [~/.gitconfig](https://github.com/2KAbhishek/Dotfiles/blob/master/.gitconfig)

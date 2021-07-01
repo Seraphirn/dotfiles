@@ -1,0 +1,10 @@
+# Slow wifi problem
+sudo su
+echo "options iwlwifi lar_disable=Y bt_coex_active=0 swcrypto=1 11n_disable=1 power_save=0" >> /etc/modprobe.d/iwlwifi.conf
+
+# tmux startup on terminal open
+## create new profile in gnome-terminal
+## add command on startup "tmux new-session -A -s main"
+
+# vim dont copy or paste from clipboard in ubuntu
+## just install vim-gtk not vim

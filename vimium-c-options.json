@@ -1,0 +1,33 @@
+{
+	"name": "Vimium C",
+	"@time": "01.07.2021, 13:54:37",
+	"time": 1625136877132,
+	"environment": {
+		"extension": "1.90.2",
+		"platform": "linux",
+		"firefox": 89
+	},
+	"exclusionRules": [
+		{
+			"pattern": ":https://mail.google.com/",
+			"passKeys": ""
+		},
+		{
+			"pattern": "^https?://localhost:8888/",
+			"passKeys": "<esc> i j k "
+		}
+	],
+	"keyMappings": [
+		"unmap d",
+		"unmap r",
+		"map <c-d> scrollPageDown",
+		"map <c-u> scrollPageUp",
+		"map r restoreTab",
+		"map K previousTab",
+		"map J nextTab",
+		"map gT previousTab",
+		"map gt nextTab",
+		""
+	],
+	"searchUrl": "https://duckduckgo.com/?q=$s DuckDuckGo"
+}
