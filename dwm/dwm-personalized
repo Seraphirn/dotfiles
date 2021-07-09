@@ -1,0 +1,25 @@
+# MOscow coordinates of to set monitor colors in red
+redshift -l 55.7615902:37.60946 -t 3400:3400 -m randr &>/dev/null &
+
+#set wallpaper
+feh --bg-scale wallpaper.jpg
+
+
+#trayer --edge bottom --align right --SetDockType true \
+#--SetPartialStrut true --expand true --widthtype percent \
+#--width 100 --height 25 &>/dev/null &
+#sudo nm-applet &>/dev/null &
+
+# screen locker
+xautolock -time 5 -locker slock &>/dev/null &
+
+# set minimal light of screen
+light -N 20
+
+# exec program on start
+
+exec firefox &>/dev/null &
+exec $TERMINAL -e $EDITOR &>/dev/null &
+#exec $TERMINAL &>/dev/null &
+exec dwmblocks &>/dev/null &
+exec dwm

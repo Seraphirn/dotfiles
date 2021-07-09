@@ -10,6 +10,7 @@ echo -e "  \u001b[34;1m (3) Install vim plugins \u001b[0m"
 echo -e "  \u001b[34;1m (4) Install tmux plugins \u001b[0m"
 echo -e "  \u001b[34;1m (5) Setup symlinks \u001b[0m"
 echo -e "  \u001b[34;1m (6) install cheat.sh \u001b[0m"
+echo -e "  \u001b[34;1m (7) install dwm related files (install dwm first!) \u001b[0m"
 echo -e "  \u001b[31;1m (0) Exit \u001b[0m"
 
 echo -en "\u001b[32;1m ==> \u001b[0m"
@@ -52,9 +53,6 @@ case $option in
         mv -iv ~/.Xresources ~/.Xresources.old
         mv -iv ~/.Xmodmap ~/.Xmodmap.old
         mv -iv ~/.config/htop ~/.config/htop.old
-        mv -iv ~/.config/i3 ~/.config/i3.old
-        mv -iv ~/.config/i3status ~/.config/i3status.old
-        mv -iv ~/.config/libinput-gestures.conf ~/.config/libinput-gestures.conf.old
         mv -iv ~/.config/ranger ~/.config/ranger.old
         mv -iv ~/.dmenurc ~/.dmenurc.old
         mv -iv ~/.gitconfig ~/.gitconfig.old
@@ -71,13 +69,9 @@ case $option in
     ln -sfnv "$PWD/.Xresources" ~/.Xresources
     ln -sfnv "$PWD/.Xmodmap" ~/.Xmodmap
     ln -sfnv "$PWD/.config/htop/" ~/.config/htop
-    ln -sfnv "$PWD/.config/i3" ~/.config/i3
-    ln -sfnv "$PWD/.config/i3status" ~/.config/i3status
-    ln -sfnv "$PWD/.config/libinput-gestures.conf" ~/.config/libinput-gestures.conf
     ln -sfnv "$PWD/.config/ranger/" ~/.config/ranger
-    ln -sfnv "$PWD/.dmenurc" ~/.dmenurc
+    #ln -sfnv "$PWD/.dmenurc" ~/.dmenurc
     ln -sfnv "$PWD/.gitconfig" ~/.gitconfig
-    cp -ivr "$PWD/.local/share/konsole/" ~/.local/share/
     ln -sfnv "$PWD/.tmux.conf" ~/.tmux.conf
     ln -sfnv "$PWD/.vimrc" ~/.vimrc
     if [ ! -f ~/.vimrc.local ]; then
@@ -85,12 +79,19 @@ case $option in
     fi
     ln -sfnv "$PWD/.zshrc" ~/.zshrc
     ln -sfnv "$PWD/.p10k.zsh" ~/.p10k.zsh
+    ln -sfnv  "$PWD/Scripts/.local/.bin/statusbar/*" ~/bin
+    chmod +x ~/bin/sb-*
+    sudo $SHELL -c 'cat "$PWD/etc/environment" >> /etc/environment'
     ;;
 "6")echo -e "\u001b[7m Installing cheat.sh... \u001b[0m"
-    CHTSH_PATH_DIR="~/bin"  # or another directory on your $PATH
-    mkdir -p "$CHTSH_PATH_DIR"
-    curl https://cht.sh/:cht.sh > "$CHTSH_PATH_DIR/cht.sh"
-    chmod +x "$CHTSH_PATH_DIR/cht.sh"
+    mkdir -p ~/bin
+    curl https://cht.sh/:cht.sh > ~/bin/cheet.sh
+    chmod +x ~/bin/cheet.sh
+    ;;
+"7")echo -e "\u001b[7m Installing dwm related filed... \u001b[0m"
+    ln -sfnv  "$PWD/dwm/dwm-presonalized" /usr/local/bin
+    chmod +x "$PWD/dwm/dwm-presonalized"
+    cp  "$PWD/dwm/dwm.desktop" /usr/share/xsessions/
     ;;
 "0")echo -e "\u001b[32;1m Bye! \u001b[0m"
     exit 0

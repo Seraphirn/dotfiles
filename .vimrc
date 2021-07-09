@@ -232,6 +232,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 
 let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --exclude=pyvenv --exclude="*.min.js" --exclude=node_modules --exclude=build --exclude=dist {DIRECTORY} 2>/dev/null'
 let g:autopep8_aggressive=1
+let g:autopep8_disable_show_diff=1
 
 set ff=unix
 set ffs=unix,dos
@@ -247,7 +248,7 @@ set encoding=utf-8
 
 set listchars=tab:.\ ,trail:~
 set list
-set number
+set number relativenumber
 set incsearch
 set nohlsearch
 
@@ -333,8 +334,30 @@ nmap <leader>sc :SyntasticCheck<CR>
 nmap <leader>ts :SyntasticToggleMode<CR>
 nmap <F2> :SyntasticCheck<CR>
 
-nmap <leader>ap :Autopep8<CR>
-nmap <F3> :Autopep8 --ignore=E501<CR>
+" Autopep8 one line without fix line length
+nmap <leader>ap :<C-u>call Autopep8("--ignore=E501 --range " . line(".") . " " . line("."))<CR>
+
+" Autopep8 one line
+nmap <leader>aP :<C-u>call Autopep8("--range " . line(".") . " " . line("."))<CR>
+
+" Autopep8 selected lines without fix line length
+xmap <leader>ap :<C-u>call Autopep8("--ignore=E501 --range " . line("'<") . " " . line("'>"))<CR>
+
+" Autopep8 selected lines
+xmap <leader>aP :<C-u>call Autopep8("--range " . line("'<") . " " . line("'>"))<CR>
+
+" Autopep8 all file without fix line length
+nmap <F3> :call Autopep8("--ignore=E501")<CR>
+
+" Open .vimrc
+nmap <leader><leader>v :tabedit $MYVIMRC<CR>
+
+" Open terminal in directory of current open file
+nmap <leader><leader>t :call system("ST_PATH=" . expand('%:p:h') . " " . $TERMINAL)<CR><CR>
+
+" Open terminal in directory of current open file and start jupyter server if 
+" has one
+nmap <leader><leader>s :call system("ST_PATH=" . expand('%:p:h') . " ST_COM='make start-jupyter' " . $TERMINAL)<CR><CR>
 
 command W write
 
@@ -351,3 +374,5 @@ endif
 autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md :%s/\s\+$//ge
 " before tab too
 autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md :%s/\ \+\t/\t/ge
+
+autocmd BufWritePost ~/projects/dwmblocks/blocks.h !cd ~/projects/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }

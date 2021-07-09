@@ -14,7 +14,7 @@ SAVEHIST=99999
 
 # Magic Enter
 MAGIC_ENTER_GIT_COMMAND="git status -v && exag && echo -e '\n'"
-MAGIC_ENTER_OTHER_COMMAND="lsda && echo -e '\n'"
+MAGIC_ENTER_OTHER_COMMAND="ls && echo -e '\n'"
 
 plugins=(git
          alias-tips
@@ -207,6 +207,14 @@ function tmux-clean() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if ! [ -z $ST_PATH ]; then
+    cd "$ST_PATH"
+fi
+
+if ! [ -z $ST_COM ]; then
+    bash -c "$ST_COM"
+fi
 
 setopt noautomenu
 setopt nomenucomplete

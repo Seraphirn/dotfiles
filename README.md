@@ -12,7 +12,12 @@ My personal config files for everyone to use.
 
 ### Requirements
 
-For installation `git` `curl` `zsh` `vim` `tmux` `xclip` are must, other tools are mentioned below.
+For installation `git` `curl` `zsh` `vim` `tmux` `xclip` `redshift` `calcurse` `feh` are must, other tools are mentioned below.
+`xautolock` `slock` `notify-osd` `xbacklight`
+`light` [repo](https://github.com/haikarainen/light)
+
+
+Also need to install `dwm` `st` `dwmblocks` from [repo](https://github.com/Serapirn/dwm/)
 
 Powerline patched fonts are required for glyphs. I'll recommend [Nerd Fonts](https://www.nerdfonts.com/).
 
@@ -25,9 +30,6 @@ Check respective tools documentation for more info.
 * dmenu : [~/.dmenurc](https://github.com/2KAbhishek/Dotfiles/blob/master/.dmenurc)
 * git : [~/.gitconfig](https://github.com/2KAbhishek/Dotfiles/blob/master/.gitconfig)
 * htop : [~/.config/htop/](https://github.com/2KAbhishek/Dotfiles/blob/master/.config/htop/)
-* i3 : [~/.config/i3/config](https://github.com/2KAbhishek/Dotfiles/blob/master/.config/i3/config)
-* i3status : [~/.config/i3status/config](https://github.com/2KAbhishek/Dotfiles/blob/master/)
-* konsole : [~/.local/share/konsole/](https://github.com/2KAbhishek/Dotfiles/blob/master/.local/share/konsole)
 
 > Open Konsole, Goto Settings -> Manage Profiles -> Check `Konsole` and click on Set as Default.
 
