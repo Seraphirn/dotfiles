@@ -5,6 +5,10 @@
 .config/ranger/bookmarks
 .config/ranger/tagged
 
+.config/nvim/init.vim.local
+.config/nvim/plugged
+.config/nvim/autoload
+
 *.pyo
 
 # vim tmp files

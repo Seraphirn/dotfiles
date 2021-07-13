@@ -6,8 +6,6 @@ echo -e "\u001b[32;1m Setting up Dotfiles...\u001b[0m"
 echo -e " \u001b[37;1m\u001b[4mSelect an option:\u001b[0m"
 echo -e "  \u001b[34;1m (1) Install oh-my-zsh \u001b[0m"
 echo -e "  \u001b[34;1m (2) Install zsh plugins \u001b[0m"
-echo -e "  \u001b[34;1m (3) Install vim plugins \u001b[0m"
-echo -e "  \u001b[34;1m (4) Install tmux plugins \u001b[0m"
 echo -e "  \u001b[34;1m (5) Setup symlinks \u001b[0m"
 echo -e "  \u001b[34;1m (6) install cheat.sh \u001b[0m"
 echo -e "  \u001b[34;1m (7) install dwm related files (install dwm first!) \u001b[0m"
@@ -32,19 +30,6 @@ case $option in
     ~/.fzf/install
     ;;
 
-"3")echo -e "\u001b[7m Installing vim plugins... \u001b[0m"
-    git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    vim +PluginUpdate +qall
-    ;;
-
-"4")echo -e "\u001b[7m Installing tmux plugins... \u001b[0m"
-    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-    tmux start-server
-    tmux new-session -d
-    ~/.tmux/plugins/tpm/scripts/install_plugins.sh
-    tmux kill-server
-    ;;
-
 "5")echo -e "\u001b[7m Setting up symlinks... \u001b[0m"
     echo -e "\u001b[33;1m Backup existing files? (y/n) \u001b[0m"
     read -r backupOption
@@ -56,8 +41,6 @@ case $option in
         mv -iv ~/.config/ranger ~/.config/ranger.old
         mv -iv ~/.dmenurc ~/.dmenurc.old
         mv -iv ~/.gitconfig ~/.gitconfig.old
-        mv -iv ~/.tmux.conf ~/.tmux.conf.old
-        mv -iv ~/.vimrc ~/.vimrc.old
         mv -iv ~/.zshrc ~/.zshrc.old
         mv -iv ~/.p10k.zsh ~/.p10k.zsh.old
         echo -e "\u001b[36;1m Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old'. \u001b[0m"
@@ -70,12 +53,11 @@ case $option in
     ln -sfnv "$PWD/.Xmodmap" ~/.Xmodmap
     ln -sfnv "$PWD/.config/htop/" ~/.config/htop
     ln -sfnv "$PWD/.config/ranger/" ~/.config/ranger
+    ln -sfnv "$PWD/.config/nvim/" ~/.config/nvim
     #ln -sfnv "$PWD/.dmenurc" ~/.dmenurc
     ln -sfnv "$PWD/.gitconfig" ~/.gitconfig
-    ln -sfnv "$PWD/.tmux.conf" ~/.tmux.conf
-    ln -sfnv "$PWD/.vimrc" ~/.vimrc
-    if [ ! -f ~/.vimrc.local ]; then
-        cp $PWD/.vimrc.local ~/.vimrc.local
+    if [ ! -f ~/.config/nvim/init.vim.local ]; then
+        cp ~/.config/nvim/init.vim.def.local ~/.config/nvim/init.vim.local
     fi
     ln -sfnv "$PWD/.zshrc" ~/.zshrc
     ln -sfnv "$PWD/.p10k.zsh" ~/.p10k.zsh

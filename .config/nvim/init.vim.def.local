@@ -1,0 +1,5 @@
+let $WORKDIR='~/projects'
+
+call project#rc($WORKDIR)
+
+"Project 'study'

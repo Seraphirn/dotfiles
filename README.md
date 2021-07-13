@@ -15,7 +15,7 @@ My personal config files for everyone to use.
 For installation `git` `curl` `zsh` `vim` `tmux` `xclip` `redshift` `calcurse` `feh` are must, other tools are mentioned below.
 `xautolock` `slock` `notify-osd` `xbacklight`
 `light` [repo](https://github.com/haikarainen/light)
-
+`ranger`
 
 Also need to install `dwm` `st` `dwmblocks` from [repo](https://github.com/Serapirn/dwm/)
 
