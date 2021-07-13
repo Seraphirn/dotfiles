@@ -42,7 +42,7 @@ set mouse=a
 " Stop hightlite search
 set nohlsearch
 " Use global keyboard clipboard in vim
-set clipboard+=unnamedplus
+set clipboard+=unnamed
 " Show current mode you are in
 set showmode
 " Disable show of position of text cursor in left corner
@@ -271,6 +271,9 @@ nmap <leader>N :lprevious<CR>
 " Welcome panel to change projects
 nmap <leader><leader>w :tabnew<CR>:Welcome<CR>
 nmap <leader><leader>W :Welcome<CR>
+" Copy to * clipboard
+"map <leader>y "*y
+"map <leader>p "*p
 
 " Open .vimrc
 nmap <leader><leader>v :tabedit $MYVIMRC<CR>

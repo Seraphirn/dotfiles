@@ -42,6 +42,7 @@ case $option in
         mv -iv ~/.p10k.zsh ~/.p10k.zsh.old
         mv -iv ~/.profile ~/.profile.old
         mv -iv ~/.xprofile ~/.xprofile.old
+        sudo mv -im /usr/share/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop.old
         echo -e "\u001b[36;1m Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old'. \u001b[0m"
     else
         echo -e "\u001b[36;1m Skipping backups. \u001b[0m"
