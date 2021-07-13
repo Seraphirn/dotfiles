@@ -325,7 +325,10 @@ autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md :%s/\ \+\t/\t/ge
 " Autocompile dwmblocks on saving its conf file
 autocmd BufWritePost ~/projects/dwmblocks/blocks.h !cd ~/projects/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
 
-autocmd VimEnter * :Welcome
+" Show welcome msg on start
+if @% == ""
+  autocmd VimEnter * :Welcome
+endif
 
 " --------------------------------------------------ELSE----------------------------------------
 
