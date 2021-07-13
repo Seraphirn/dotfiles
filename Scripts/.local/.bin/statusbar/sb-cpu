@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# Prints all batteries, their percentage remaining and an emoji corresponding
+# to charge status (🔌 for plugged up, 🔋 for discharging on battery, etc.).
+
+case $BUTTON in
+	3) notify-send "CPU module" "Shown" ;;
+  6) bash -c "$TERMINAL -e \"$EDITOR $0\"" ;;
+esac
+
+memory = free -h | awk '/^Память/ { print $3\"/\"$2 }' | sed s/i//g
+
+# Loop through all attached batteries and format the info
+for battery in /sys/class/power_supply/BAT?*; do
+	# If non-first battery, print a space separator.
+	[ -n "${capacity+x}" ] && printf " "
+	# Sets up the status and capacity
+	case "$(cat "$battery/status")" in
+		#"Full") status="⚡" ;;
+		#"Discharging") status="🔋" ;;
+		#"Charging") status="🔌" ;;
+		#"Not charging") status="🛑" ;;
+		#"Unknown") status="♻️" ;;
+		"Full") status="" ;;
+		"Discharging") status="↓" ;;
+		"Charging") status="↑" ;;
+		"Not charging") status="" ;;
+		"Unknown") status="?" ;;
+	esac
+	capacity=$(cat "$battery/capacity")
+	# Will make a warn variable if discharging and low
+	#[ "$status" = "🔋" ] && [ "$capacity" -le 25 ] && warn="❗"
+	[ "$status" = "↓" ] && [ "$capacity" -le 25 ] && warn="!"
+	# Prints the info
+  #printf "%s%s%d%%" "$status" "$warn" "$capacity"; unset warn
+  printf "%d%%%s%s" "$capacity" "$status" "$warn"; unset warn
+	#printf "%s %d%%" "$(cat "$battery/status")" "$capacity"; unset warn
+done && exit 0

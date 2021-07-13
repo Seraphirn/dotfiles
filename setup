@@ -35,27 +35,24 @@ case $option in
     read -r backupOption
     if [[ $backupOption == "y" ]]; then
         echo -e "\u001b[33;1m Backing up existing files... \u001b[0m"
-        mv -iv ~/.Xresources ~/.Xresources.old
         mv -iv ~/.Xmodmap ~/.Xmodmap.old
         mv -iv ~/.config/htop ~/.config/htop.old
         mv -iv ~/.config/ranger ~/.config/ranger.old
-        mv -iv ~/.dmenurc ~/.dmenurc.old
-        mv -iv ~/.gitconfig ~/.gitconfig.old
         mv -iv ~/.zshrc ~/.zshrc.old
         mv -iv ~/.p10k.zsh ~/.p10k.zsh.old
+        mv -iv ~/.profile ~/.profile.old
+        mv -iv ~/.xprofile ~/.xprofile.old
         echo -e "\u001b[36;1m Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old'. \u001b[0m"
     else
         echo -e "\u001b[36;1m Skipping backups. \u001b[0m"
     fi
 
     echo -e "\u001b[36;1m Adding symlinks...\u001b[0m"
-    ln -sfnv "$PWD/.Xresources" ~/.Xresources
     ln -sfnv "$PWD/.Xmodmap" ~/.Xmodmap
     ln -sfnv "$PWD/.config/htop/" ~/.config/htop
     ln -sfnv "$PWD/.config/ranger/" ~/.config/ranger
     ln -sfnv "$PWD/.config/nvim/" ~/.config/nvim
-    #ln -sfnv "$PWD/.dmenurc" ~/.dmenurc
-    ln -sfnv "$PWD/.gitconfig" ~/.gitconfig
+    ln -sfnv "$PWD/.config/git/" ~/.config/git
     if [ ! -f ~/.config/nvim/init.vim.local ]; then
         cp ~/.config/nvim/init.vim.def.local ~/.config/nvim/init.vim.local
     fi
@@ -63,7 +60,9 @@ case $option in
     ln -sfnv "$PWD/.p10k.zsh" ~/.p10k.zsh
     ln -sfnv  "$PWD/Scripts/.local/.bin/statusbar/*" ~/bin
     chmod +x ~/bin/sb-*
-    sudo $SHELL -c 'cat "$PWD/etc/environment" >> /etc/environment'
+    ln -sfnv "$PWD/.profile" ~/.profile
+    ln -sfnv "$PWD/.xprofile" ~/.xprofile
+    sudo ln -sfnv "$PWD/dwm/dwm.desktop" /usr/share/xsessions/dwm.desktop
     ;;
 "6")echo -e "\u001b[7m Installing cheat.sh... \u001b[0m"
     mkdir -p ~/bin

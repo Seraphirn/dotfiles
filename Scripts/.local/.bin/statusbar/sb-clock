@@ -32,4 +32,4 @@ esac
 
 
 ##date "+%Y %b %d (%a) $icon%I:%M%p"
-date "+%Y %b %d (%a) %I:%M%p"
+date "+%d %b (%a) %H:%M%p"

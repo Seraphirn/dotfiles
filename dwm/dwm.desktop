@@ -2,5 +2,5 @@
 Encoding=UTF-8
 Name=Dwm
 Comment=Lightweight tiling window manager
-Exec=dwm-personalized
+Exec=dwm
 Type=XSession

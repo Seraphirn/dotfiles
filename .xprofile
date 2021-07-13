@@ -1,12 +1,7 @@
-export TERMINAL="gnome-terminal --hide-menubar --window"
-export EDITOR="nvim"
-
-# MOscow coordinates of to set monitor colors in red
+#!/bin/sh
 redshift -l 55.7615902:37.60946 -t 3400:3400 -m randr &>/dev/null &
 
-#set wallpaper
 feh --bg-scale wallpaper.jpg
-
 
 #trayer --edge bottom --align right --SetDockType true \
 #--SetPartialStrut true --expand true --widthtype percent \
@@ -21,8 +16,8 @@ light -N 20
 
 # exec program on start
 
-exec firefox &>/dev/null &
+exec $BROWSER &>/dev/null &
 exec $TERMINAL -e $EDITOR &>/dev/null &
 #exec $TERMINAL &>/dev/null &
 exec dwmblocks &>/dev/null &
-exec dwm
+#exec dwm
