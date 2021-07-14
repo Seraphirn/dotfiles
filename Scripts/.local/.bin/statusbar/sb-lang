@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case $BUTTON in
+  1) setxkbmap -query | grep -q 'us' && setxkbmap ru || setxkbmap us; pkill -RTMIN+2 dwmblocks;;
+	
+  3) notify-send "Language support" "Left click to change locale USA/RUS";;
+  6) bash -c "$TERMINAL -e \"$EDITOR $0\"" ;;
+esac
+
+setxkbmap -query | grep -q 'us' && echo US || echo RU
