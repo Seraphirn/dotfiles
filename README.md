@@ -16,6 +16,9 @@ For installation `git` `curl` `zsh` `vim` `tmux` `xclip` `redshift` `calcurse` `
 `xautolock` `slock` `notify-osd` `xbacklight`
 `light` [repo](https://github.com/haikarainen/light)
 `ranger`
+`xcompmng` from transparency
+`lm-sensors` from cpu temp
+`blueman` for manage bluetooth devices
 
 Also need to install `dwm` `st` `dwmblocks` from [repo](https://github.com/Serapirn/dwm/)
 
