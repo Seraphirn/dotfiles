@@ -29,6 +29,7 @@ Plug 'Houl/vim-repmo'
 Plug 'tpope/vim-surround'
 Plug 'gabenespoli/vim-jupycent'
 Plug 'tell-k/vim-autopep8'
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) }}
 call plug#end()
 
 " ------------------------------------------VIM commong settings-------------------------------------
@@ -71,10 +72,13 @@ colorscheme molokai
 " Set color groups and font
 if has('gui_running')
   set background=dark
-  set guifont=:h13:cRUSSIAN
-  set guifont=Monospace\ 13
+  set guifont=:h12:cRUSSIAN
+  set guifont=Monospace\ 12
 else
   set t_Co=256
+endif
+if exists('g:started_by_firenvim')
+  set guifont=Monospace:h11
 endif
 " Show relative line number on left and absolute line number for current line
 set number relativenumber
@@ -114,6 +118,15 @@ set gdefault
 set ignorecase
 " Fold options
 set nofoldenable
+" ------------Firenvim - for firefox ------
+let g:firenvim_config = { 
+    \ 'localSettings': {
+        \ '.*': {
+            \ 'priority': 0,
+            \ 'takeover': 'never',
+        \ },
+    \ }
+\ }
 
 " ---------NerdTree options---------
 let NERDTreeWinSize=30
