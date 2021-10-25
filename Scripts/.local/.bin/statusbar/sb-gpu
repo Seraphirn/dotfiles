@@ -1,0 +1,11 @@
+#!/bin/sh
+
+case $BUTTON in
+	3) notify-send "GPU module" "Show GPU temparatur and memory" ;;
+  6) bash -c "$TERMINAL -e \"$EDITOR $0\"" ;;
+esac
+
+mem=$(nvidia-smi -q | grep "Used\|Total" | awk 'NR==1{l[0] = $3/1024}NR==2{l[1] = $3/1024}END{printf "%.1fG/%.1fG",l[1],l[0]}')
+temp=$(nvidia-smi -q | grep "GPU Current Temp" | awk 'NR==1{print $5"°C"}')
+
+printf "%s %s" "$temp" "$mem"
