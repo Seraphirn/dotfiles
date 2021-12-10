@@ -90,8 +90,8 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*pycache*,*/node_modules/*,*/pyvenv/*,*
 " Set some autowrap text options for comments
 set formatoptions=cqjro
 " Set textwitdh options and visible indicators
-set colorcolumn=120 textwidth=120
-autocmd Filetype python setlocal colorcolumn=80 textwidth=80
+set colorcolumn=100 textwidth=100
+autocmd Filetype python setlocal colorcolumn=100 textwidth=100
 autocmd Filetype php setlocal colorcolumn=100 textwidth=100
 " Splits open at the bottom and right
 set splitbelow splitright
@@ -261,6 +261,8 @@ nmap <c-f> :tab Grep<Space>
 " Move tabs right and left
 nmap <Leader>H :tabmove -1<CR>
 nmap <Leader>L :tabmove +1<CR>
+nmap J :tabn<CR>
+nmap K :tabN<CR>
 " Goto tabs
 nmap g1 :tabn 1<CR>
 nmap g2 :tabn 2<CR>
@@ -290,6 +292,9 @@ nmap <leader><leader>W :Welcome<CR>
 
 " Open .vimrc
 nmap <leader><leader>v :tabedit $MYVIMRC<CR>
+" Open local vimrc
+nmap <leader><leader>l :tabedit ~/.config/nvim/init.vim.local<CR>
+
 " Open terminal in directory of current open file
 nmap <leader><leader>t :call system("ST_PATH=" . expand('%:p:h') . " " . $TERMINAL)<CR><CR>
 " Open terminal in directory of current open file and start jupyter server if has one
