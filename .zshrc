@@ -72,6 +72,8 @@ alias ya="yandex"
 
 # Job specific
 alias confacerec="ssh s_s.yukhimets@ds-facerec01p"
+alias ctags="`brew --prefix`/bin/ctags"
+alias ctags >> ~/.bash_profile
 
 
 # Commands

@@ -11,7 +11,6 @@ call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"
 " Plug 'git://github.com/VundleVim/Vundle.vim'
 Plug 'tomasr/molokai'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/syntastic'
 Plug 'scrooloose/nerdcommenter'
 Plug 'kien/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
@@ -29,7 +28,10 @@ Plug 'Houl/vim-repmo'
 Plug 'tpope/vim-surround'
 Plug 'gabenespoli/vim-jupycent'
 Plug 'tell-k/vim-autopep8'
+Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) }}
+
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 " ------------------------------------------VIM commong settings-------------------------------------
@@ -81,7 +83,7 @@ if exists('g:started_by_firenvim')
   set guifont=Monospace:h11
 endif
 " Show relative line number on left and absolute line number for current line
-set number relativenumber
+set number
 " Enable command line autocompletion:
 set wildmode=longest,list,full
 " Ignore those files in wildcard
@@ -142,6 +144,9 @@ endif
 nmap <Leader>tt :NERDTreeToggle<CR>
 nmap <Leader>tf :NERDTreeFind<CR>
 
+" ----------NerdCommenter-----------
+let NERDDefaultAlign = 'left'
+
 " ---------EasyGrep settings---------
 let g:EasyGrepReplaceWindowMode=2
 let g:EasyGrepSearchCurrentBufferDir=0
@@ -167,42 +172,22 @@ let g:airline_symbols.linenr = ''
 let g:airline_symbols.maxlinenr = 'Ξ'
 let g:airline_symbols.colnr = ''
 
-" ---------Syntactic settings---------
-let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': ['python'], 'passive_filetypes': ['javascript'] }
-set statusline+=%#warningmsg#%{SyntasticStatuslineFlag()}%*
+" ---------Autocompition------------
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_loc_list_height = 4
-
-let g:syntastic_error_symbol = '❌'
-let g:syntastic_style_error_symbol = '⁉️'
-let g:syntastic_warning_symbol = '⚠️'
-let g:syntastic_style_warning_symbol = '💩'
-highlight link SyntasticErrorSign SignColumn
-highlight link SyntasticWarningSign SignColumn
-highlight link SyntasticStyleErrorSign SignColumn
-highlight link SyntasticStyleWarningSign SignColumn
-
-"let g:syntastic_python_checkers = ['prospector', 'mypy']
-let g:syntastic_python_checkers = ['flake8', 'bandit']
-let g:syntastic_php_checkers = ['php', 'phpcs']
-let g:syntastic_javascript_checkers = ['eslint']
-
-" E501 -  is for line lenght warning
-let g:syntastic_python_flake8_args = '--ignore=E501'
-
-nmap <leader>st :SyntasticToggleMode<CR>
-nmap <leader>sc :SyntasticCheck<CR>
-nmap <leader>ts :SyntasticToggleMode<CR>
-nmap <F2> :SyntasticCheck<CR>
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
 
 " ---------Autopep 8 settings---------
 let g:autopep8_aggressive=1
 let g:autopep8_disable_show_diff=1
+let g:autopep8_max_line_length=99
 " Autopep8 one line without fix line length
 nmap <leader>ap :<C-u>call Autopep8("--ignore=E501 --range " . line(".") . " " . line("."))<CR>
 " Autopep8 one line
@@ -214,9 +199,12 @@ xmap <leader>aP :<C-u>call Autopep8("--range " . line("'<") . " " . line("'>"))<
 " Autopep8 all file without fix line length
 nmap <F3> :call Autopep8("--ignore=E501")<CR>
 
+nmap <leader><leader>ap :call Autopep8("--ignore=E501")<CR>
+nmap <leader><leader>aP :call Autopep8()<CR>
+
 " ---------Else extention settings---------
 " Ctags commang
-let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --exclude=pyvenv --exclude="*.min.js" --exclude=node_modules --exclude=build --exclude=dist {DIRECTORY} 2>/dev/null'
+let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --python-kinds=-i --exclude=pyvenv --exclude="*.min.js" --exclude=node_modules --exclude=build --exclude=dist --exclude=notebooks {DIRECTORY} 2>/dev/null'
 
 
 " -------------------------------------------------------REMAPS-----------------------------------------------
@@ -227,7 +215,16 @@ map <leader>o :setlocal spell! spelllang=en_us<CR>
 " Replace ex mode with gq
 map Q gq
 " Reset leader as easymotion key
-map <Leader> <Plug>(easymotion-prefix)
+"map <Leader> <Plug>(easymotion-prefix)
+map <Leader>w <Plug>(easymotion-bd-w)
+map <Leader>W <Plug>(easymotion-bd-W)
+map <Leader>f <Plug>(easymotion-bd-f)
+map <Leader>e <Plug>(easymotion-bd-e)
+map <Leader>E <Plug>(easymotion-bd-E)
+map <Leader>j <Plug>(easymotion-bd-jk)
+map <Leader>g <Plug>(easymotion-jumptoanywhere)
+"let g:EasyMotion_keys = 'asdfghjkl;qwertyuiopzxcvbnm'
+let g:EasyMotion_keys = 'asdfghjkl;qweruiopvncm'
 
 " ---------Insert mode remaps---------
 " New line
@@ -250,10 +247,10 @@ cnoremap <c-p> <c-r>+
 
 " ---------Normal mode remaps----------
 " Shortcutting split navigation, saving a keypress:
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
+"nmap <C-h> <C-w>h
+"nmap <C-j> <C-w>j
+"nmap <C-k> <C-w>k
+"nmap <C-l> <C-w>l
 " Goto difinition
 nmap <c-]> g<c-]>
 " Grep
@@ -261,18 +258,18 @@ nmap <c-f> :tab Grep<Space>
 " Move tabs right and left
 nmap <Leader>H :tabmove -1<CR>
 nmap <Leader>L :tabmove +1<CR>
-nmap J :tabn<CR>
-nmap K :tabN<CR>
+nmap <c-j> :tabn<CR>
+nmap <c-k> :tabN<CR>
 " Goto tabs
-nmap g1 :tabn 1<CR>
-nmap g2 :tabn 2<CR>
-nmap g3 :tabn 3<CR>
-nmap g4 :tabn 4<CR>
-nmap g5 :tabn 5<CR>
-nmap g6 :tabn 6<CR>
-nmap g7 :tabn 7<CR>
-nmap g8 :tabn 8<CR>
-nmap g9 :tabn 9<CR>
+nmap <leader>1 :tabn 1<CR>
+nmap <leader>2 :tabn 2<CR>
+nmap <leader>3 :tabn 3<CR>
+nmap <leader>4 :tabn 4<CR>
+nmap <leader>5 :tabn 5<CR>
+nmap <leader>6 :tabn 6<CR>
+nmap <leader>7 :tabn 7<CR>
+nmap <leader>8 :tabn 8<CR>
+nmap <leader>9 :tabn 9<CR>
 " Delete trailing spaces, tabs and mixing tabs
 nmap <leader>qa :%s/\s\+$//ge<CR>:%s/\ \+\t/\t/ge<CR>
 " Split window

@@ -7,3 +7,5 @@
   editor = nvim
 [color]
   ui = true
+[url "ssh://git@gitlab.tcsbank.ru:7999/"]
+  insteadOf = https://gitlab.tcsbank.ru/
