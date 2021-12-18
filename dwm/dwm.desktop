@@ -2,5 +2,5 @@
 Encoding=UTF-8
 Name=Dwm
 Comment=Lightweight tiling window manager
-Exec=dwm
+Exec=/usr/share/xsessions/dwm_startup.sh
 Type=XSession

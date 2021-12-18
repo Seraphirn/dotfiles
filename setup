@@ -63,12 +63,15 @@ case $option in
     chmod +x ~/.local/bin/**/*.sh
     ln -sfnv "$PWD/.profile-linux" ~/.profile
     ln -sfnv "$PWD/.xprofile" ~/.xprofile
-    sudo ln -sfnv "$PWD/dwm/dwm.desktop" /usr/share/xsessions/dwm.desktop
     ;;
 "6")echo -e "\u001b[7m Installing dwm related filed... \u001b[0m"
     ln -sfnv  "$PWD/dwm/dwm-presonalized" /usr/local/bin
     chmod +x "$PWD/dwm/dwm-presonalized"
     cp  "$PWD/dwm/dwm.desktop" /usr/share/xsessions/
+    ln -sfnv "$PWD/dwm/startup.sh" ~/.dwm_startup
+    sudo ln -sfnv "$PWD/dwm/startup.sh" /usr/share/xsessions/dwm_startup.sh
+    chmod 755 /usr/share/xsessions/dwm_startup.sh
+    sudo ln -sfnv "$PWD/dwm/dwm.desktop" /usr/share/xsessions/dwm.desktop
     ;;
 "0")echo -e "\u001b[32;1m Bye! \u001b[0m"
     exit 0
