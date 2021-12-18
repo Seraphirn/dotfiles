@@ -1,13 +1,9 @@
 #!/bin/bash
 
-#Setup script for Dotfiles
-echo -e "\u001b[32;1m Setting up Dotfiles...\u001b[0m"
-
 echo -e " \u001b[37;1m\u001b[4mSelect an option:\u001b[0m"
 echo -e "  \u001b[34;1m (1) Install oh-my-zsh \u001b[0m"
 echo -e "  \u001b[34;1m (2) Install zsh plugins \u001b[0m"
 echo -e "  \u001b[34;1m (5) Setup symlinks \u001b[0m"
-echo -e "  \u001b[34;1m (6) install dwm related files (install dwm first!) \u001b[0m"
 echo -e "  \u001b[31;1m (0) Exit \u001b[0m"
 
 echo -en "\u001b[32;1m ==> \u001b[0m"
@@ -34,21 +30,18 @@ case $option in
     read -r backupOption
     if [[ $backupOption == "y" ]]; then
         echo -e "\u001b[33;1m Backing up existing files... \u001b[0m"
-        mv -iv ~/.Xmodmap ~/.Xmodmap.old
         mv -iv ~/.config/htop ~/.config/htop.old
         mv -iv ~/.config/ranger ~/.config/ranger.old
         mv -iv ~/.zshrc ~/.zshrc.old
         mv -iv ~/.p10k.zsh ~/.p10k.zsh.old
         mv -iv ~/.profile ~/.profile.old
-        mv -iv ~/.xprofile ~/.xprofile.old
-        sudo mv -im /usr/share/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop.old
+        #mv -iv ~/.xprofile ~/.xprofile.old
         echo -e "\u001b[36;1m Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old'. \u001b[0m"
     else
         echo -e "\u001b[36;1m Skipping backups. \u001b[0m"
     fi
 
     echo -e "\u001b[36;1m Adding symlinks...\u001b[0m"
-    ln -sfnv "$PWD/.Xmodmap" ~/.Xmodmap
     ln -sfnv "$PWD/.config/htop/" ~/.config/htop
     ln -sfnv "$PWD/.config/ranger/" ~/.config/ranger
     ln -sfnv "$PWD/.config/nvim/" ~/.config/nvim
@@ -58,20 +51,8 @@ case $option in
     fi
     ln -sfnv "$PWD/.zshrc" ~/.zshrc
     ln -sfnv "$PWD/.p10k.zsh" ~/.p10k.zsh
-    ln -sfnv  "$PWD/Scripts/.local/.bin/" ~/.local/bin
-    chmod +x ~/.local/bin/statusbar/*
-    chmod +x ~/.local/bin/**/*.sh
-    ln -sfnv "$PWD/.profile-linux" ~/.profile
-    ln -sfnv "$PWD/.xprofile" ~/.xprofile
-    ;;
-"6")echo -e "\u001b[7m Installing dwm related filed... \u001b[0m"
-    ln -sfnv  "$PWD/dwm/dwm-presonalized" /usr/local/bin
-    chmod +x "$PWD/dwm/dwm-presonalized"
-    cp  "$PWD/dwm/dwm.desktop" /usr/share/xsessions/
-    ln -sfnv "$PWD/dwm/startup.sh" ~/.dwm_startup
-    sudo ln -sfnv "$PWD/dwm/startup.sh" /usr/share/xsessions/dwm_startup.sh
-    chmod 755 /usr/share/xsessions/dwm_startup.sh
-    sudo ln -sfnv "$PWD/dwm/dwm.desktop" /usr/share/xsessions/dwm.desktop
+    ln -sfnv "$PWD/.profile-mac" ~/.profile
+    #ln -sfnv "$PWD/.xprofile" ~/.xprofile
     ;;
 "0")echo -e "\u001b[32;1m Bye! \u001b[0m"
     exit 0

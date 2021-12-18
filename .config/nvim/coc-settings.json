@@ -1,0 +1,17 @@
+{
+  "diagnostic.errorSign": "⁉️",
+  "diagnostic.warningSign": "⚠️",
+  "diagnostic.infoSign": ">",
+  "diagnostic.hintSign": ">",
+
+  "diagnostic.messageTarget": "float",
+  "diagnostic.autoRefresh": true,
+  "diagnostic.checkCurrentLine": true,
+
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportGeneralTypeIssues": "none"
+  },
+  "pyright.disableDiagnostics": true,
+  "python.linting.flake8Enabled": true,
+  "python.linting.banditEnabled": true
+}

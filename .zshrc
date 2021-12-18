@@ -70,6 +70,11 @@ alias zshrc="vim ~/.zshrc"
 alias ggl="google"
 alias ya="yandex"
 
+# Job specific
+alias confacerec="ssh s_s.yukhimets@ds-facerec01p"
+alias ctags="`brew --prefix`/bin/ctags"
+alias ctags >> ~/.bash_profile
+
 
 # Commands
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
