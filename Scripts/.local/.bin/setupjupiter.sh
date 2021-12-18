@@ -1,5 +1,5 @@
 #!/bin/bash
 #Install pyvenv with jupiter in current directory
 
-cp ~/.local/bin/setupjupiter/{Makefile,requirements.txt} .
+cp -n ~/.local/bin/setupjupiter/{Makefile,requirements.txt} .
 make setup

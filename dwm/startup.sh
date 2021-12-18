@@ -1,7 +1,9 @@
 #!/bin/sh
-#redshift -l 55.7615902:37.60946 -t 3400:3400 -m randr &>/dev/null &
+#red light filter
+redshift -l 55.7615902:37.60946 -t 3400:3400 -m randr &>/dev/null &
 
-#feh --bg-scale wallpaper.jpg
+#wallpaper
+feh --bg-scale wallpaper.jpg
 
 #trayer --edge bottom --align right --SetDockType true \
 #--SetPartialStrut true --expand true --widthtype percent \
@@ -9,23 +11,23 @@
 #sudo nm-applet &>/dev/null &
 
 # screen locker
-#xautolock -time 25 -locker slock &>/dev/null &
+xautolock -time 25 -locker slock &>/dev/null &
 
 # set minimal light of screen
-#light -N 20
+light -N 20
 
 # touchpad settings
 # mouse sensetivity
-#xinput set-prop 10 366 +0.9
+xinput set-prop 10 366 +0.9
 # tapping enabled
-#xinput set-prop 10 346 1
+xinput set-prop 10 346 1
 
 
 # exec program on start
 
-exec $BROWSER &>/dev/null &
-exec $TERMINAL -e $EDITOR &>/dev/null &
+#exec $BROWSER &>/dev/null &
+#exec $TERMINAL -e $EDITOR &>/dev/null &
 #exec $TERMINAL &>/dev/null &
-#exec dwmblocks &>/dev/null &
+exec dwmblocks &>/dev/null &
 #exec xcompmgr &>/dev/null &
-#exec dwm
+exec dwm

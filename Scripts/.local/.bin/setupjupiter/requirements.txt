@@ -1,10 +1,12 @@
 # torch
 # torchvision
 matplotlib
-sklearn
+# sklearn
+# scipy
 # bokeh==0.13.0
 # gensim==3.6.0
 # nltk
+pyparsing<3
 
 jupyter
 jupyter_contrib_nbextensions

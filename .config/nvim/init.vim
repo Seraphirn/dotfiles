@@ -43,7 +43,7 @@ set mouse=a
 " Stop hightlite search
 set nohlsearch
 " Use global keyboard clipboard in vim
-set clipboard+=unnamed
+set clipboard+=unnamedplus
 " Show current mode you are in
 set showmode
 " Disable show of position of text cursor in left corner
@@ -77,9 +77,25 @@ if has('gui_running')
 else
   set t_Co=256
 endif
-if exists('g:started_by_firenvim')
-  set guifont=Monospace:h11
-endif
+" ------- Firenvim settings ---------"
+"if exists('g:started_by_firenvim')
+  "set guifont=Monospace:h11
+  "set noshowmode
+  "set noruler
+"endif
+
+function! SetLinesForFirefox(timer)
+    set lines+=3
+endfunction
+
+function! OnUIEnter(event) abort
+  if 'Firenvim' ==# get(get(nvim_get_chan_info(a:event.chan), 'client', {}), 'name', '')
+    set guifont=Monospace:h11
+    call timer_start(100, function("SetLinesForFirefox"))
+  endif
+endfunction
+autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
+
 " Show relative line number on left and absolute line number for current line
 set number relativenumber
 " Enable command line autocompletion:
@@ -91,7 +107,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*pycache*,*/node_modules/*,*/pyvenv/*,*
 set formatoptions=cqjro
 " Set textwitdh options and visible indicators
 set colorcolumn=120 textwidth=120
-autocmd Filetype python setlocal colorcolumn=80 textwidth=80
+autocmd Filetype python setlocal colorcolumn=120 textwidth=120
 autocmd Filetype php setlocal colorcolumn=100 textwidth=100
 " Splits open at the bottom and right
 set splitbelow splitright
@@ -213,6 +229,8 @@ xmap <leader>ap :<C-u>call Autopep8("--ignore=E501 --range " . line("'<") . " " 
 xmap <leader>aP :<C-u>call Autopep8("--range " . line("'<") . " " . line("'>"))<CR>
 " Autopep8 all file without fix line length
 nmap <F3> :call Autopep8("--ignore=E501")<CR>
+" Autopep8 all file without fix line length
+nmap <leader><F3> :call Autopep8()<CR>
 
 " ---------Else extention settings---------
 " Ctags commang
@@ -285,8 +303,8 @@ nmap <leader>N :lprevious<CR>
 nmap <leader><leader>w :tabnew<CR>:Welcome<CR>
 nmap <leader><leader>W :Welcome<CR>
 " Copy to * clipboard
-"map <leader>y "*y
-"map <leader>p "*p
+map <leader>y "*y
+map <leader>p "*p
 
 " Open .vimrc
 nmap <leader><leader>v :tabedit $MYVIMRC<CR>
@@ -298,7 +316,7 @@ nmap <leader><leader>s :call system("ST_PATH=" . expand('%:p:h') . " ST_COM='mak
 " make and install package in current working directory
 nmap <leader><leader>i :!make && sudo make install<CR>
 " Open terminal in directory of current open file and exec current python file
-nmap <leader><leader>p :call system("ST_PATH=" . expand('%:p:h') . " ST_COM='python " . expand('%:t') . "' " . $TERMINAL)<CR><CR>
+nmap <leader><leader>p :call system("ST_PATH=" . expand('%:p:h') . " ST_COM='python3 " . expand('%:t') . "' " . $TERMINAL)<CR><CR>
 
 " Equivivalent of source [current_dir]/pyvenv/bin/activate. add pyvenv/bin to
 " $PATH. Replaces old path If executed multiple times
@@ -306,13 +324,15 @@ function! SetPyVenv()
   let $VIRTUAL_ENV = expand("%:p:h") . "/pyvenv"
   let s:bin_dir = $VIRTUAL_ENV . "/bin"
   if !exists("g:bin_dir")
-    let $PATH .= ':' . s:bin_dir
+    let $PATH = s:bin_dir . ':' . $PATH
   else
     let $PATH = substitute($PATH, g:bin_dir, s:bin_dir, "")
   endif
+  let g:python3_host_prog = s:bin_dir . '/python3'
   let g:bin_dir = s:bin_dir
 endfunction
 nmap <leader><leader>e :call SetPyVenv()<CR>
+"nmap <leader><leader>e :call system("source " . expand("%:p:h") . "/pyvenv/bin/activate")<CR>
 
 " Open vim help for word under cursor
 nmap <leader><leader>h :exec ("tab help " . expand("<cword>"))<CR>
