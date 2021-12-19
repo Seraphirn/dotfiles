@@ -13,3 +13,6 @@
 
 # vim tmp files
 *.sw*
+
+# vim ctrl-space sessions
+CS_SESSION
