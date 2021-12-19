@@ -245,6 +245,14 @@ let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --python-kinds=-i --ex
 map <leader>o :setlocal spell! spelllang=en_us<CR>
 " Replace ex mode with gq
 map Q gq
+
+" esc in insert mode
+inoremap kj <esc>
+inoremap jk <esc>
+" esc in command mode
+cnoremap kj <C-C>
+cnoremap jk <C-C>
+
 " Reset leader as easymotion key
 "map <Leader> <Plug>(easymotion-prefix)
 map <Leader>w <Plug>(easymotion-bd-w)
