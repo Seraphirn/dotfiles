@@ -19,6 +19,7 @@ For installation `git` `curl` `zsh` `vim` `tmux` `xclip` `redshift` `calcurse` `
 `xcompmng` from transparency
 `lm-sensors` from cpu temp
 `blueman` for manage bluetooth devices
+`nodejs` for nvim coc plugin
 
 Also need to install `dwm` `st` `dwmblocks` from [repo](https://github.com/Serapirn/dwm/)
 

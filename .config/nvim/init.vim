@@ -32,6 +32,9 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) }}
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'antoinemadec/FixCursorHold.nvim'
+Plug 'puremourning/vimspector'
+
 call plug#end()
 
 " ------------------------------------------VIM commong settings-------------------------------------
@@ -119,8 +122,9 @@ set listchars=tab:.\ ,trail:~
 "While typing a search command, show where the pattern
 set incsearch
 "Set tab settings
-set tabstop=2 shiftwidth=2 softtabstop=2 smarttab smartindent expandtab
+set tabstop=4 shiftwidth=4 softtabstop=4 smarttab smartindent expandtab
 autocmd BufRead,BufNewFile *.php,python setlocal tabstop=4 shiftwidth=4 softtabstop=4
+autocmd BufRead,BufNewFile *.js setlocal tabstop=2 shiftwidth=2 softtabstop=2
 " Minimal number of screen lines to keep above and below the cursor.
 set scrolloff=5
 " Show (partial) command in the last line of the screen
@@ -188,7 +192,7 @@ let g:airline_symbols.linenr = ''
 let g:airline_symbols.maxlinenr = 'Ξ'
 let g:airline_symbols.colnr = ''
 
-" ---------Autocompition------------
+" ---------COC.nvim Autocompition------------
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
@@ -200,10 +204,18 @@ inoremap <silent><expr> <Tab>
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
 
+" keywords for scroll doc float window
 nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
 nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
 inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+
+" Coc extensions
+let g:coc_global_extensions = ['coc-json', 'coc-pyright', 'coc-markdownlint']
+
+" --------- Vimspector -----------
+let g:vimspector_enable_mappings = 'HUMAN'
+let g:vimspector_install_gadgets = ['debugpy']
 
 " ---------Autopep 8 settings---------
 let g:autopep8_aggressive=1
@@ -240,7 +252,6 @@ map <Leader>W <Plug>(easymotion-bd-W)
 map <Leader>f <Plug>(easymotion-bd-f)
 map <Leader>e <Plug>(easymotion-bd-e)
 map <Leader>E <Plug>(easymotion-bd-E)
-map <Leader>j <Plug>(easymotion-bd-jk)
 map <Leader>g <Plug>(easymotion-jumptoanywhere)
 "let g:EasyMotion_keys = 'asdfghjkl;qwertyuiopzxcvbnm'
 let g:EasyMotion_keys = 'asdfghjkl;qweruiopvncm'
@@ -266,10 +277,10 @@ cnoremap <c-p> <c-r>+
 
 " ---------Normal mode remaps----------
 " Shortcutting split navigation, saving a keypress:
-"nmap <C-h> <C-w>h
-"nmap <C-j> <C-w>j
-"nmap <C-k> <C-w>k
-"nmap <C-l> <C-w>l
+nmap <c-h> <C-w>h
+nmap <c-j> <C-w>j
+nmap <c-k> <C-w>k
+nmap <c-l> <C-w>l
 " Goto difinition
 nmap <c-]> g<c-]>
 " Grep
@@ -277,8 +288,8 @@ nmap <c-f> :tab Grep<Space>
 " Move tabs right and left
 nmap <Leader>H :tabmove -1<CR>
 nmap <Leader>L :tabmove +1<CR>
-nmap <c-j> :tabn<CR>
-nmap <c-k> :tabN<CR>
+nmap <c-o> :tabn<CR>
+nmap <c-i> :tabN<CR>
 " Goto tabs
 nmap <leader>1 :tabn 1<CR>
 nmap <leader>2 :tabn 2<CR>
@@ -348,9 +359,9 @@ iabbrev pdb import pdb; pdb.set_trace()
 iabbrev p_r print '<pre>' . print_r(, true) . '</pre>'; exit;
 
 " ----------------------------------------------------Commands & Autocommands------------------------------
-command W write
+command! W write
 " Save file as sudo on files that require root permission. short of sudo write
-command SW execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+command! SW execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 
 " apply local virtual env before open ipynv file. That allow gabenespoli/vim-jupycent plugin work because in
 " local veirual env have installed its dependency - jupytext
