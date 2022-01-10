@@ -176,7 +176,7 @@ let g:EasyGrepSearchCurrentBufferDir=0
 let g:EasyGrepRecursive=1
 let g:EasyGrepIgnoreCase=1
 let g:EasyGrepCommand=1
-let g:EasyGrepFilesToExclude=".svn,.git,*/tmp/*,*.so,*.swp,*.zip,*pycache*,*node_modules*,*pyvenv*,*build*,*dump*,*.js*,*.css*,*.svg"
+let g:EasyGrepFilesToExclude=".svn,.git,*/tmp/*,*.so,*.swp,*.zip,*pycache*,*node_modules*,*pyvenv*,*build*,*dump*,*.js*,*.css*,*.svg,*notebooks,.ipynb"
 
 " ---------CtrlP settings---------
 let g:ctrlp_working_path_mode='a'
@@ -248,10 +248,10 @@ nmap <leader>dd :VimspectorReset<CR>
 nmap <leader>dp <Plug>VimspectorPause
 nmap <leader>dx <Plug>VimspectorStop
 
-nmap <leader>db <Plug>VimspectorToggleBreakpoint
 nmap <leader>da <Plug>VimspectorToggleBreakpoint
-nmap <leader>dtc <Plug>VimspectorToggleConditionalBreakpoint
-nmap <leader>dtf <Plug>VimspectorAddFunctionBreakpoint
+nmap <leader>dbc <Plug>VimspectorToggleConditionalBreakpoint
+nmap <leader>dbf <Plug>VimspectorAddFunctionBreakpoint
+nmap <leader>dB :call vimspector#ClearBreakpoints()<CR>
 nmap <leader>dr <Plug>VimspectorRunToCursor
 nmap <F10> <Plug>VimspectorStepOver
 nmap <F11> <Plug>VimspectorStepInto
@@ -261,6 +261,10 @@ nmap <F12> <Plug>VimspectorStepOut
 nmap <Leader>di <Plug>VimspectorBalloonEval
 " for visual mode, the visually selected text
 xmap <Leader>di <Plug>VimspectorBalloonEval
+
+nmap <Leader>de :VimspectorEval<space>
+nmap <Leader>dw :VimspectorWatch<space>
+nmap <Leader>dw :VimspectorWatch<space>
 
 let g:vimspector_sidebar_width = 35
 let g:vimspector_bottombar_height = 10
@@ -331,6 +335,13 @@ inoremap <C-h> <left>
 " Deletion
 inoremap <c-x> <del>
 
+" ---------Comand mode remaps---------
+" Navigation
+xmap <C-j> <down>
+xmap <C-k> <up>
+xmap <C-l> <right>
+xmap <C-h> <left>
+
 " ---------Visual mode remaps---------
 " Perform dot commands over visual blocks:
 vnoremap . :normal .<CR>
@@ -338,6 +349,7 @@ vnoremap . :normal .<CR>
 " ---------Command line mode remaps---------
 " paste from +register with ctrl-p
 cnoremap <c-p> <c-r>+
+
 
 " ---------Normal mode remaps----------
 " Shortcutting split navigation, saving a keypress:
@@ -355,8 +367,8 @@ nmap <Leader>L :tabmove +1<CR>
 
 nmap <c-j> :tabn<CR>
 nmap <c-k> :tabN<CR>
-nmap <c-l> :tabn<CR>
-nmap <c-h> :tabN<CR>
+"nmap <c-l> :tabn<CR>
+"nmap <c-h> :tabN<CR>
 " Goto tabs
 nmap <leader>1 :tabn 1<CR>
 nmap <leader>2 :tabn 2<CR>

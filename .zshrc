@@ -71,7 +71,7 @@ alias ggl="google"
 alias ya="yandex"
 
 # Job specific
-alias confacerec="ssh s_s.yukhimets@ds-facerec01p"
+alias facerec="ssh s_s.yukhimets@ds-facerec01p"
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias ctags="`brew --prefix`/bin/ctags"
   alias ctags >> ~/.bash_profile
