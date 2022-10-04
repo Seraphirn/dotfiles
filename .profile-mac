@@ -6,8 +6,14 @@ export TERMINAL="open -a Terminal ~"
 #export TERMINAL="st"
 export EDITOR="nvim"
 export BROWSER="firefox"
+export C_INCLUDE_PATH=/usr/local/include
+export CPLUS_INCLUDE_PATH=/usr/local/include
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "/usr/local/opt/python/libexec/bin" ] ; then
     PATH="/usr/local/opt/python/libexec/bin:$PATH"
+fi
+
+if [ -d "$HOME/.poetry/bin" ] ; then
+    export PATH="$HOME/.poetry/bin:$PATH"
 fi
