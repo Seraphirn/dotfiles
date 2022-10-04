@@ -13,19 +13,25 @@ COMPLETION_WAITING_DOTS="true"
 SAVEHIST=99999
 
 # Magic Enter
-MAGIC_ENTER_GIT_COMMAND="git status -v && exag && echo -e '\n'"
-MAGIC_ENTER_OTHER_COMMAND="ls && echo -e '\n'"
+#MAGIC_ENTER_GIT_COMMAND="git status -v && exag && echo -e '\n'"
+#MAGIC_ENTER_OTHER_COMMAND="ls && echo -e '\n'"
 
-plugins=(git
-         alias-tips
-         extract
-         sudo
-         fzf
-         vi-mode
-         magic-enter
-         fast-syntax-highlighting
-         zsh-autosuggestions
-         web-search)
+plugins=(
+    git
+    alias-tips
+    extract
+    sudo
+    fzf
+    vi-mode
+    helm
+    kubectl
+    docker
+    docker-compose
+    #magic-enter
+    #fast-syntax-highlighting
+    zsh-autosuggestions
+    web-search
+)
 
 
 # Theme
@@ -116,3 +122,8 @@ fi
 
 setopt noautomenu
 setopt nomenucomplete
+
+export PATH="$HOME/.poetry/bin:$PATH"
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"

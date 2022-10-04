@@ -37,6 +37,8 @@ Plug 'puremourning/vimspector'
 Plug 'vim-ctrlspace/vim-ctrlspace'
 
 Plug 't9md/vim-choosewin'
+
+Plug 'fatih/vim-go'
 call plug#end()
 
 " ------------------------------------------VIM commong settings-------------------------------------
@@ -142,7 +144,11 @@ set gdefault
 " ignorecase by default
 set ignorecase
 " Fold options
-set nofoldenable
+set foldmethod=indent
+set foldlevel=99
+nnoremap <space> za
+
+"set nofoldenable
 " ------------Firenvim - for firefox ------
 let g:firenvim_config = { 
     \ 'localSettings': {
@@ -176,12 +182,14 @@ let g:EasyGrepSearchCurrentBufferDir=0
 let g:EasyGrepRecursive=1
 let g:EasyGrepIgnoreCase=1
 let g:EasyGrepCommand=1
-let g:EasyGrepFilesToExclude=".svn,.git,*/tmp/*,*.so,*.swp,*.zip,*pycache*,*node_modules*,*pyvenv*,*build*,*dump*,*.js*,*.css*,*.svg,*notebooks,.ipynb"
+let g:EasyGrepFilesToExclude=".svn,.git,*/tmp/*,*.so,*.swp,*.zip,*pycache*,*node_modules*,*pyvenv*,*build*,*dump*,*.js*,*.css*,*.svg,*notebooks*,.ipynb,release_agents,.md,.txt"
+"nnoremap <leader>V <c-W>s<c-W>T:execute 'Grep ' . expand('<cword>')<CR>
+nnoremap <leader>V <c-W>s<c-W>T:execute 'vimgrep ' . expand('<cword>') . ' **/*.py \| copen 6'<CR>
 
 " ---------CtrlP settings---------
 let g:ctrlp_working_path_mode='a'
 nmap <c-p> :CtrlP getcwd()<CR>
-nmap <Leader>re :CtrlPClearAllCache<CR>
+nmap <Leader>re :CtrlPClearAllCache<CR>:TagsGenerate!<CR>
 
 " ---------Airline setting---------
 let g:airline_theme = 'onedark'
@@ -199,7 +207,10 @@ let g:airline_exclude_preview = 1
 " ------------Ctrlspace---------
 " hide tabline
 "set showtabline=0
+"let g:CtrlSpaceEnableFilesCache = 1
+let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
 let g:CtrlSpaceDefaultMappingKey = "<C-space> "
+let g:CtrlSpaceSearchTiming = 1
 
 " ---------COC.nvim Autocompition------------
 " use <tab> for trigger completion and navigate to the next complete item
@@ -222,7 +233,8 @@ inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(
 " Coc extensions
 " asdfgqwertzxcvbhjkl;'nnm,./j
 "
-let g:coc_global_extensions = ['coc-json', 'coc-pyright', 'coc-markdownlint']
+let g:coc_global_extensions = ['coc-json', 'coc-pyright', 'coc-markdownlint', 'coc-go']
+"autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.flake8']  " add .env to test folder
 
 " --------- Vimspector -----------
 "let g:vimspector_enable_mappings = 'HUMAN'
@@ -240,9 +252,10 @@ let g:vimspector_install_gadgets = ['debugpy']
 "nmap <leader><F8> <Plug>VimspectorRunToCursor
 
 nmap <leader>ds <Plug>VimspectorContinue
-nmap <leader>dc <Plug>VimspectorContinue
-nmap <leader>dC <Plug>VimspectorRestart
 nmap <leader>dS <Plug>VimspectorRestart
+
+"nmap <leader>s <Plug>VimspectorContinue
+nmap <leader>S <Plug>VimspectorRestart
 
 nmap <leader>dd :VimspectorReset<CR>
 nmap <leader>dp <Plug>VimspectorPause
@@ -253,9 +266,15 @@ nmap <leader>dbc <Plug>VimspectorToggleConditionalBreakpoint
 nmap <leader>dbf <Plug>VimspectorAddFunctionBreakpoint
 nmap <leader>dB :call vimspector#ClearBreakpoints()<CR>
 nmap <leader>dr <Plug>VimspectorRunToCursor
+nmap <leader>J <Plug>VimspectorRunToCursor
+
 nmap <F10> <Plug>VimspectorStepOver
+nmap <leader>j <Plug>VimspectorStepOver
 nmap <F11> <Plug>VimspectorStepInto
+nmap <leader>l <Plug>VimspectorStepInto
 nmap <F12> <Plug>VimspectorStepOut
+nmap <leader>h <Plug>VimspectorStepOut
+
 
 " for normal mode - the word under the cursor
 nmap <Leader>di <Plug>VimspectorBalloonEval
@@ -263,6 +282,7 @@ nmap <Leader>di <Plug>VimspectorBalloonEval
 xmap <Leader>di <Plug>VimspectorBalloonEval
 
 nmap <Leader>de :VimspectorEval<space>
+nmap <Leader>v :VimspectorEval<space>
 nmap <Leader>dw :VimspectorWatch<space>
 nmap <Leader>dw :VimspectorWatch<space>
 
@@ -275,7 +295,7 @@ let g:vimspector_terminal_minwidth = 10
 
 " -------- Choosewin --------
 nmap - <Plug>(choosewin)
-nmap <leader>ss <Plug>(choosewin)
+"nmap <leader>ss <Plug>(choosewin)
 
 " ---------Autopep 8 settings---------
 let g:autopep8_aggressive=1
@@ -307,11 +327,11 @@ map <leader>o :setlocal spell! spelllang=en_us<CR>
 map Q gq
 
 " esc in insert mode
-inoremap kj <esc>
-inoremap jk <esc>
+inoremap <leader>j <esc>
+" esc in visual and select mode
+vnoremap <leader>j <esc>
 " esc in command mode
-cnoremap kj <C-C>
-cnoremap jk <C-C>
+cnoremap <leader>j <C-C>
 
 " Reset leader as easymotion key
 "map <Leader> <Plug>(easymotion-prefix)
@@ -353,10 +373,10 @@ cnoremap <c-p> <c-r>+
 
 " ---------Normal mode remaps----------
 " Shortcutting split navigation, saving a keypress:
-nmap <leader>h <C-w>h
-nmap <leader>j <C-w>j
-nmap <leader>k <C-w>k
-nmap <leader>l <C-w>l
+"nmap <leader>h <C-w>h
+"nmap <leader>j <C-w>j
+"nmap <leader>k <C-w>k
+"nmap <leader>l <C-w>l
 " Goto difinition
 nmap <c-]> g<c-]>
 " Grep
@@ -382,11 +402,11 @@ nmap <leader>9 :tabn 9<CR>
 " Delete trailing spaces, tabs and mixing tabs
 nmap <leader>qa :%s/\s\+$//ge<CR>:%s/\ \+\t/\t/ge<CR>
 " Split window
-nmap <leader>sh :split res 120<CR>
-nmap <leader>sv :vsplit res 120<CR>
+"nmap <leader>sh :split res 120<CR>
+"nmap <leader>sv :vsplit res 120<CR>
 " Location list
-nmap <leader>lo :lopen 4<CR>
-nmap <leader>lc :lclose<CR>
+"nmap <leader>lo :lopen 4<CR>
+"nmap <leader>lc :lclose<CR>
 nmap <leader>n :lnext<CR>
 nmap <leader>N :lprevious<CR>
 " Welcome panel to change projects
@@ -411,6 +431,8 @@ nmap <leader><leader>i :!make && sudo make install<CR>
 " Open terminal in directory of current open file and exec current python file
 nmap <leader><leader>p :call system("ST_PATH=" . expand('%:p:h') . " ST_COM='python3 " . expand('%:t') . "' " . $TERMINAL)<CR><CR>
 
+" Isort current file
+nmap <leader>s :!isort .<CR>
 " Equivivalent of source [current_dir]/pyvenv/bin/activate. add pyvenv/bin to
 " $PATH. Replaces old path If executed multiple times
 function! SetPyVenv()
@@ -447,9 +469,9 @@ command! SW execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 autocmd BufReadPre *.ipynb :call SetPyVenv()
 
 " clear useless spaces
-autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md :%s/\s\+$//ge
+autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md,*.yaml,*.yml :%s/\s\+$//ge
 " before tab too
-autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md :%s/\ \+\t/\t/ge
+autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md,*.yaml,*.yml :%s/\ \+\t/\t/ge
 
 " Autocompile dwmblocks on saving its conf file
 autocmd BufWritePost ~/projects/dwmblocks/blocks.h !cd ~/projects/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
