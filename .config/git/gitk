@@ -54,7 +54,7 @@ set circleoutlinecolor black
 set diffbgcolors {"#fff3f3" "#f0fff0"}
 set web_browser open
 set geometry(main) 1792x1067+5+30
-set geometry(state) zoomed
+/*set geometry(state) zoomed*/
 set geometry(topwidth) 1792
 set geometry(topheight) 481
 set geometry(pwsash0) "527 1"

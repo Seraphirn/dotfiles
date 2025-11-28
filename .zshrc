@@ -7,8 +7,6 @@ export HOMEBREW_NO_AUTO_UPDATE="1"
 
 # Options
 # dont work with zsh-autosuggestions
-#setopt hist_ignore_dups
-#setopt hist_expire_dups_first
 setopt noautomenu
 setopt nomenucomplete
 
@@ -17,13 +15,6 @@ DISABLE_AUTO_TITLE="false"
 ENABLE_CORRECTION="false"
 COMPLETION_WAITING_DOTS="true"
 SAVEHIST=99999
-
-# Magic Enter
-#MAGIC_ENTER_GIT_COMMAND="git status -v && exag && echo -e '\n'"
-#MAGIC_ENTER_OTHER_COMMAND="ls && echo -e '\n'"
-
-# zsh-autosuggestions
-#ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
 
 bindkey ';e' autosuggest-execute
 bindkey '; ' autosuggest-accept
@@ -42,13 +33,7 @@ plugins=(
     kubectl
     docker
     docker-compose
-    #magic-enter
-    #fast-syntax-highlighting
-    #sudo
-    #extract
-    #fzf
     zsh-autosuggestions
-    #web-search
 )
 
 # Theme
@@ -79,31 +64,16 @@ alias ncdu="ncdu --color=dark -x"
 alias pp="prettyping --nolegend"
 alias q="exit"
 alias rm="rm -irv"
-alias sysd="sudo systemctl disable"
-alias syse="sudo systemctl enable"
-alias sysr="sudo systemctl restart"
-alias syss="systemctl status"
-alias systa="sudo systemctl start"
-alias systo="sudo systemctl stop"
 alias vimrc="vim ~/.vimrc"
-alias yayi="yay -S"
-alias yayu="yay -Syu"
 alias zshrc="vim ~/.zshrc"
 
-alias ggl="google"
-alias ya="yandex"
-
 # Job specific
-alias facerec="ssh s_s.yukhimets@ds-facerec01p"
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias ctags="`brew --prefix`/bin/ctags"
   alias ctags >> ~/.bash_profile
 fi
 
-
 # Commands
-#export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-#export FZF_BASE='~/.fzf'
 export GREP_COLOR="1;32"
 export ZSH_PLUGINS_ALIAS_TIPS_TEXT="Alias: "
 
@@ -116,13 +86,8 @@ mkcd ()
 
 [[ ! -f ~/.Xmodmap ]] || xmodmap ~/.Xmodmap
 
-# enter command ls on changing dir
-#chpwd() ls
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if ! [ -z $ST_PATH ]; then
     cd "$ST_PATH"

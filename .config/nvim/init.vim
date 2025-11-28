@@ -27,23 +27,14 @@ Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'Houl/vim-repmo'
 Plug 'tpope/vim-surround'
-"Plug 'gabenespoli/vim-jupycent'
-"Plug 'tell-k/vim-autopep8'
 Plug 'Vimjas/vim-python-pep8-indent'
-"Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) }}
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale' " Линтинг и форматирование
 Plug 'antoinemadec/FixCursorHold.nvim'
-"Plug 'puremourning/vimspector'
 Plug 'vim-ctrlspace/vim-ctrlspace'
-"Plug 'bagrat/vim-buffet'
 "Plug 'yaegassy/coc-ruff', {'do': 'yarn install --frozen-lockfile'}
 
-Plug 't9md/vim-choosewin'
-
-"Plug 'fatih/vim-go'
-"Plug 'ki11errabbit/vim-colemak-dh'
 call plug#end()
 
 " ------------------------------------------VIM commong settings-------------------------------------
@@ -96,12 +87,6 @@ if has('gui_running')
 else
   set t_Co=256
 endif
-" ------- Firenvim settings ---------"
-"if exists('g:started_by_firenvim')
-  "set guifont=Monospace:h11
-  "set noshowmode
-  "set noruler
-"endif
 
 function! SetLinesForFirefox(timer)
     set lines+=3
@@ -157,17 +142,6 @@ set foldmethod=indent
 set foldlevel=99
 nnoremap <space> za
 
-"set nofoldenable
-" ------------Firenvim - for firefox ------
-let g:firenvim_config = { 
-    \ 'localSettings': {
-        \ '.*': {
-            \ 'priority': 0,
-            \ 'takeover': 'never',
-        \ },
-    \ }
-\ }
-
 " ---------NerdTree options---------
 let NERDTreeWinSize=30
 let NERDTreeIgnore=['\.pyc$', '\~$']
@@ -179,9 +153,7 @@ if has('nvim')
 else
   let NERDTreeBookmarksFile = '~/.vim' . '/NERDTreeBookmarks'
 endif
-nmap <Leader>tt :NERDTreeToggle<CR>
-nmap <Leader>tf :NERDTreeFind<CR>
-nmap <Leader>df :NERDTreeFind<CR>
+nmap <Leader>t :NERDTreeFind<CR>
 
 " ----------NerdCommenter-----------
 let NERDDefaultAlign = 'left'
@@ -199,8 +171,7 @@ nnoremap <leader>V <c-W>s<c-W>T:execute 'vimgrep ' . expand('<cword>') . ' **/*.
 " ---------CtrlP settings---------
 let g:ctrlp_working_path_mode='a'
 nmap <c-p> :CtrlP getcwd()<CR>
-"nmap <Leader>re :CtrlPClearAllCache<CR>:TagsGenerate!<CR>
-nmap <Leader>re :CtrlPClearAllCache<CR>:GutentagsUpdate!<CR>
+"nmap <Leader>re :CtrlPClearAllCache<CR>:GutentagsUpdate!<CR>
 
 " ---------Airline setting---------
 let g:airline_theme = 'onedark'
@@ -250,85 +221,6 @@ let g:coc_global_extensions = ['coc-json', 'coc-pyright', 'coc-markdownlint', 'c
 let g:ale_linters = {'python': ['ruff'], 'sql': ['sqlfluff']}
 "let g:ale_linters = {'python': ['ruff']}
 
-
-
-" --------- Vimspector -----------
-"let g:vimspector_enable_mappings = 'HUMAN'
-let g:vimspector_install_gadgets = ['debugpy']
-
-"nmap <F5> <Plug>VimspectorContinue
-"nmap <F3> <Plug>VimspectorStop
-"nmap <leader><F3> :VimspectorReset<CR>
-"nmap <F4> <Plug>VimspectorRestart
-"nmap <F6> <Plug>VimspectorPause
-
-"nmap <F9> <Plug>VimspectorToggleBreakpoint
-"nmap <leader><F9> <Plug>VimspectorToggleConditionalBreakpoint
-"nmap <F8> <Plug>VimspectorAddFunctionBreakpoint
-"nmap <leader><F8> <Plug>VimspectorRunToCursor
-
-nmap <leader>ds <Plug>VimspectorContinue
-nmap <leader>dS <Plug>VimspectorRestart
-
-"nmap <leader>s <Plug>VimspectorContinue
-nmap <leader>S <Plug>VimspectorRestart
-
-nmap <leader>dd :VimspectorReset<CR>
-nmap <leader>dp <Plug>VimspectorPause
-nmap <leader>dx <Plug>VimspectorStop
-
-nmap <leader>da <Plug>VimspectorToggleBreakpoint
-nmap <leader>dbc <Plug>VimspectorToggleConditionalBreakpoint
-nmap <leader>dbf <Plug>VimspectorAddFunctionBreakpoint
-nmap <leader>dB :call vimspector#ClearBreakpoints()<CR>
-nmap <leader>dr <Plug>VimspectorRunToCursor
-nmap <leader>J <Plug>VimspectorRunToCursor
-
-nmap <F10> <Plug>VimspectorStepOver
-nmap <leader>j <Plug>VimspectorStepOver
-nmap <F11> <Plug>VimspectorStepInto
-nmap <leader>l <Plug>VimspectorStepInto
-nmap <F12> <Plug>VimspectorStepOut
-nmap <leader>h <Plug>VimspectorStepOut
-
-
-" for normal mode - the word under the cursor
-nmap <Leader>di <Plug>VimspectorBalloonEval
-" for visual mode, the visually selected text
-xmap <Leader>di <Plug>VimspectorBalloonEval
-
-nmap <Leader>de :VimspectorEval<space>
-nmap <Leader>v :VimspectorEval<space>
-nmap <Leader>dw :VimspectorWatch<space>
-nmap <Leader>dw :VimspectorWatch<space>
-
-let g:vimspector_sidebar_width = 35
-let g:vimspector_bottombar_height = 10
-
-let g:vimspector_code_minwidth = 100
-let g:vimspector_terminal_maxwidth = 20
-let g:vimspector_terminal_minwidth = 10
-
-" -------- Choosewin --------
-nmap - <Plug>(choosewin)
-"nmap <leader>ss <Plug>(choosewin)
-
-" ---------Autopep 8 settings---------
-"let g:autopep8_aggressive=1
-"let g:autopep8_disable_show_diff=1
-"let g:autopep8_max_line_length=99
-"" Autopep8 one line without fix line length
-"nmap <leader>ap :<C-u>call Autopep8("--ignore=E501 --range " . line(".") . " " . line("."))<CR>
-"" Autopep8 one line
-"nmap <leader>aP :<C-u>call Autopep8("--range " . line(".") . " " . line("."))<CR>
-"" Autopep8 selected lines without fix line length
-"xmap <leader>ap :<C-u>call Autopep8("--ignore=E501 --range " . line("'<") . " " . line("'>"))<CR>
-"" Autopep8 selected lines
-"xmap <leader>aP :<C-u>call Autopep8("--range " . line("'<") . " " . line("'>"))<CR>
-
-"nmap <leader><leader>ap :call Autopep8("--ignore=E501")<CR>
-"nmap <leader><leader>aP :call Autopep8()<CR>
-
 " ---------Else extention settings---------
 " Ctags commang
 "let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --python-kinds=-i --exclude=pyvenv --exclude="*.min.js" --exclude=node_modules --exclude=build --exclude=dist --exclude=notebooks {DIRECTORY} 2>/dev/null'
@@ -363,11 +255,13 @@ map Q gq
 map <Leader>w <Plug>(easymotion-bd-w)
 map <Leader>W <Plug>(easymotion-bd-W)
 map <Leader>f <Plug>(easymotion-bd-f)
-map <Leader>e <Plug>(easymotion-bd-e)
-map <Leader>E <Plug>(easymotion-bd-E)
-map <Leader>g <Plug>(easymotion-jumptoanywhere)
+"map f <Plug>(easymotion-bd-f)
+map <Tab> <Plug>(easymotion-bd-W)
+
 "let g:EasyMotion_keys = 'asdfghjkl;qwertyuiopzxcvbnm'
-let g:EasyMotion_keys = 'asdfghjkl;qweruiopvncm'
+"let g:EasyMotion_keys = 'qwertuiopasdghklzxcvbnmfj'
+"let g:EasyMotion_keys = 'qwertyuiopasdfghjkl'
+let g:EasyMotion_keys = 'qweruiopasdfghjkl;'
 
 
 " ---------Visual mode remaps---------
@@ -398,13 +292,13 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Grep
-nmap <c-f> :tab Grep<Space>
+"nmap <c-f> :tab Grep<Space>
 " Move tabs right and left DEPRECATED
 nmap <Leader>H :tabmove -1<CR>
 nmap <Leader>L :tabmove +1<CR>
 
 nmap \ :tabn"<CR>
-nmap <Tab> :tabN<CR>
+"nmap <Tab> :tabN<CR>
 " Goto tabs
 nmap <leader>1 :tabn 1<CR>
 nmap <leader>2 :tabn 2<CR>
@@ -434,13 +328,9 @@ nmap <leader><leader>l :tabedit ~/.config/nvim/init.vim.local<CR>
 
 " Open terminal in directory of current open file
 nmap <leader><leader>t :call system("ST_PATH=" . expand('%:p:h') . " " . $TERMINAL)<CR><CR>
-" Open terminal in directory of current open file and start jupyter server if has one
-nmap <leader><leader>s :call system("ST_PATH=" . expand('%:p:h') . " ST_COM='make start-jupyter' " . $TERMINAL)<CR><CR>
 
 " make and install package in current working directory
 nmap <leader><leader>i :!make && sudo make install<CR>
-" Open terminal in directory of current open file and exec current python file
-nmap <leader><leader>p :call system("ST_PATH=" . expand('%:p:h') . " ST_COM='python3 " . expand('%:t') . "' " . $TERMINAL)<CR><CR>
 
 " Isort current file
 "nmap <leader>s :!isort .<CR>
@@ -459,11 +349,9 @@ function! SetPyVenv()
   let g:bin_dir = s:bin_dir
 endfunction
 nmap <leader><leader>e :call SetPyVenv()<CR>
-"nmap <leader><leader>e :call system("source " . expand("%:p:h") . "/pyvenv/bin/activate")<CR>
 
 " Open vim help for word under cursor
 nmap <leader><leader>h :exec ("tab help " . expand("<cword>"))<CR>
-
 
 " ----------------------------------------------------Abbrevs-----------------------------------------------
 abclear
@@ -480,11 +368,14 @@ command! SW execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 " local veirual env have installed its dependency - jupytext
 autocmd BufReadPre *.ipynb :call SetPyVenv()
 
-
 " clear useless spaces
 autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md,*.yaml,*.yml,*.sql :%s/\s\+$//ge
 " before tab too
 autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md,*.yaml,*.yml,*.sql :%s/\ \+\t/\t/ge
+
+" goto next class or def on ]] pressed
+autocmd FileType python noremap <buffer> [[ ?^class\\|^\s*def<CR>
+autocmd FileType python noremap <buffer> ]] /^class\\|^\s*def<CR>
 
 " Autocompile dwmblocks on saving its conf file
 autocmd BufWritePost ~/projects/dwmblocks/blocks.h !cd ~/projects/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
@@ -497,94 +388,9 @@ endif
 " --------------------------------------------------ELSE----------------------------------------
 
 if filereadable(glob("~/.config/nvim/init.vim.local"))
-
     source ~/.config/nvim/init.vim.local
 endif
 
 "Commands
 "replace all datetime
 "s/\('[0-9- :.]\{16,}'\)/from_utc_timestamp(\1, 'UTC')
-
-
-" Colemak in insept mode
-"inoremap e f
-"inoremap E F
-"inoremap r p
-"inoremap R P
-"inoremap t g
-"inoremap T G
-"inoremap s r
-"inoremap S R
-"inoremap d s
-"inoremap D S
-"inoremap f t
-"inoremap F T
-"inoremap g d
-"inoremap G D
-"inoremap y j
-"inoremap Y J
-"inoremap u l
-"inoremap U L
-"inoremap i u
-"inoremap I U
-"inoremap o y
-"inoremap O Y
-"inoremap p ;
-"inoremap P :
-"inoremap j n
-"inoremap J N
-"inoremap k e
-"inoremap K E
-"inoremap l i
-"inoremap L I
-"inoremap ; o
-"inoremap : O
-"inoremap n k
-"inoremap N K
-
-" Colemak DH changes
-" Up/down/left/righ
-" nnoremap m h|xnoremap m h|onoremap m h|
-" nnoremap n j|xnoremap n j|onoremap n j|
-" nnoremap e k|xnoremap e k|onoremap e k|
-" nnoremap i l|xnoremap i l|onoremap i l|
-" Window handling
-" nnoremap <C-W>m <C-W>h|xnoremap <C-W>m <C-W>h|
-" nnoremap <C-W>n <C-W>j|xnoremap <C-W>n <C-W>j|
-" nnoremap <C-W>e <C-W>k|xnoremap <C-W>e <C-W>k|
-" nnoremap <C-W>i <C-W>l|xnoremap <C-W>i <C-W>l|
-" Words forward/backward
-" nnoremap k e|xnoremap k e|onoremap k e|
-" nnoremap K E|xnoremap K E|onoremap K E|
-" inSert/Replace/append (T)
-"nnoremap l i|
-"nnoremap L I|
-" nnoremap s i|
-" nnoremap S I|
-" Search
-"  nnoremap h n|xnoremap h n|onoremap h n|
-" nnoremap H N|xnoremap H N|onoremap H N|
-" todo filebrowser mappings
-" join stings
-" nmap <s-n> <s-j>
-
-" map <Leader>k <Plug>(easymotion-bd-e)
-" map <Leader>K <Plug>(easymotion-bd-E)
-
-" nmap <c-n> :tabn<CR>
-" nmap <c-e> :tabN<CR>
-"nmap \ :tabn<CR>
-"nmap <Tab> :tabN<CR>
-" Move tabs right and left
-" nmap <Leader><Tab> :tabmove -1<CR>
-" nmap <Leader>\ :tabmove +1<CR>
-" nmap <Leader>e :tabmove -1<CR>
-" nmap <Leader>n :tabmove +1<CR>
-"nmap <c-s-E> :tabmove -1<CR>
-"nmap <c-s-N> :tabmove +1<CR>
-
-" let NERDTreeMapOpenSplit='l'
-" let NERDTreeMapOpenExpl='k'
-" let NERDTreeMapMenu='j'
-" let NERDTreeMenuDown='n'
-" let NERDTreeMenuUp='e'
