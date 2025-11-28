@@ -2,9 +2,15 @@
 export ZSH="$HOME/.oh-my-zsh"
 export TERM="xterm-256color"
 
+# Some vars
+export HOMEBREW_NO_AUTO_UPDATE="1"
+
 # Options
-setopt hist_ignore_dups
-setopt hist_expire_dups_first
+# dont work with zsh-autosuggestions
+#setopt hist_ignore_dups
+#setopt hist_expire_dups_first
+setopt noautomenu
+setopt nomenucomplete
 
 # General
 DISABLE_AUTO_TITLE="false"
@@ -16,12 +22,21 @@ SAVEHIST=99999
 #MAGIC_ENTER_GIT_COMMAND="git status -v && exag && echo -e '\n'"
 #MAGIC_ENTER_OTHER_COMMAND="ls && echo -e '\n'"
 
+# zsh-autosuggestions
+#ZSH_AUTOSUGGEST_STRATEGY=(match_prev_cmd history completion)
+
+bindkey ';e' autosuggest-execute
+bindkey '; ' autosuggest-accept
+
+# vi-mode
+VI_MODE_RESET_PROMPT_ON_MODE_CHANGE=true
+VI_MODE_SET_CURSOR=true
+MODE_INDICATOR="%F{white}+%f"
+INSERT_MODE_INDICATOR="%F{yellow}+%f"
+
 plugins=(
     git
     alias-tips
-    extract
-    sudo
-    fzf
     vi-mode
     helm
     kubectl
@@ -29,10 +44,12 @@ plugins=(
     docker-compose
     #magic-enter
     #fast-syntax-highlighting
+    #sudo
+    #extract
+    #fzf
     zsh-autosuggestions
-    web-search
+    #web-search
 )
-
 
 # Theme
 ZSH_THEME="powerlevel10k/powerlevel10k"
@@ -85,17 +102,12 @@ fi
 
 
 # Commands
-export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
-export FZF_BASE='~/.fzf'
+#export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git -g ""'
+#export FZF_BASE='~/.fzf'
 export GREP_COLOR="1;32"
 export ZSH_PLUGINS_ALIAS_TIPS_TEXT="Alias: "
 
 #Functions
-function lc () {
-    cd $1 &&
-    la $2
-}
-
 mkcd ()
 {
     mkdir -p -- "$1" &&
@@ -110,7 +122,7 @@ mkcd ()
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+#[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 if ! [ -z $ST_PATH ]; then
     cd "$ST_PATH"
@@ -120,11 +132,8 @@ if ! [ -z $ST_COM ]; then
     bash -c "$ST_COM"
 fi
 
-setopt noautomenu
-setopt nomenucomplete
-
-if [ -d "$HOME/.poetry/bin" ]; then
-    export PATH="$HOME/.poetry/bin:$PATH"
+if [ -d "$HOME/.local/bin" ]; then
+    export PATH="$HOME/.local/bin:$PATH"
 fi
 
 if [ -d "$HOME/.pyenv" ]; then

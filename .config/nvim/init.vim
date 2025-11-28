@@ -1,5 +1,4 @@
 let mapleader=";"
-
 if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
   echo "Downloading junegunn/vim-plug to manage plugins..."
   silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
@@ -10,35 +9,41 @@ endif
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
 " Plug 'git://github.com/VundleVim/Vundle.vim'
 Plug 'tomasr/molokai'
+Plug 'rafi/awesome-vim-colorschemes'
 Plug 'scrooloose/nerdtree'
 Plug 'scrooloose/nerdcommenter'
 Plug 'kien/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
-Plug 'szw/vim-tags'
+
 Plug 'dkprice/vim-easygrep'
 Plug 'skwp/greplace.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'amiorin/vim-project'
+Plug 'bkad/CamelCaseMotion'
 
 Plug 'godlygeek/tabular'
 Plug 'plasticboy/vim-markdown'
 Plug 'tpope/vim-repeat'
 Plug 'Houl/vim-repmo'
 Plug 'tpope/vim-surround'
-Plug 'gabenespoli/vim-jupycent'
-Plug 'tell-k/vim-autopep8'
+"Plug 'gabenespoli/vim-jupycent'
+"Plug 'tell-k/vim-autopep8'
 Plug 'Vimjas/vim-python-pep8-indent'
-Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) }}
+"Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(0) }}
 
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale' " Линтинг и форматирование
 Plug 'antoinemadec/FixCursorHold.nvim'
-Plug 'puremourning/vimspector'
+"Plug 'puremourning/vimspector'
 Plug 'vim-ctrlspace/vim-ctrlspace'
+"Plug 'bagrat/vim-buffet'
+"Plug 'yaegassy/coc-ruff', {'do': 'yarn install --frozen-lockfile'}
 
 Plug 't9md/vim-choosewin'
 
-Plug 'fatih/vim-go'
+"Plug 'fatih/vim-go'
+"Plug 'ki11errabbit/vim-colemak-dh'
 call plug#end()
 
 " ------------------------------------------VIM commong settings-------------------------------------
@@ -46,7 +51,7 @@ call plug#end()
 set title
 " Hide usless toolbars and menues. a means that visual selections may be
 " copiend using standart terminal commands
-set go=a
+"set go=a
 " Enabling mouse support for all modes
 set mouse=a
 " Stop hightlite search
@@ -78,7 +83,11 @@ filetype plugin indent on
 " Enable syntax highlight
 syntax on
 " Set molokai colorscheme
-colorscheme molokai
+colorscheme gruvbox
+"colorscheme molokai
+"colorscheme afterglow
+"colorscheme PaperColor
+"colorscheme purify
 " Set color groups and font
 if has('gui_running')
   set background=dark
@@ -111,14 +120,14 @@ set number
 " Enable command line autocompletion:
 set wildmode=longest,list,full
 " Ignore those files in wildcard
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*pycache*,*/node_modules/*,*/pyvenv/*,*/build/*,*dump*,*.log,*.xml
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*pycache*,*/node_modules/*,*/pyvenv/*,*/venv/*,*/build/*,*dump*,*.log,*.xml
 
 " Set some autowrap text options for comments
 set formatoptions=cqjro
 " Set textwitdh options and visible indicators
-set colorcolumn=100 textwidth=100
-autocmd Filetype python setlocal colorcolumn=100 textwidth=100
-autocmd Filetype php setlocal colorcolumn=100 textwidth=100
+set colorcolumn=101 textwidth=101
+autocmd Filetype python setlocal colorcolumn=101 textwidth=101
+autocmd Filetype php setlocal colorcolumn=101 textwidth=101
 " Splits open at the bottom and right
 set splitbelow splitright
 " See tabs and trail spaces to DELETE THIS SHIT
@@ -172,6 +181,7 @@ else
 endif
 nmap <Leader>tt :NERDTreeToggle<CR>
 nmap <Leader>tf :NERDTreeFind<CR>
+nmap <Leader>df :NERDTreeFind<CR>
 
 " ----------NerdCommenter-----------
 let NERDDefaultAlign = 'left'
@@ -182,14 +192,15 @@ let g:EasyGrepSearchCurrentBufferDir=0
 let g:EasyGrepRecursive=1
 let g:EasyGrepIgnoreCase=1
 let g:EasyGrepCommand=1
-let g:EasyGrepFilesToExclude=".svn,.git,*/tmp/*,*.so,*.swp,*.zip,*pycache*,*node_modules*,*pyvenv*,*build*,*dump*,*.js*,*.css*,*.svg,*notebooks*,.ipynb,release_agents,.md,.txt"
+let g:EasyGrepFilesToExclude=".svn,.git,*/tmp/*,*.so,*.swp,*.zip,*pycache*,*node_modules*,*pyvenv*,*build*,*dump*,*.js*,*.css*,*.svg,*notebooks*,.ipynb,release_agents,.md,.txt,*/venv/"
 "nnoremap <leader>V <c-W>s<c-W>T:execute 'Grep ' . expand('<cword>')<CR>
 nnoremap <leader>V <c-W>s<c-W>T:execute 'vimgrep ' . expand('<cword>') . ' **/*.py \| copen 6'<CR>
 
 " ---------CtrlP settings---------
 let g:ctrlp_working_path_mode='a'
 nmap <c-p> :CtrlP getcwd()<CR>
-nmap <Leader>re :CtrlPClearAllCache<CR>:TagsGenerate!<CR>
+"nmap <Leader>re :CtrlPClearAllCache<CR>:TagsGenerate!<CR>
+nmap <Leader>re :CtrlPClearAllCache<CR>:GutentagsUpdate!<CR>
 
 " ---------Airline setting---------
 let g:airline_theme = 'onedark'
@@ -211,18 +222,15 @@ let g:airline_exclude_preview = 1
 let g:CtrlSpaceLoadLastWorkspaceOnStart = 1
 let g:CtrlSpaceDefaultMappingKey = "<C-space> "
 let g:CtrlSpaceSearchTiming = 1
+"let g:CtrlSpaceKeys = { "Buffer": { "a": "PrintFooBar" } }
 
 " ---------COC.nvim Autocompition------------
 " use <tab> for trigger completion and navigate to the next complete item
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
-endfunction
-
-inoremap <silent><expr> <Tab>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<Tab>" :
+inoremap <silent><expr> <TAB>
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
 " keywords for scroll doc float window
 nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
@@ -230,11 +238,19 @@ nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<
 inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
 inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
 
+autocmd FileType python let b:coc_root_patterns = ['.git', '.env', 'venv', '.venv', 'setup.cfg', 'setup.py', 'pyproject.toml', 'pyrightconfig.json']
+
 " Coc extensions
 " asdfgqwertzxcvbhjkl;'nnm,./j
 "
 let g:coc_global_extensions = ['coc-json', 'coc-pyright', 'coc-markdownlint', 'coc-go']
 "autocmd FileType python let b:coc_root_patterns = ['.git', '.env', '.flake8']  " add .env to test folder
+
+" --------- ALE --------
+let g:ale_linters = {'python': ['ruff'], 'sql': ['sqlfluff']}
+"let g:ale_linters = {'python': ['ruff']}
+
+
 
 " --------- Vimspector -----------
 "let g:vimspector_enable_mappings = 'HUMAN'
@@ -298,40 +314,49 @@ nmap - <Plug>(choosewin)
 "nmap <leader>ss <Plug>(choosewin)
 
 " ---------Autopep 8 settings---------
-let g:autopep8_aggressive=1
-let g:autopep8_disable_show_diff=1
-let g:autopep8_max_line_length=99
-" Autopep8 one line without fix line length
-nmap <leader>ap :<C-u>call Autopep8("--ignore=E501 --range " . line(".") . " " . line("."))<CR>
-" Autopep8 one line
-nmap <leader>aP :<C-u>call Autopep8("--range " . line(".") . " " . line("."))<CR>
-" Autopep8 selected lines without fix line length
-xmap <leader>ap :<C-u>call Autopep8("--ignore=E501 --range " . line("'<") . " " . line("'>"))<CR>
-" Autopep8 selected lines
-xmap <leader>aP :<C-u>call Autopep8("--range " . line("'<") . " " . line("'>"))<CR>
+"let g:autopep8_aggressive=1
+"let g:autopep8_disable_show_diff=1
+"let g:autopep8_max_line_length=99
+"" Autopep8 one line without fix line length
+"nmap <leader>ap :<C-u>call Autopep8("--ignore=E501 --range " . line(".") . " " . line("."))<CR>
+"" Autopep8 one line
+"nmap <leader>aP :<C-u>call Autopep8("--range " . line(".") . " " . line("."))<CR>
+"" Autopep8 selected lines without fix line length
+"xmap <leader>ap :<C-u>call Autopep8("--ignore=E501 --range " . line("'<") . " " . line("'>"))<CR>
+"" Autopep8 selected lines
+"xmap <leader>aP :<C-u>call Autopep8("--range " . line("'<") . " " . line("'>"))<CR>
 
-nmap <leader><leader>ap :call Autopep8("--ignore=E501")<CR>
-nmap <leader><leader>aP :call Autopep8()<CR>
+"nmap <leader><leader>ap :call Autopep8("--ignore=E501")<CR>
+"nmap <leader><leader>aP :call Autopep8()<CR>
 
 " ---------Else extention settings---------
 " Ctags commang
-let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --python-kinds=-i --exclude=pyvenv --exclude="*.min.js" --exclude=node_modules --exclude=build --exclude=dist --exclude=notebooks {DIRECTORY} 2>/dev/null'
+"let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --python-kinds=-i --exclude=pyvenv --exclude="*.min.js" --exclude=node_modules --exclude=build --exclude=dist --exclude=notebooks {DIRECTORY} 2>/dev/null'
+"let g:vim_tags_ctags_binary='/usr/local/bin/ctags'
+
+"vim-tags options
+"let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --languages=python --python-kinds=-i {DIRECTORY} 2>/dev/null'
+"let g:vim_tags_directories = ['.git']
+"let g:vim_tags_ignore_files = ['*pyvenv*', '*.min.js', '*node_models*', '*/.*', '*build*', '*dist', '*notebooks*']
+"let g:vim_tags_auto_generate = 0
+
+"let g:gutentags_exclude_filetypes = ['*pyvenv*', '*.min.js', '*node_models*', '*/.*', '*build*', '*dist', '*notebooks*']
+"let g:gutentags_project_root = ['package.json', '.git']
+""call add(g:gutentags_project_info, {'type': 'python', 'file': 'pyproject.toml'})
+""let g:gutentags_ctags_executable_python = 'cscope'
+"let g:gutentags_ctags_extra_args = [
+"      \ '--tag-relative=yes',
+"      \ '--python-kinds=-i',
+"      \ '--fields=+imnS',
+"      \ ]
+
 
 
 " -------------------------------------------------------REMAPS-----------------------------------------------
 "
 " ---------All remaps---------
-" Spell-check set to <leader>o, 'o' for 'orthography':
-map <leader>o :setlocal spell! spelllang=en_us<CR>
 " Replace ex mode with gq
 map Q gq
-
-" esc in insert mode
-inoremap <leader>j <esc>
-" esc in visual and select mode
-vnoremap <leader>j <esc>
-" esc in command mode
-cnoremap <leader>j <C-C>
 
 " Reset leader as easymotion key
 "map <Leader> <Plug>(easymotion-prefix)
@@ -344,23 +369,6 @@ map <Leader>g <Plug>(easymotion-jumptoanywhere)
 "let g:EasyMotion_keys = 'asdfghjkl;qwertyuiopzxcvbnm'
 let g:EasyMotion_keys = 'asdfghjkl;qweruiopvncm'
 
-" ---------Insert mode remaps---------
-" New line
-inoremap <C-o> <C-j>
-" Navigation
-inoremap <C-j> <down>
-inoremap <C-k> <up>
-inoremap <C-l> <right>
-inoremap <C-h> <left>
-" Deletion
-inoremap <c-x> <del>
-
-" ---------Comand mode remaps---------
-" Navigation
-xmap <C-j> <down>
-xmap <C-k> <up>
-xmap <C-l> <right>
-xmap <C-h> <left>
 
 " ---------Visual mode remaps---------
 " Perform dot commands over visual blocks:
@@ -378,17 +386,25 @@ cnoremap <c-p> <c-r>+
 "nmap <leader>k <C-w>k
 "nmap <leader>l <C-w>l
 " Goto difinition
-nmap <c-]> g<c-]>
+"nmap <c-]> g<c-]>
+"nmap <silent> <c-]> <Plug>(coc-definition)
+
+"nmap <silent> <c-t> <c-o>
+set tagfunc=CocTagFunc
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
 " Grep
 nmap <c-f> :tab Grep<Space>
-" Move tabs right and left
+" Move tabs right and left DEPRECATED
 nmap <Leader>H :tabmove -1<CR>
 nmap <Leader>L :tabmove +1<CR>
 
-nmap <c-j> :tabn<CR>
-nmap <c-k> :tabN<CR>
-"nmap <c-l> :tabn<CR>
-"nmap <c-h> :tabN<CR>
+nmap \ :tabn"<CR>
+nmap <Tab> :tabN<CR>
 " Goto tabs
 nmap <leader>1 :tabn 1<CR>
 nmap <leader>2 :tabn 2<CR>
@@ -401,14 +417,9 @@ nmap <leader>8 :tabn 8<CR>
 nmap <leader>9 :tabn 9<CR>
 " Delete trailing spaces, tabs and mixing tabs
 nmap <leader>qa :%s/\s\+$//ge<CR>:%s/\ \+\t/\t/ge<CR>
-" Split window
-"nmap <leader>sh :split res 120<CR>
-"nmap <leader>sv :vsplit res 120<CR>
 " Location list
-"nmap <leader>lo :lopen 4<CR>
-"nmap <leader>lc :lclose<CR>
-nmap <leader>n :lnext<CR>
-nmap <leader>N :lprevious<CR>
+nmap <leader>n :lnext<cr>
+nmap <leader>n :lprevious<cr>
 " Welcome panel to change projects
 nmap <leader><leader>w :tabnew<CR>:Welcome<CR>
 nmap <leader><leader>W :Welcome<CR>
@@ -432,7 +443,8 @@ nmap <leader><leader>i :!make && sudo make install<CR>
 nmap <leader><leader>p :call system("ST_PATH=" . expand('%:p:h') . " ST_COM='python3 " . expand('%:t') . "' " . $TERMINAL)<CR><CR>
 
 " Isort current file
-nmap <leader>s :!isort .<CR>
+"nmap <leader>s :!isort .<CR>
+nmap <leader>s :!ruff check --fix .<CR>
 " Equivivalent of source [current_dir]/pyvenv/bin/activate. add pyvenv/bin to
 " $PATH. Replaces old path If executed multiple times
 function! SetPyVenv()
@@ -468,10 +480,11 @@ command! SW execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
 " local veirual env have installed its dependency - jupytext
 autocmd BufReadPre *.ipynb :call SetPyVenv()
 
+
 " clear useless spaces
-autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md,*.yaml,*.yml :%s/\s\+$//ge
+autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md,*.yaml,*.yml,*.sql :%s/\s\+$//ge
 " before tab too
-autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md,*.yaml,*.yml :%s/\ \+\t/\t/ge
+autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md,*.yaml,*.yml,*.sql :%s/\ \+\t/\t/ge
 
 " Autocompile dwmblocks on saving its conf file
 autocmd BufWritePost ~/projects/dwmblocks/blocks.h !cd ~/projects/dwmblocks/; sudo make install && { killall -q dwmblocks;setsid dwmblocks & }
@@ -484,5 +497,94 @@ endif
 " --------------------------------------------------ELSE----------------------------------------
 
 if filereadable(glob("~/.config/nvim/init.vim.local"))
+
     source ~/.config/nvim/init.vim.local
 endif
+
+"Commands
+"replace all datetime
+"s/\('[0-9- :.]\{16,}'\)/from_utc_timestamp(\1, 'UTC')
+
+
+" Colemak in insept mode
+"inoremap e f
+"inoremap E F
+"inoremap r p
+"inoremap R P
+"inoremap t g
+"inoremap T G
+"inoremap s r
+"inoremap S R
+"inoremap d s
+"inoremap D S
+"inoremap f t
+"inoremap F T
+"inoremap g d
+"inoremap G D
+"inoremap y j
+"inoremap Y J
+"inoremap u l
+"inoremap U L
+"inoremap i u
+"inoremap I U
+"inoremap o y
+"inoremap O Y
+"inoremap p ;
+"inoremap P :
+"inoremap j n
+"inoremap J N
+"inoremap k e
+"inoremap K E
+"inoremap l i
+"inoremap L I
+"inoremap ; o
+"inoremap : O
+"inoremap n k
+"inoremap N K
+
+" Colemak DH changes
+" Up/down/left/righ
+" nnoremap m h|xnoremap m h|onoremap m h|
+" nnoremap n j|xnoremap n j|onoremap n j|
+" nnoremap e k|xnoremap e k|onoremap e k|
+" nnoremap i l|xnoremap i l|onoremap i l|
+" Window handling
+" nnoremap <C-W>m <C-W>h|xnoremap <C-W>m <C-W>h|
+" nnoremap <C-W>n <C-W>j|xnoremap <C-W>n <C-W>j|
+" nnoremap <C-W>e <C-W>k|xnoremap <C-W>e <C-W>k|
+" nnoremap <C-W>i <C-W>l|xnoremap <C-W>i <C-W>l|
+" Words forward/backward
+" nnoremap k e|xnoremap k e|onoremap k e|
+" nnoremap K E|xnoremap K E|onoremap K E|
+" inSert/Replace/append (T)
+"nnoremap l i|
+"nnoremap L I|
+" nnoremap s i|
+" nnoremap S I|
+" Search
+"  nnoremap h n|xnoremap h n|onoremap h n|
+" nnoremap H N|xnoremap H N|onoremap H N|
+" todo filebrowser mappings
+" join stings
+" nmap <s-n> <s-j>
+
+" map <Leader>k <Plug>(easymotion-bd-e)
+" map <Leader>K <Plug>(easymotion-bd-E)
+
+" nmap <c-n> :tabn<CR>
+" nmap <c-e> :tabN<CR>
+"nmap \ :tabn<CR>
+"nmap <Tab> :tabN<CR>
+" Move tabs right and left
+" nmap <Leader><Tab> :tabmove -1<CR>
+" nmap <Leader>\ :tabmove +1<CR>
+" nmap <Leader>e :tabmove -1<CR>
+" nmap <Leader>n :tabmove +1<CR>
+"nmap <c-s-E> :tabmove -1<CR>
+"nmap <c-s-N> :tabmove +1<CR>
+
+" let NERDTreeMapOpenSplit='l'
+" let NERDTreeMapOpenExpl='k'
+" let NERDTreeMapMenu='j'
+" let NERDTreeMenuDown='n'
+" let NERDTreeMenuUp='e'
