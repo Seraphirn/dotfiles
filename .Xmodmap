@@ -1,3 +1,1 @@
 keycode 104 = Return
-remove mod4 = Super_L Super_R
-add control = Super_L Super_R

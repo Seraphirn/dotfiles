@@ -11,16 +11,16 @@ feh --bg-scale wallpaper.jpg
 #sudo nm-applet &>/dev/null &
 
 # screen locker
-xautolock -time 25 -locker slock &>/dev/null &
+#xautolock -time 25 -detectsleep -locker xsecurelock &>/dev/null &
 
 # set minimal light of screen
 light -N 20
 
 # touchpad settings
 # mouse sensetivity
-xinput set-prop 10 366 +0.9
+xinput set-prop 10 "libinput Accel Speed" +0.9
 # tapping enabled
-xinput set-prop 10 346 1
+xinput set-prop 10 "libinput Tapping Enabled" 1
 
 
 # exec program on start
