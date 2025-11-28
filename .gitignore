@@ -16,3 +16,6 @@
 
 # vim ctrl-space sessions
 CS_SESSION
+
+#else
+.DS_Store
