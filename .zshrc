@@ -13,19 +13,25 @@ COMPLETION_WAITING_DOTS="true"
 SAVEHIST=99999
 
 # Magic Enter
-MAGIC_ENTER_GIT_COMMAND="git status -v && exag && echo -e '\n'"
-MAGIC_ENTER_OTHER_COMMAND="ls && echo -e '\n'"
+#MAGIC_ENTER_GIT_COMMAND="git status -v && exag && echo -e '\n'"
+#MAGIC_ENTER_OTHER_COMMAND="ls && echo -e '\n'"
 
-plugins=(git
-         alias-tips
-         extract
-         sudo
-         fzf
-         vi-mode
-         magic-enter
-         fast-syntax-highlighting
-         zsh-autosuggestions
-         web-search)
+plugins=(
+    git
+    alias-tips
+    extract
+    sudo
+    fzf
+    vi-mode
+    helm
+    kubectl
+    docker
+    docker-compose
+    #magic-enter
+    #fast-syntax-highlighting
+    zsh-autosuggestions
+    web-search
+)
 
 
 # Theme
@@ -71,7 +77,7 @@ alias ggl="google"
 alias ya="yandex"
 
 # Job specific
-alias confacerec="ssh s_s.yukhimets@ds-facerec01p"
+alias facerec="ssh s_s.yukhimets@ds-facerec01p"
 if [[ "$OSTYPE" == "darwin"* ]]; then
   alias ctags="`brew --prefix`/bin/ctags"
   alias ctags >> ~/.bash_profile
@@ -116,3 +122,13 @@ fi
 
 setopt noautomenu
 setopt nomenucomplete
+
+if [ -d "$HOME/.poetry/bin" ]; then
+    export PATH="$HOME/.poetry/bin:$PATH"
+fi
+
+if [ -d "$HOME/.pyenv" ]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+fi

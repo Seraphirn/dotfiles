@@ -1,10 +1,10 @@
 {
 	"name": "Vimium C",
-	"@time": "19.12.2021, 12:41:54",
-	"time": 1639906914810,
+	"@time": "19.12.2021, 19:52:47",
+	"time": 1639932767943,
 	"environment": {
 		"extension": "1.95.0",
-		"platform": "linux",
+		"platform": "mac",
 		"firefox": 95
 	},
 	"exclusionRules": [
@@ -28,8 +28,10 @@
 		"map <c-d> scrollPageDown",
 		"map <c-u> scrollPageUp",
 		"map r restoreTab",
-		"map <c-i> previousTab",
-		"map <c-o> nextTab",
+		"map <c-k> previousTab",
+		"map <c-j> nextTab",
+		"map <c-h> previousTab",
+		"map <c-l> nextTab",
 		"map gT previousTab",
 		"map gt nextTab",
 		"map ZZ removeTab",
