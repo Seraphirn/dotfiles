@@ -29,6 +29,7 @@ case $option in
         echo -e "\u001b[33;1m Backing up existing files... \u001b[0m"
         mv -iv ~/.config/htop ~/.config/htop.old
         mv -iv ~/.config/ranger ~/.config/ranger.old
+        mv -iv ~/.config/nvim ~/.config/nvim.old
         mv -iv ~/.zshrc ~/.zshrc.old
         mv -iv ~/.p10k.zsh ~/.p10k.zsh.old
         mv -iv ~/.profile ~/.profile.old
@@ -43,9 +44,6 @@ case $option in
     ln -sfnv "$PWD/.config/ranger/" ~/.config/ranger
     ln -sfnv "$PWD/.config/nvim/" ~/.config/nvim
     ln -sfnv "$PWD/.config/git/" ~/.config/git
-    if [ ! -f ~/.config/nvim/init.vim.local ]; then
-        cp ~/.config/nvim/init.vim.def.local ~/.config/nvim/init.vim.local
-    fi
     ln -sfnv "$PWD/.zshrc" ~/.zshrc
     ln -sfnv "$PWD/.p10k.zsh" ~/.p10k.zsh
     ln -sfnv "$PWD/.profile-mac" ~/.profile

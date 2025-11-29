@@ -13,6 +13,8 @@
 
 # vim tmp files
 *.sw*
+# lockfiles
+*lock.json
 
 # vim ctrl-space sessions
 CS_SESSION
