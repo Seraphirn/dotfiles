@@ -49,7 +49,15 @@ set mouse=a
 " Stop hightlite search
 set nohlsearch
 " Use global keyboard clipboard in vim
-set clipboard+=unnamedplus
+if has('unix')
+    if has('mac')       " osx
+        set clipboard+=unnamedplus
+  else                " linux, bsd, etc
+        set clipboard+=unnamed
+  endif
+elseif has('win32') || has('win64')
+    set clipboard+=unnamedplus
+endif
 " Show current mode you are in
 set showmode
 " Disable show of position of text cursor in left corner
@@ -88,18 +96,6 @@ if has('gui_running')
 else
   set t_Co=256
 endif
-
-function! SetLinesForFirefox(timer)
-    set lines+=3
-endfunction
-
-function! OnUIEnter(event) abort
-  if 'Firenvim' ==# get(get(nvim_get_chan_info(a:event.chan), 'client', {}), 'name', '')
-    set guifont=Monospace:h11
-    call timer_start(100, function("SetLinesForFirefox"))
-  endif
-endfunction
-autocmd UIEnter * call OnUIEnter(deepcopy(v:event))
 
 " Show relative line number on left and absolute line number for current line
 set number
@@ -154,7 +150,9 @@ if has('nvim')
 else
   let NERDTreeBookmarksFile = '~/.vim' . '/NERDTreeBookmarks'
 endif
-nmap <Leader>t :NERDTreeFind<CR>
+"nmap <Leader>t :NERDTreeFind<CR>
+"nnoremap <silent> <expr> <F6> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
+nmap <expr> <Tab> g:NERDTree.IsOpen() ? "\:NERDTreeClose<CR>" : bufexists(expand('%')) ? "\:NERDTreeFind<CR>" : "\:NERDTree<CR>"
 
 " ----------NerdCommenter-----------
 let NERDDefaultAlign = 'left'
@@ -223,6 +221,12 @@ let g:ale_linters = {'python': ['ruff'], 'sql': ['sqlfluff']}
 "let g:ale_linters = {'python': ['ruff']}
 
 " ---------Else extention settings---------
+
+map <buffer> ]f <Plug>(PythonsenseStartOfNextPythonFunction)
+map <buffer> ]F <Plug>(PythonsenseEndOfPythonFunction)
+map <buffer> [f <Plug>(PythonsenseStartOfPythonFunction)
+map <buffer> [F <Plug>(PythonsenseEndOfPreviousPythonFunction)
+
 " Ctags commang
 "let g:vim_tags_project_tags_command='{CTAGS} -R {OPTIONS} --python-kinds=-i --exclude=pyvenv --exclude="*.min.js" --exclude=node_modules --exclude=build --exclude=dist --exclude=notebooks {DIRECTORY} 2>/dev/null'
 "let g:vim_tags_ctags_binary='/usr/local/bin/ctags'
@@ -257,7 +261,7 @@ map <Leader>w <Plug>(easymotion-bd-w)
 map <Leader>W <Plug>(easymotion-bd-W)
 map <Leader>f <Plug>(easymotion-bd-f)
 "map f <Plug>(easymotion-bd-f)
-map <Tab> <Plug>(easymotion-bd-W)
+map \ <Plug>(easymotion-bd-W)
 
 "let g:EasyMotion_keys = 'asdfghjkl;qwertyuiopzxcvbnm'
 "let g:EasyMotion_keys = 'qwertuiopasdghklzxcvbnmfj'
@@ -271,20 +275,10 @@ vnoremap . :normal .<CR>
 
 " ---------Command line mode remaps---------
 " paste from +register with ctrl-p
-cnoremap <c-p> <c-r>+
+cnoremap <c-v> <c-r>+
 
 
 " ---------Normal mode remaps----------
-" Shortcutting split navigation, saving a keypress:
-"nmap <leader>h <C-w>h
-"nmap <leader>j <C-w>j
-"nmap <leader>k <C-w>k
-"nmap <leader>l <C-w>l
-" Goto difinition
-"nmap <c-]> g<c-]>
-"nmap <silent> <c-]> <Plug>(coc-definition)
-
-"nmap <silent> <c-t> <c-o>
 set tagfunc=CocTagFunc
 
 nmap <silent> gd <Plug>(coc-definition)
@@ -298,7 +292,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <Leader>H :tabmove -1<CR>
 nmap <Leader>L :tabmove +1<CR>
 
-nmap \ :tabn"<CR>
+"nmap \ :tabn"<CR>
 "nmap <Tab> :tabN<CR>
 " Goto tabs
 nmap <leader>1 :tabn 1<CR>
@@ -358,7 +352,6 @@ nmap <leader><leader>h :exec ("tab help " . expand("<cword>"))<CR>
 abclear
 iabbrev /** /**<CR><CR>/<UP>
 iabbrev pdb import pdb; pdb.set_trace()
-iabbrev p_r print '<pre>' . print_r(, true) . '</pre>'; exit;
 
 " ----------------------------------------------------Commands & Autocommands------------------------------
 command! W write
