@@ -1,12 +1,6 @@
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.keymap.set("", "<space>", ";", { noremap = true, desc = "space as repeat" })
 
 -- TODO:
--- iabbrev /** /**<CR><CR>/<UP>
--- iabbrev pdb import pdb; pdb.set_trace()
--- command! W write
 -- clear useless spaces
 -- autocmd BufWrite *.py,*.php,*.html,*.js,*.txt,*.ipynb,*.md,*.yaml,*.yml,*.sql :%s/\s\+$//ge
 -- before tab too
@@ -21,6 +15,8 @@ vim.keymap.set("", "<space>", ";", { noremap = true, desc = "space as repeat" })
 -- " paste from +register with ctrl-p
 -- cnoremap <c-v> <c-r>+
 
+-- See `:help mapleader`
+--  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = ";"
 vim.g.maplocalleader = ";"
 
@@ -135,7 +131,7 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 --
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
-vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+-- vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -175,6 +171,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
 		end, 10) -- Delay in milliseconds
 	end,
 })
+-- missclick w to W is ok
+vim.api.nvim_create_user_command("W", "write", { bang = true })
+
+-- abreviations
+-- vim.cmd({ cmd = "inoreabbrev", args = { "pdb", "import pdb; pdb.set_trace()" } })
+vim.cmd({ cmd = "inoreabbrev", args = { "pdb", "breakpoint()" } })
 
 -- [[ Install `lazy.nvim` plugin manager ]]
 --    See `:help lazy.nvim.txt` or https://github.com/folke/lazy.nvim for more info
@@ -261,7 +263,7 @@ require("lazy").setup({
 		opts = {
 			-- delay between pressing a key and opening which-key (milliseconds)
 			-- this setting is independent of vim.o.timeoutlen
-			delay = 0.4,
+			delay = 1000,
 			icons = {
 				-- set icon mappings to true if you have a Nerd Font
 				mappings = vim.g.have_nerd_font,
@@ -364,11 +366,19 @@ require("lazy").setup({
 				-- You can put your default mappings / updates / etc. in here
 				--  All the info you're looking for is in `:help telescope.setup()`
 				--
-				-- defaults = {
-				--   mappings = {
-				--     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-				--   },
-				-- },
+				defaults = {
+					mappings = {
+						i = {
+							-- ["<C-j>"] = "move_selection_next",
+							["<C-j>"] = "move_selection_next",
+							["<C-k>"] = "move_selection_previous",
+							["<C-d>"] = "preview_scrolling_down",
+							["<C-u>"] = "preview_scrolling_up",
+							["<C-h>"] = "preview_scrolling_left",
+							["<C-l>"] = "preview_scrolling_right",
+						},
+					},
+				},
 				-- pickers = {}
 				extensions = {
 					["ui-select"] = {
