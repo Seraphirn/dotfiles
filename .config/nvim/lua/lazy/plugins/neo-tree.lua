@@ -20,6 +20,12 @@ return {
 					["<Tab>"] = "close_window",
 				},
 			},
+			filtered_items = {
+				hide_dotfiles = false,
+				hide_gitignored = false,
+				hide_ignored = false, -- hide files that are ignored by other gitignore-like files
+				hide_hidden = false, -- only works on Windows for hidden files/directories
+			},
 		},
 		event_handlers = {
 			{
