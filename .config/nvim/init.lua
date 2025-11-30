@@ -146,7 +146,7 @@ vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper win
 vim.keymap.set("n", "<Leader>H", ":tabmove -1<CR>", { desc = "Move current tab left" })
 vim.keymap.set("n", "<Leader>L", ":tabmove +1<CR>", { desc = "Move current tab right" })
 vim.keymap.set("n", "<leader><leader>v", function()
-	vim.cmd.edit(vim.fn.stdpath("config") .. "/init.lua")
+	vim.cmd("tabedit " .. vim.fn.stdpath("config") .. "/init.lua")
 end, { desc = "Edit init.lua" })
 
 vim.keymap.set("", "Q", "gq", { desc = "Replace ex mode with gq" })
@@ -652,7 +652,14 @@ require("lazy").setup({
 			local servers = {
 				-- clangd = {},
 				-- gopls = {},
-				pyright = {},
+				-- pyright = {
+				-- 	settings = {
+				-- 		python = {
+				-- 			analysis = { diagnosticMode = "off", typeCheckingMode = "off" },
+				-- 		},
+				-- 	},
+				-- },
+				ruff = {},
 				-- rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
