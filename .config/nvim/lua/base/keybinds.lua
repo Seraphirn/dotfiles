@@ -50,9 +50,11 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 vim.api.nvim_create_autocmd("VimEnter", {
 	callback = function()
-		vim.defer_fn(function()
-			vim.cmd(":NeovimProjectDiscover") -- Replace with your command
-		end, 10) -- Delay in milliseconds
+		if vim.fn.argc() == 0 then -- Only show if no files are opened
+			vim.defer_fn(function()
+				vim.cmd(":NeovimProjectDiscover") -- Replace with your command
+			end, 10) -- Delay in milliseconds
+		end
 	end,
 })
 -- missclick w to W is ok
