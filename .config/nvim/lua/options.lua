@@ -51,7 +51,6 @@ vim.o.colorcolumn = "+1"
 
 -- While typing a search command, show where the pattern
 vim.o.incsearch = true
-
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -85,6 +84,9 @@ vim.o.timeoutlen = 300
 -- Configure how new splits should be opened
 vim.o.splitright = true
 vim.o.splitbelow = true
+
+-- Disable search hilighting
+vim.o.hlsearch = false
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`

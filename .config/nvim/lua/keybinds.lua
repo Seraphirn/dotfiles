@@ -1,33 +1,27 @@
--- [[ Basic Keymaps ]]
---  See `:help vim.keymap.set()`
 
--- Clear highlights on search when pressing <Esc> in normal mode
---  See `:help hlsearch`
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected part down" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected part up" })
 
--- Diagnostic keymaps
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
+vim.keymap.set("n", "J", "mzJ`z", { desc = "Open diagnostic [Q]uickfix list" })
 
--- Exit terminal mode in the buirltin terminal with a shortcut that is a bit easier
--- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
--- is not what someone will guess without a bit more experience.
---
--- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
--- or just use <C-\><C-n> to exit terminal mode
+vim.keymap.set("n", "<C-d>", "<C-d>zz", { desc = "Less disoriented look down" })
+vim.keymap.set("n", "<C-u>", "<C-u>zz", { desc = "Less disoriented look up" })
+vim.keymap.set("n", "<n>", "nzzzv", { desc = "Less disoriented search next" })
+vim.keymap.set("n", "<N>", "Nzzzv", { desc = "Less disoriented search next" })
+
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 vim.keymap.set("n", "<leader>t", ":horizontal term<CR>:resize 15<CR>i", { desc = "Open [T]erminal in window" })
 
 -- Keybinds to make split navigation easier.
---  Use CTRL+<hjkl> to switch between windows
---
---  See `:help wincmd` for a list of all window commands
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", { desc = "Move focus to the right window" })
 vim.keymap.set("n", "<C-j>", "<C-w><C-j>", { desc = "Move focus to the lower window" })
 vim.keymap.set("n", "<C-k>", "<C-w><C-k>", { desc = "Move focus to the upper window" })
-
 vim.keymap.set("n", "<Leader>H", ":tabmove -1<CR>", { desc = "Move current tab left" })
 vim.keymap.set("n", "<Leader>L", ":tabmove +1<CR>", { desc = "Move current tab right" })
+--
+
 vim.keymap.set("n", "<leader><leader>v", function()
 	vim.cmd("tabedit " .. vim.fn.stdpath("config") .. "/init.lua")
 end, { desc = "Edit init.lua" })

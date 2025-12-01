@@ -27,19 +27,6 @@ require("lazy").setup({
 
 	"tpope/vim-repeat", -- repeat complicated comands with .
 
-	{ -- Adds git related signs to the gutter, as well as utilities for managing changes
-		"lewis6991/gitsigns.nvim",
-		opts = {
-			signs = {
-				add = { text = "+" },
-				change = { text = "~" },
-				delete = { text = "_" },
-				topdelete = { text = "‾" },
-				changedelete = { text = "~" },
-			},
-		},
-	},
-
 	{ -- Colorscheme
 		"folke/tokyonight.nvim",
 		priority = 1000, -- Make sure to load this before all the other start plugins.
@@ -66,6 +53,7 @@ require("lazy").setup({
 		"smoka7/hop.nvim",
 		keys = {
 			{ "\\", ":HopWord<cr>", mode = "", desc = "Hop to word" },
+			{ "=", ":HopWord<cr>", mode = "", desc = "Hop to word" },
 		},
 		opts = {
 			keys = "etovxqpdygfblzhckisuran",
