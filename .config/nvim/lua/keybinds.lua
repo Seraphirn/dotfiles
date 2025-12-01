@@ -15,7 +15,7 @@ vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagn
 -- NOTE: This won't work in all terminal emulators/tmux/etc. Try your own mapping
 -- or just use <C-\><C-n> to exit terminal mode
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
-vim.keymap.set("n", "<leader>t", ":vert term<CR>i", { desc = "Open [T]erminal in window" })
+vim.keymap.set("n", "<leader>t", ":horizontal term<CR>:resize 15<CR>i", { desc = "Open [T]erminal in window" })
 
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
@@ -34,6 +34,8 @@ end, { desc = "Edit init.lua" })
 
 vim.keymap.set("", "Q", "gq", { desc = "Replace ex mode with gq" })
 
+
+vim.keymap.set("i", "<C-v>", "<C-r>\"", { desc = "Paste from clipboard" })
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
