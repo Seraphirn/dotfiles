@@ -6,6 +6,7 @@ echo -e "\u001b[32;1m Setting up Dotfiles...\u001b[0m"
 echo -e " \u001b[37;1m\u001b[4mSelect an option:\u001b[0m"
 echo -e "  \u001b[34;1m (1) Install oh-my-zsh \u001b[0m"
 echo -e "  \u001b[34;1m (2) Install zsh plugins \u001b[0m"
+echo -e "  \u001b[34;1m (4) Setup fonts \u001b[0m"
 echo -e "  \u001b[34;1m (5) Setup symlinks \u001b[0m"
 echo -e "  \u001b[34;1m (6) install dwm related files (install dwm first!) \u001b[0m"
 echo -e "  \u001b[31;1m (0) Exit \u001b[0m"
@@ -26,6 +27,15 @@ case $option in
     git clone https://github.com/djui/alias-tips.git ~/.oh-my-zsh/custom/plugins/alias-tips
     ;;
 
+"4")echo -e "\u001b[7m Setting up fonts... \u001b[0m"
+    for fname in "DejaVuSansMono" "DroidSansMono"; do
+        wget -O ~/.fonts/$fname.zip  https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/$fname.zip
+        unzip -u ~/.fonts/$fname.zip -d ~/.fonts/$fname
+        rm -f ~/.fonts/$fname.zip
+    done
+    fc-cache -fv
+    ;;
+
 "5")echo -e "\u001b[7m Setting up symlinks... \u001b[0m"
     echo -e "\u001b[33;1m Backup existing files? (y/n) \u001b[0m"
     read -r backupOption
@@ -35,11 +45,11 @@ case $option in
         mv -iv ~/.config/htop ~/.config/htop.old
         mv -iv ~/.config/nvim ~/.config/nvim.old
         mv -iv ~/.config/ranger ~/.config/ranger.old
+        mv -iv ~/.config/yazi ~/.config/yazi.old
         mv -iv ~/.zshrc ~/.zshrc.old
         mv -iv ~/.p10k.zsh ~/.p10k.zsh.old
         mv -iv ~/.profile ~/.profile.old
         mv -iv ~/.xprofile ~/.xprofile.old
-        sudo mv -im /usr/share/xsessions/dwm.desktop /usr/share/xsessions/dwm.desktop.old
         echo -e "\u001b[36;1m Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old'. \u001b[0m"
     else
         echo -e "\u001b[36;1m Skipping backups. \u001b[0m"
@@ -49,6 +59,7 @@ case $option in
     ln -sfnv "$PWD/.Xmodmap" ~/.Xmodmap
     ln -sfnv "$PWD/.config/htop/" ~/.config/htop
     ln -sfnv "$PWD/.config/ranger/" ~/.config/ranger
+    ln -sfnv "$PWD/.config/yazi/" ~/.config/yazi
     ln -sfnv "$PWD/.config/nvim/" ~/.config/nvim
     ln -sfnv "$PWD/.config/git/" ~/.config/git
     ln -sfnv "$PWD/.zshrc" ~/.zshrc
