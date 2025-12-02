@@ -29,6 +29,7 @@ case $option in
 
 "4")echo -e "\u001b[7m Setting up fonts... \u001b[0m"
     for fname in "DejaVuSansMono" "DroidSansMono"; do
+	mkdir ~/.fonts
         wget -O ~/.fonts/$fname.zip  https://github.com/ryanoasis/nerd-fonts/releases/download/v3.4.0/$fname.zip
         unzip -u ~/.fonts/$fname.zip -d ~/.fonts/$fname
         rm -f ~/.fonts/$fname.zip
