@@ -17,6 +17,10 @@ vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to the left wind
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
 vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+vim.keymap.set('n', '<leader>=', '<C-w>+', { desc = 'Add height to window' })
+vim.keymap.set('n', '<leader>-', '<C-w>-', { desc = 'Dec height to window' })
+vim.keymap.set('n', '<leader>,', '<C-w><lt>', { desc = 'Add height to window' })
+vim.keymap.set('n', '<leader>.', '<C-w>>', { desc = 'Add height to window' })
 vim.keymap.set('n', '<Leader>H', ':tabmove -1<CR>', { desc = 'Move current tab left' })
 vim.keymap.set('n', '<Leader>L', ':tabmove +1<CR>', { desc = 'Move current tab right' })
 --
