@@ -88,6 +88,13 @@ vim.o.splitbelow = true
 -- Disable search hilighting
 vim.o.hlsearch = false
 
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.softtabstop = 4
+vim.o.smarttab = true
+vim.o.smartindent = true
+vim.o.expandtab = true
+
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`

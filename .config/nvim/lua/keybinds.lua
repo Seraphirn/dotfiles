@@ -46,8 +46,9 @@ vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
     if vim.fn.argc() == 0 then -- Only show if no files are opened
       vim.defer_fn(function()
-        vim.cmd ':NeovimProjectDiscover' -- Replace with your command
-      end, 10) -- Delay in milliseconds
+        vim.cmd ':Telescope repo list'
+        -- vim.cmd ':NeovimProjectDiscover'
+      end, 10)
     end
   end,
 })

@@ -27,19 +27,20 @@ return { -- Fuzzy Finder (files, lsp, etc)
       defaults = {
         mappings = {
           i = {
-            -- ["<C-j>"] = "move_selection_next",
             ['<C-j>'] = 'move_selection_next',
             ['<C-k>'] = 'move_selection_previous',
             ['<C-d>'] = 'preview_scrolling_down',
             ['<C-u>'] = 'preview_scrolling_up',
             ['<C-h>'] = 'preview_scrolling_left',
             ['<C-l>'] = 'preview_scrolling_right',
+            -- ['<esc>'] = require('telescope.actions').close,
           },
         },
       },
       pickers = {
         find_files = {
-          hidden = false,
+          hidden = true,
+          file_ignore_patterns = { '.git/' },
         },
       },
       extensions = {
@@ -77,6 +78,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
     vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
     vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
     vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<leader>sp', ':Telescope repo list<CR>', { desc = '[S]earch [P]roject' })
 
     -- Slightly advanced example of overriding default behavior and theme
     vim.keymap.set('n', '<leader>/', function()

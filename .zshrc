@@ -101,6 +101,10 @@ if [ -d "$HOME/.local/bin" ]; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
 
+if [ -d "/opt/nvim-linux-x86_64/bin" ]; then
+    export PATH="$PATH:/opt/nvim-linux-x86_64/bin"
+fi
+
 if [ -d "$HOME/.pyenv" ]; then
     export PYENV_ROOT="$HOME/.pyenv"
     command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"

@@ -19,3 +19,4 @@ if [ -d "$HOME/.local/bin/statusbar" ] ; then
     PATH="$HOME/.local/bin/statusbar:$PATH"
 fi
 
+. "$HOME/.cargo/env"

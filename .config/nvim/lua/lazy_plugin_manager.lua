@@ -52,12 +52,20 @@ require('lazy').setup({
   { -- Easy_motion alternative. fast travel thought code
     'smoka7/hop.nvim',
     keys = {
-      { '\\', ':HopWord<cr>', mode = '', desc = 'Hop to word' },
+      -- { '\\', ':HopWord<cr>', mode = '', desc = 'Hop to word' },
+      { '\\', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
       { '=', ':HopWord<cr>', mode = '', desc = 'Hop to word' },
     },
     opts = {
       keys = 'etovxqpdygfblzhckisuran',
     },
+  },
+  { -- Change worker directory when you open file
+    'airblade/vim-rooter',
+    config = function()
+      -- vim.g.rooter_targets = { '~/projects' }
+      vim.g.rooter_cd_cmd = 'lcd'
+    end,
   },
 
   { -- ads text object like class and method for python
