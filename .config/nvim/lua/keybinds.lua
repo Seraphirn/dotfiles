@@ -9,7 +9,7 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Less disoriented look up' })
 vim.keymap.set('n', '<n>', 'nzzzv', { desc = 'Less disoriented search next' })
 vim.keymap.set('n', '<N>', 'Nzzzv', { desc = 'Less disoriented search next' })
 
-vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 vim.keymap.set('n', '<leader>t', ':horizontal term<CR>:resize 15<CR>i', { desc = 'Open [T]erminal in window' })
 
 -- Keybinds to make split navigation easier.
@@ -22,7 +22,7 @@ vim.keymap.set('n', '<Leader>L', ':tabmove +1<CR>', { desc = 'Move current tab r
 --
 
 vim.keymap.set('n', '<leader><leader>v', function()
-  vim.cmd('tabedit ' .. vim.fn.stdpath 'config' .. '/init.lua')
+    vim.cmd('tabedit ' .. vim.fn.stdpath 'config' .. '/init.lua')
 end, { desc = 'Edit init.lua' })
 
 vim.keymap.set('', 'Q', 'gq', { desc = 'Replace ex mode with gq' })
@@ -35,22 +35,22 @@ vim.keymap.set('i', '<C-v>', '<C-r>"', { desc = 'Paste from clipboard' })
 --  Try it with `yap` in normal mode
 --  See `:help vim.hl.on_yank()`
 vim.api.nvim_create_autocmd('TextYankPost', {
-  desc = 'Highlight when yanking (copying) text',
-  group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
-  callback = function()
-    vim.hl.on_yank()
-  end,
+    desc = 'Highlight when yanking (copying) text',
+    group = vim.api.nvim_create_augroup('kickstart-highlight-yank', { clear = true }),
+    callback = function()
+        vim.hl.on_yank()
+    end,
 })
 
 vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    if vim.fn.argc() == 0 then -- Only show if no files are opened
-      vim.defer_fn(function()
-        vim.cmd ':Telescope repo list'
-        -- vim.cmd ':NeovimProjectDiscover'
-      end, 10)
-    end
-  end,
+    callback = function()
+        if vim.fn.argc() == 0 then -- Only show if no files are opened
+            vim.defer_fn(function()
+                vim.cmd ':Telescope repo list'
+                -- vim.cmd ':NeovimProjectDiscover'
+            end, 10)
+        end
+    end,
 })
 -- missclick w to W is ok
 vim.api.nvim_create_user_command('W', 'write', { bang = true })
