@@ -9,6 +9,7 @@ echo -e "  \u001b[34;1m (2) Install zsh plugins \u001b[0m"
 echo -e "  \u001b[34;1m (4) Setup fonts \u001b[0m"
 echo -e "  \u001b[34;1m (5) Setup symlinks \u001b[0m"
 echo -e "  \u001b[34;1m (6) install dwm related files (install dwm first!) \u001b[0m"
+echo -e "  \u001b[34;1m (7) install qtile related files (install qtile first!) \u001b[0m"
 echo -e "  \u001b[31;1m (0) Exit \u001b[0m"
 
 echo -en "\u001b[32;1m ==> \u001b[0m"
@@ -51,6 +52,7 @@ case $option in
         mv -iv ~/.p10k.zsh ~/.p10k.zsh.old
         mv -iv ~/.profile ~/.profile.old
         mv -iv ~/.xprofile ~/.xprofile.old
+        mv -iv ~/wallpaper.jpg ~/wallpaper.jpg.old
         echo -e "\u001b[36;1m Remove backups with 'rm -ir ~/.*.old && rm -ir ~/.config/*.old'. \u001b[0m"
     else
         echo -e "\u001b[36;1m Skipping backups. \u001b[0m"
@@ -70,6 +72,7 @@ case $option in
     chmod +x ~/.local/bin/**/*.sh
     ln -sfnv "$PWD/.profile-linux" ~/.profile
     ln -sfnv "$PWD/.xprofile" ~/.xprofile
+    ln -sfnv "$PWD/wallpaper.jpg" ~/wallpaper.jpg
     ;;
 "6")echo -e "\u001b[7m Installing dwm related filed... \u001b[0m"
     ln -sfnv  "$PWD/dwm/dwm-presonalized" /usr/local/bin
@@ -79,6 +82,11 @@ case $option in
     sudo ln -sfnv "$PWD/dwm/startup.sh" /usr/share/xsessions/dwm_startup.sh
     chmod 755 /usr/share/xsessions/dwm_startup.sh
     sudo ln -sfnv "$PWD/dwm/dwm.desktop" /usr/share/xsessions/dwm.desktop
+    ;;
+"7")echo -e "\u001b[7m Setuping qtile... \u001b[0m"
+    sudo ln -sfnv "$PWD/.config/qtile/qtile.desktop" /usr/share/xsessions/qtile.desktop
+    mv -iv ~/.config/qtile ~/.config/qtile.old
+    ln -sfnv "$PWD/.config/qtile/" ~/.config/qtile
     ;;
 "0")echo -e "\u001b[32;1m Bye! \u001b[0m"
     exit 0

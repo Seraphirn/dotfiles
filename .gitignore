@@ -10,6 +10,7 @@
 .config/nvim/autoload
 
 *.pyo
+*.pyc
 
 # vim tmp files
 *.sw*
