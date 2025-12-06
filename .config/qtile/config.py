@@ -5,16 +5,23 @@ import libqtile.resources
 from libqtile import bar, layout, qtile, widget, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-from libqtile.utils import guess_terminal
+from libqtile.utils import guess_terminal, send_notification
 
 mod = "mod1"
 terminal = guess_terminal()
+editor = terminal + "-e nvim"
+browser = "firefox"
 
 
 @hook.subscribe.startup_once
 def autostart():
     home = os.path.expanduser("~/.config/qtile/startup.sh")
     subprocess.call([home])
+
+
+@hook.subscribe.startup
+def run_every_startup():
+    send_notification("qtile", "Started")
 
 
 keys = [
@@ -47,24 +54,14 @@ keys = [
     Key([mod, "control"], "h", lazy.layout.shrink()),
     Key([mod, "control"], "k", lazy.layout.shrink()),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
-    # Toggle between split and unsplit sides of stack.
-    # Split = all windows displayed
-    # Unsplit = 1 window displayed, like Max layout, but still with
-    # multiple stack panes
-    Key(
-        [mod, "control"],
-        "Return",
-        lazy.layout.toggle_split(),
-        desc="Toggle between split and unsplit sides of stack",
-    ),
     Key([mod, "shift"], "Return", lazy.spawn(terminal), desc="Launch terminal"),
-    Key([mod, "shift"], "f", lazy.spawn("firefox"), desc="Launch firefox"),
-    Key([mod, "shift"], "e", lazy.spawn(terminal + " -e nvim"), desc="Launch terminal"),
+    Key([mod, "shift"], "f", lazy.spawn(browser), desc="Launch firefox"),
+    Key([mod, "shift"], "e", lazy.spawn(editor), desc="Launch editor"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-    Key([mod], "m", lazy.to_layout_index(0), desc="max"),
-    Key([mod], "t", lazy.to_layout_index(1), desc="Tall"),
-    Key([mod], "u", lazy.to_layout_index(2), desc="Tall"),
+    Key([mod], "t", lazy.to_layout_index(0), desc="Tall"),
+    Key([mod], "u", lazy.to_layout_index(1), desc="Wide"),
+    Key([mod], "m", lazy.to_layout_index(2), desc="max"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
     Key(
         [mod],
@@ -111,7 +108,13 @@ for vt in range(1, 8):
     )
 
 
-groups = [Group(i) for i in "12345"]
+groups = [
+    Group("1", label="code"),
+    Group("2", label="term", spawn=terminal),
+    Group("3", label="web", spawn=browser),
+    Group("4", label="joy"),
+    Group("5", label="else"),
+]
 
 for i in groups:
     keys.extend(
@@ -139,9 +142,13 @@ for i in groups:
 
 layouts = [
     # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
+    layout.MonadTall(
+        single_border_width=0,
+    ),
+    layout.MonadWide(
+        single_border_width=0,
+    ),
     layout.Max(),
-    layout.MonadTall(),
-    layout.MonadWide(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
@@ -161,67 +168,69 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 separator = widget.Sep(
-    padding=10,
+    padding=12,
+)
+
+main_bar = bar.Bar(
+    [
+        widget.CurrentLayout(),
+        separator,
+        widget.GroupBox(
+            highlight_method="line",
+        ),
+        separator,
+        widget.Prompt(padding=20),
+        widget.WindowName(),
+        widget.CPU(format="CPU {load_percent}%"),
+        widget.ThermalSensor(),
+        separator,
+        widget.Memory(
+            measure_mem="G",
+            format="MEM {MemUsed: .1f}{mm}/{MemTotal: .1f}{mm}",
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(terminal + " -e htop")},
+        ),
+        separator,
+        widget.Battery(
+            charge_char="🔌",
+            discharge_char="🔋",
+            error_message="error",
+            empty_char="🛑",
+            full_char="⚡",
+            not_charging_char="",
+            # format="{percent:2.0%}{char} ({hour:d}:{min:02d})",
+            format="PWR {percent:2.0%}{char}",
+            update_interval=10,
+        ),
+        separator,
+        widget.Volume(
+            padding=0,
+        ),
+        widget.TextBox(
+            text="  ",
+            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
+            padding=0,
+        ),
+        separator,
+        widget.Systray(
+            padding=5,
+        ),
+        separator,
+        widget.KeyboardLayout(
+            update_interval=1,
+        ),
+        separator,
+        widget.Clock(format="%A %d %H:%M"),
+    ],
+    32,
+    # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+    # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
 )
 
 # home_directory = Path.home()
 screens = [
     Screen(
-        top=bar.Bar(
-            [
-                widget.CurrentLayout(),
-                widget.GroupBox(
-                    highlight_method="line",
-                ),
-                widget.Prompt(),
-                widget.WindowName(),
-                widget.CPU(format="CPU {load_percent}%"),
-                widget.ThermalSensor(),
-                separator,
-                widget.Memory(
-                    measure_mem="G",
-                    format="MEM {MemUsed: .1f}{mm}/{MemTotal: .1f}{mm}",
-                    mouse_callbacks={
-                        "Button1": lambda: qtile.cmd_spawn(terminal + " -e htop")
-                    },
-                ),
-                separator,
-                widget.Battery(
-                    charge_char="🔌",
-                    discharge_char="🔋",
-                    error_message="error",
-                    empty_char="🛑",
-                    full_char="⚡",
-                    not_charging_char="",
-                    # format="{percent:2.0%}{char} ({hour:d}:{min:02d})",
-                    format="PWR {percent:2.0%}{char}",
-                    update_interval=10,
-                ),
-                separator,
-                widget.Volume(
-                    padding=0,
-                ),
-                widget.TextBox(
-                    text="  ",
-                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
-                    padding=0,
-                ),
-                separator,
-                widget.Systray(
-                    padding=5,
-                ),
-                separator,
-                widget.KeyboardLayout(
-                    update_interval=1,
-                ),
-                separator,
-                widget.Clock(format="%A %d %H:%M"),
-            ],
-            32,
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-        ),
-        background="#000000",
+        top=main_bar,
+        background="#100000",
         wallpaper="~/wallpaper.jpg",
         wallpaper_mode="center",
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
