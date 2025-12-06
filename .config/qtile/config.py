@@ -10,16 +10,19 @@ from libqtile.utils import guess_terminal
 mod = "mod1"
 terminal = guess_terminal()
 
+
+@hook.subscribe.startup_once
+def autostart():
+    home = os.path.expanduser("~/.config/qtile/startup.sh")
+    subprocess.call([home])
+
+
 keys = [
-    # A list of available commands that can be bound to keys can be found
-    # at https://docs.qtile.org/en/latest/manual/config/lazy.html
-    # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
     # Move windows between left/right columns or move up/down in current stack.
-    # Moving out of range in Columns layout will create new column.
     Key(
         [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
     ),
@@ -59,6 +62,9 @@ keys = [
     Key([mod, "shift"], "e", lazy.spawn(terminal + " -e nvim"), desc="Launch terminal"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
+    Key([mod], "m", lazy.to_layout_index(0), desc="max"),
+    Key([mod], "t", lazy.to_layout_index(1), desc="Tall"),
+    Key([mod], "u", lazy.to_layout_index(2), desc="Tall"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
     Key(
         [mod],
@@ -66,29 +72,29 @@ keys = [
         lazy.window.toggle_fullscreen(),
         desc="Toggle fullscreen on the focused window",
     ),
-    Key(
-        [mod],
-        "t",
-        lazy.window.toggle_floating(),
-        desc="Toggle floating on the focused window",
-    ),
+    # Key(
+    #     [mod],
+    #     "t",
+    #     lazy.window.toggle_floating(),
+    #     desc="Toggle floating on the focused window",
+    # ),
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "p", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod, "shift"], "j", lazy.spawn("light -U 10"), desc="Add brightness"),
-    Key([mod, "shift"], "k", lazy.spawn("light -A 10"), desc="Low brightness"),
-    Key(
-        [mod, "shift"],
-        "h",
-        lazy.spawn("amixer -D pulse sset Master 5%-"),
-        desc="Add volume",
-    ),
-    Key(
-        [mod, "shift"],
-        "l",
-        lazy.spawn("amixer -D pulse sset Master 5%+"),
-        desc="Low volume",
-    ),
+    Key([mod, "shift"], "u", lazy.spawn("light -U 10"), desc="Add brightness"),
+    Key([mod, "shift"], "d", lazy.spawn("light -A 10"), desc="Low brightness"),
+    # Key(
+    #     [mod, "shift"],
+    #     "h",
+    #     lazy.spawn("amixer -D pulse sset Master 5%-"),
+    #     desc="Add volume",
+    # ),
+    # Key(
+    #     [mod, "shift"],
+    #     "l",
+    #     lazy.spawn("amixer -D pulse sset Master 5%+"),
+    #     desc="Low volume",
+    # ),
 ]
 
 # Add key bindings to switch VTs in Wayland.
@@ -134,12 +140,12 @@ for i in groups:
 layouts = [
     # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
     layout.Max(),
+    layout.MonadTall(),
+    layout.MonadWide(),
     # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
     # layout.Bsp(),
     # layout.Matrix(),
-    layout.MonadTall(),
-    layout.MonadWide(),
     # layout.RatioTile(),
     # layout.Tile(),
     layout.TreeTab(),
@@ -150,9 +156,13 @@ layouts = [
 widget_defaults = dict(
     font="sans",
     fontsize=16,
-    padding=7,
+    padding=2,
 )
 extension_defaults = widget_defaults.copy()
+
+separator = widget.Sep(
+    padding=10,
+)
 
 # home_directory = Path.home()
 screens = [
@@ -167,11 +177,15 @@ screens = [
                 widget.WindowName(),
                 widget.CPU(format="CPU {load_percent}%"),
                 widget.ThermalSensor(),
+                separator,
                 widget.Memory(
+                    measure_mem="G",
+                    format="MEM {MemUsed: .1f}{mm}/{MemTotal: .1f}{mm}",
                     mouse_callbacks={
                         "Button1": lambda: qtile.cmd_spawn(terminal + " -e htop")
                     },
                 ),
+                separator,
                 widget.Battery(
                     charge_char="🔌",
                     discharge_char="🔋",
@@ -180,9 +194,10 @@ screens = [
                     full_char="⚡",
                     not_charging_char="",
                     # format="{percent:2.0%}{char} ({hour:d}:{min:02d})",
-                    format="{percent:2.0%}{char}",
+                    format="PWR {percent:2.0%}{char}",
                     update_interval=10,
                 ),
+                separator,
                 widget.Volume(
                     padding=0,
                 ),
@@ -191,18 +206,15 @@ screens = [
                     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
                     padding=0,
                 ),
-                # widget.Chord(
-                #     # chords_colors={
-                #     #     "launch": ("#ff0000", "#ffffff"),
-                #     # },
-                #     # name_transform=lambda name: name.upper(),
-                # ),
+                separator,
                 widget.Systray(
                     padding=5,
                 ),
+                separator,
                 widget.KeyboardLayout(
                     update_interval=1,
                 ),
+                separator,
                 widget.Clock(format="%A %d %H:%M"),
             ],
             32,
@@ -276,9 +288,3 @@ wl_xcursor_size = 24
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
 wmname = "LG3D"
-
-
-@hook.subscribe.startup_once
-def autostart():
-    home = os.path.expanduser("~/.config/qtile/startup.sh")
-    subprocess.call([home])
