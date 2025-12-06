@@ -78,8 +78,8 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "p", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
-    Key([mod, "shift"], "u", lazy.spawn("light -U 10"), desc="Add brightness"),
-    Key([mod, "shift"], "d", lazy.spawn("light -A 10"), desc="Low brightness"),
+    Key([mod, "shift"], "u", lazy.spawn("light -A 10"), desc="Add brightness"),
+    Key([mod, "shift"], "d", lazy.spawn("light -U 10"), desc="Low brightness"),
     # Key(
     #     [mod, "shift"],
     #     "h",
@@ -111,8 +111,8 @@ for vt in range(1, 8):
 groups = [
     Group("1", label="code"),
     Group("2", label="term", spawn=terminal),
-    Group("3", label="web", spawn=browser),
-    Group("4", label="joy"),
+    Group("3", label="web"),
+    Group("4", label="video", spawn=browser),
     Group("5", label="else"),
 ]
 
@@ -232,11 +232,16 @@ screens = [
         top=main_bar,
         background="#100000",
         wallpaper="~/wallpaper.jpg",
-        wallpaper_mode="center",
+        wallpaper_mode="fill",
         # You can uncomment this variable if you see that on X11 floating resize/moving is laggy
         # By default we handle these events delayed to already improve performance, however your system might still be struggling
         # This variable is set to None (no cap) by default, but you can set it to 60 to indicate that you limit it to 60 events per second
         # x11_drag_polling_rate = 60,
+    ),
+    Screen(
+        bottom=main_bar,
+        wallpaper="~/wallpaper.jpg",
+        wallpaper_mode="fill",
     ),
 ]
 
