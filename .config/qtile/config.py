@@ -17,7 +17,6 @@ LAUNCHER = "ulauncher"
 
 @hook.subscribe.startup_once
 def autostart():
-    send_notification("qtile", "First started")
     home = os.path.expanduser("~/.config/qtile/startup.sh")
     subprocess.call([home])
 
