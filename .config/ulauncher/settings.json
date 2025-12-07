@@ -7,6 +7,6 @@
     "render-on-screen": "default-monitor",
     "show-indicator-icon": true,
     "show-recent-apps": "5",
-    "terminal-command": "",
+    "terminal-command": "alacritty",
     "theme-name": "dark"
 }

@@ -242,6 +242,11 @@ main_widgets += [
     separator,
     widget.KeyboardLayout(
         update_interval=1,
+        mouse_callbacks={
+            "Button1": lambda: qtile.cmd_spawn(
+                'setxkbmap -layout "us,ru" -option "grp:alt_space_toggle"'
+            )
+        },
     ),
     separator,
     widget.Clock(format="%d %a %H:%M"),
