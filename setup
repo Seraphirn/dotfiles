@@ -48,6 +48,7 @@ case $option in
         mv -iv ~/.config/nvim ~/.config/nvim.old
         mv -iv ~/.config/ranger ~/.config/ranger.old
         mv -iv ~/.config/yazi ~/.config/yazi.old
+        mv -iv ~/.config/ulauncher ~/.config/ulauncher.old
         mv -iv ~/.zshrc ~/.zshrc.old
         mv -iv ~/.p10k.zsh ~/.p10k.zsh.old
         mv -iv ~/.profile ~/.profile.old
@@ -65,6 +66,7 @@ case $option in
     ln -sfnv "$PWD/.config/yazi/" ~/.config/yazi
     ln -sfnv "$PWD/.config/nvim/" ~/.config/nvim
     ln -sfnv "$PWD/.config/git/" ~/.config/git
+    ln -sfnv "$PWD/.config/ulauncher/" ~/.config/ulauncher
     ln -sfnv "$PWD/.zshrc" ~/.zshrc
     ln -sfnv "$PWD/.p10k.zsh" ~/.p10k.zsh
     ln -sfnv  "$PWD/Scripts/.local/.bin/" ~/.local/bin
@@ -88,6 +90,8 @@ case $option in
     # Ubuntu setup
     sudo apt install xsecurelock xautolock redshift feh picom
     sudo apt install xserver-xorg xinit python3-dev python3-cffi python3-cairocffi libpangocairo-1.0-0 python3-xcffib libiw-dev
+    # app launcher
+    sudo add-apt-repository universe -y && sudo add-apt-repository ppa:agornostal/ulauncher -y && sudo apt update && sudo apt install ulauncher
 
     curl -LsSf https://astral.sh/uv/install.sh | sh
     uv tool install "qtile[widgets]"

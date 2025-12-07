@@ -12,6 +12,7 @@ TERMINAL = guess_terminal()
 EDITOR = TERMINAL + "-e nvim"
 BROWSER = "firefox"
 LOCK = "xsecurelock"
+LAUNCHER = "ulauncher"
 
 
 @hook.subscribe.startup_once
@@ -81,7 +82,8 @@ keys = [
     # ),
     Key([MOD, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([MOD, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
-    Key([MOD], "p", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    # Key([MOD], "p", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
+    Key([MOD], "p", lazy.spawn(LAUNCHER), desc="Opens app launcher"),
     Key([MOD, "shift"], "u", lazy.spawn("light -A 10"), desc="Add brightness"),
     Key([MOD, "shift"], "d", lazy.spawn("light -U 10"), desc="Low brightness"),
     Key([MOD, "shift"], "o", lazy.spawn(LOCK), desc="Lock screen"),
@@ -174,7 +176,7 @@ layouts = [
 ]
 
 widget_defaults = dict(
-    font="sans",
+    font="DejaVuSansMono",
     fontsize=16,
     padding=2,
 )
@@ -199,7 +201,7 @@ main_widgets = [
     separator,
     widget.Memory(
         measure_mem="G",
-        format="MEM {MemUsed: .1f}{mm}/{MemTotal: .1f}{mm}",
+        format="MEM {MemUsed:.1f}/{MemTotal:.1f}{mm}",
         mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(TERMINAL + " -e htop")},
     ),
 ]
@@ -242,17 +244,24 @@ main_widgets += [
         update_interval=1,
     ),
     separator,
-    widget.Clock(format="%A %d %H:%M"),
+    widget.Clock(format="%d %a %H:%M"),
 ]
 
 secondary_widgets = main_widgets.copy()
 del secondary_widgets[-5:-3]  # del systray
 
+
+def current_screen_factory():
+    return widget.CurrentScreen(
+        mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(LAUNCHER)},
+    )
+
+
 # home_directory = Path.home()
 screens = [
     Screen(
         top=bar.Bar(
-            [widget.CurrentScreen()] + main_widgets,
+            [current_screen_factory()] + main_widgets,
             32,
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
@@ -267,7 +276,7 @@ screens = [
     ),
     Screen(
         top=bar.Bar(
-            [widget.CurrentScreen()] + secondary_widgets,
+            [current_screen_factory()] + secondary_widgets,
             32,
         ),
         wallpaper="~/wallpaper.jpg",
@@ -291,7 +300,7 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
-follow_mouse_focus = True
+follow_mouse_focus = False
 bring_front_click = False
 floats_kept_above = True
 cursor_warp = False
