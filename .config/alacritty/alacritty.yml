@@ -1,0 +1,19 @@
+# This alacrity config is super old
+window:
+  opacity: 0.8
+
+font:
+  size: 13.5
+
+  normal:
+      family: DejaVuSansMono
+      style: Regular
+  bold:
+      family: DejaVuSansMono
+      style: Bold
+  italic:
+      family: DejaVuSansMono
+      style: Oblique
+  bold_italic:
+      family: DejaVuSansMono
+      style: Bold Oblique

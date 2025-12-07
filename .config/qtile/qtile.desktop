@@ -3,4 +3,5 @@ Name=Qtile
 Comment=Qtile Session
 Exec=qtile start
 Type=Application
+DesktopNames=Qtile
 Keywords=wm;tiling

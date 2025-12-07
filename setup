@@ -75,6 +75,7 @@ case $option in
     ln -sfnv "$PWD/wallpaper.jpg" ~/wallpaper.jpg
     ;;
 "6")echo -e "\u001b[7m Installing dwm related filed... \u001b[0m"
+    sudo apt install xsecurelock xautolock redshift feh
     ln -sfnv  "$PWD/dwm/dwm-presonalized" /usr/local/bin
     chmod +x "$PWD/dwm/dwm-presonalized"
     cp  "$PWD/dwm/dwm.desktop" /usr/share/xsessions/
@@ -84,6 +85,13 @@ case $option in
     sudo ln -sfnv "$PWD/dwm/dwm.desktop" /usr/share/xsessions/dwm.desktop
     ;;
 "7")echo -e "\u001b[7m Setuping qtile... \u001b[0m"
+    # Ubuntu setup
+    sudo apt install xsecurelock xautolock redshift feh picom
+    sudo apt install xserver-xorg xinit python3-dev python3-cffi python3-cairocffi libpangocairo-1.0-0 python3-xcffib libiw-dev
+
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+    uv tool install "qtile[widgets]"
+
     sudo ln -sfnv "$PWD/.config/qtile/qtile.desktop" /usr/share/xsessions/qtile.desktop
     mv -iv ~/.config/qtile ~/.config/qtile.old
     ln -sfnv "$PWD/.config/qtile/" ~/.config/qtile

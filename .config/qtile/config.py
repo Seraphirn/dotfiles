@@ -16,6 +16,7 @@ LOCK = "xsecurelock"
 
 @hook.subscribe.startup_once
 def autostart():
+    send_notification("qtile", "First started")
     home = os.path.expanduser("~/.config/qtile/startup.sh")
     subprocess.call([home])
 
@@ -26,6 +27,8 @@ def run_every_startup():
 
 
 keys = [
+    Key([MOD], "comma", lazy.to_screen(0), desc="Focus to monitor 1"),
+    Key([MOD], "period", lazy.to_screen(1), desc="Focus to monitor 2"),
     Key([MOD], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([MOD], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([MOD], "j", lazy.layout.down(), desc="Move focus down"),
@@ -111,12 +114,27 @@ for vt in range(1, 8):
 
 
 groups = [
-    Group("1", label="code"),
-    Group("2", label="term", spawn=TERMINAL),
-    Group("3", label="web"),
-    Group("4", label="video", spawn=BROWSER),
-    Group("5", label="else"),
+    Group("1", label="code", spawn=TERMINAL, screen_affinity=0),
+    Group("2", label="term", screen_affinity=0),
+    Group("3", label="soc", screen_affinity=0),
+    Group("4", label="media", spawn=BROWSER, screen_affinity=1),
+    Group("5", label="else", screen_affinity=0),
 ]
+
+
+@lazy.function
+def go_to_group(qtile, name: str):
+    if len(qtile.screens) == 1:
+        qtile.groups_map[name].toscreen()
+        return
+
+    if name in "1235":
+        qtile.focus_screen(0)
+        qtile.groups_map[name].toscreen()
+    else:
+        qtile.focus_screen(1)
+        qtile.groups_map[name].toscreen()
+
 
 for i in groups:
     keys.extend(
@@ -125,41 +143,34 @@ for i in groups:
             Key(
                 [MOD],
                 i.name,
-                lazy.group[i.name].toscreen(),
+                # lazy.group[i.name].toscreen(0),
+                go_to_group(i.name),
                 desc=f"Switch to group {i.name}",
             ),
             # MOD + shift + group number = switch to & move focused window to group
             Key(
                 [MOD, "shift"],
                 i.name,
-                lazy.window.togroup(i.name, switch_group=True),
-                desc=f"Switch to & move focused window to group {i.name}",
+                lazy.window.togroup(i.name),
+                desc=f"Move focused window to group {i.name}",
             ),
-            # Or, use below if you prefer not to switch to that group.
-            # # MOD + shift + group number = move focused window to group
-            # Key([MOD, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
         ]
     )
 
 layouts = [
-    # layout.Columns(border_focus_stack=["#d75f5f", "#8f3d3d"], border_width=4),
     layout.MonadTall(
         single_border_width=0,
+        border_focus="#295ccc",
     ),
     layout.MonadWide(
         single_border_width=0,
+        border_focus="#295ccc",
     ),
     layout.Max(),
-    # Try more layouts by unleashing below layouts.
     # layout.Stack(num_stacks=2),
-    # layout.Bsp(),
-    # layout.Matrix(),
-    # layout.RatioTile(),
     # layout.Tile(),
     layout.TreeTab(),
     # layout.VerticalTile(),
-    # layout.Zoomy(),
 ]
 
 widget_defaults = dict(
@@ -173,24 +184,28 @@ separator = widget.Sep(
     padding=12,
 )
 
-main_bar = bar.Bar(
-    [
-        widget.CurrentLayout(),
-        separator,
-        widget.GroupBox(
-            highlight_method="line",
-        ),
-        separator,
-        widget.Prompt(padding=20),
-        widget.WindowName(),
-        widget.CPU(format="CPU {load_percent}%"),
-        widget.ThermalSensor(),
-        separator,
-        widget.Memory(
-            measure_mem="G",
-            format="MEM {MemUsed: .1f}{mm}/{MemTotal: .1f}{mm}",
-            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(TERMINAL + " -e htop")},
-        ),
+main_widgets = [
+    separator,
+    widget.CurrentLayout(),
+    separator,
+    widget.GroupBox(
+        highlight_method="line",
+    ),
+    separator,
+    widget.Prompt(padding=20),
+    widget.WindowName(),
+    widget.CPU(format="CPU {load_percent}%"),
+    widget.ThermalSensor(),
+    separator,
+    widget.Memory(
+        measure_mem="G",
+        format="MEM {MemUsed: .1f}{mm}/{MemTotal: .1f}{mm}",
+        mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(TERMINAL + " -e htop")},
+    ),
+]
+
+if os.path.isdir("/sys/class/power_supply/BAT0"):
+    main_widgets += [
         separator,
         widget.Battery(
             charge_char="🔌",
@@ -202,36 +217,46 @@ main_bar = bar.Bar(
             # format="{percent:2.0%}{char} ({hour:d}:{min:02d})",
             format="PWR {percent:2.0%}{char}",
             update_interval=10,
+            hide_crash=True,
         ),
-        separator,
-        widget.Volume(
-            padding=0,
-        ),
-        widget.TextBox(
-            text="  ",
-            mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
-            padding=0,
-        ),
-        separator,
-        widget.Systray(
-            padding=5,
-        ),
-        separator,
-        widget.KeyboardLayout(
-            update_interval=1,
-        ),
-        separator,
-        widget.Clock(format="%A %d %H:%M"),
-    ],
-    32,
-    # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-    # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
-)
+    ]
+
+main_widgets += [
+    separator,
+    widget.TextBox(
+        # text="",
+        text="SND ",
+        mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
+        padding=0,
+    ),
+    widget.Volume(
+        padding=0,
+    ),
+    separator,
+    widget.Systray(
+        padding=5,
+        hide_crash=True,
+    ),
+    separator,
+    widget.KeyboardLayout(
+        update_interval=1,
+    ),
+    separator,
+    widget.Clock(format="%A %d %H:%M"),
+]
+
+secondary_widgets = main_widgets.copy()
+del secondary_widgets[-5:-3]  # del systray
 
 # home_directory = Path.home()
 screens = [
     Screen(
-        top=main_bar,
+        top=bar.Bar(
+            [widget.CurrentScreen()] + main_widgets,
+            32,
+            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
+            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
+        ),
         background="#100000",
         wallpaper="~/wallpaper.jpg",
         wallpaper_mode="fill",
@@ -241,7 +266,10 @@ screens = [
         # x11_drag_polling_rate = 60,
     ),
     Screen(
-        bottom=main_bar,
+        top=bar.Bar(
+            [widget.CurrentScreen()] + secondary_widgets,
+            32,
+        ),
         wallpaper="~/wallpaper.jpg",
         wallpaper_mode="fill",
     ),
