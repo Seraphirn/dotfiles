@@ -15,11 +15,11 @@ vim.api.nvim_create_autocmd('VimEnter', {
         end
     end,
 })
-vim.api.nvim_create_autocmd('BufWrite', {
-    pattern = { '*.py', '*.php', '*.html', '*.js', '*.txt', '*.ipynb', '*.md', '*.yaml', '*.yml', '*.sql' },
-    command = ':%s/\\s*$//ge',
-    desc = 'Delete space characters in end of line',
-})
+-- vim.api.nvim_create_autocmd('BufWrite', {
+--     pattern = { '*.py', '*.php', '*.html', '*.js', '*.txt', '*.ipynb', '*.md', '*.yaml', '*.yml', '*.sql' },
+--     command = ':%s/\\s*$//ge',
+--     desc = 'Delete space characters in end of line',
+-- })
 -- missclick w to W is ok
 vim.api.nvim_create_user_command('W', 'write', { bang = true })
 

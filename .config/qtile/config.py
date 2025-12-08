@@ -83,21 +83,55 @@ keys = [
     Key([MOD, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     # Key([MOD], "p", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
     Key([MOD], "p", lazy.spawn(LAUNCHER), desc="Opens app launcher"),
-    Key([MOD, "shift"], "u", lazy.spawn("light -A 10"), desc="Add brightness"),
-    Key([MOD, "shift"], "d", lazy.spawn("light -U 10"), desc="Low brightness"),
+    Key(
+        [MOD, "shift"],
+        "r",
+        lazy.widget["redshift"].click(),
+        desc="click redshift",
+    ),
+    Key(
+        [MOD, "shift"],
+        "u",
+        lazy.widget["redshift"].increase_brightness(),
+        desc="Add brightness",
+    ),
+    Key(
+        [MOD, "shift"],
+        "d",
+        lazy.widget["redshift"].decrease_brightness(),
+        desc="Low brightness",
+    ),
     Key([MOD, "shift"], "o", lazy.spawn(LOCK), desc="Lock screen"),
-    # Key(
-    #     [MOD, "shift"],
-    #     "h",
-    #     lazy.spawn("amixer -D pulse sset Master 5%-"),
-    #     desc="Add volume",
-    # ),
-    # Key(
-    #     [MOD, "shift"],
-    #     "l",
-    #     lazy.spawn("amixer -D pulse sset Master 5%+"),
-    #     desc="Low volume",
-    # ),
+    Key(
+        [MOD, "shift"],
+        "h",
+        lazy.widget["volume"].decrease_vol(),
+        desc="Add volume",
+    ),
+    Key(
+        [MOD, "shift"],
+        "l",
+        lazy.widget["volume"].increase_vol(),
+        desc="Low volume",
+    ),
+    Key(
+        [],
+        "XF86AudioLowerVolume",
+        lazy.widget["volume"].decrease_vol(),
+        desc="Add volume",
+    ),
+    Key(
+        [],
+        "XF86AudioRaiseVolume",
+        lazy.widget["volume"].increase_vol(),
+        desc="Low volume",
+    ),
+    Key(
+        [],
+        "XF86AudioMute",
+        lazy.widget["volume"].mute(),
+        desc="Mute",
+    ),
 ]
 
 
@@ -175,6 +209,10 @@ separator = widget.Sep(
 )
 
 main_widgets = [
+    separator,
+    widget.Redshift(
+        temperature=3400,
+    ),
     separator,
     widget.CurrentLayout(),
     separator,

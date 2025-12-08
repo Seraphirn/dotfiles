@@ -19,9 +19,9 @@ if command -v nm-applet &> /dev/null; then
 fi
 
 #red light filter
-if command -v redshift &> /dev/null; then
-    redshift -l 55.7615902:37.60946 -t 3400:3400 -m randr &>/dev/null &
-fi
+# if command -v redshift &> /dev/null; then
+#     redshift -l 55.7615902:37.60946 -t 3400:3400 -m randr -r &>/dev/null &
+# fi
 
 # screen locker
 if command -v xautolock &> /dev/null; then
