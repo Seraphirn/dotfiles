@@ -62,17 +62,16 @@ require('lazy').setup({
             keys = 'etovxqpdygfblzhckisuran',
         },
     },
-    { -- Change worker directory when you open file
-        'airblade/vim-rooter',
-        config = function()
-            -- vim.g.rooter_targets = { '~/projects' }
-            vim.g.rooter_cd_cmd = 'lcd'
-        end,
-    },
+    -- { -- Change worker directory when you open file
+    --     'airblade/vim-rooter',
+    --     config = function()
+    --         -- vim.g.rooter_targets = { '~/projects' }
+    --         vim.g.rooter_cd_cmd = 'lcd'
+    --     end,
+    -- },
 
     { -- ads text object like class and method for python
         'jeetsukumaran/vim-pythonsense',
-        lazy = False,
         keys = {
             { ']f', '<Plug>(PythonsenseStartOfNextPythonFunction)', mode = 'n', desc = 'Start of Next method' },
             { ']F', '<Plug>(PythonsenseEndOfPythonFunction)', mode = 'n', desc = 'End of method' },

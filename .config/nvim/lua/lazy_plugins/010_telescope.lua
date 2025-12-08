@@ -20,20 +20,20 @@ return { -- Fuzzy Finder (files, lsp, etc)
 
         -- Useful for getting pretty icons, but requires a Nerd Font.
         { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-        'cljoly/telescope-repo.nvim',
+        -- 'cljoly/telescope-repo.nvim',
     },
     config = function()
         require('telescope').setup {
             defaults = {
+                layout_strategy = 'horizontal',
+                layout_config = { prompt_position = 'top' },
+                sorting_strategy = 'ascending',
                 mappings = {
                     i = {
-                        ['<C-j>'] = 'move_selection_next',
-                        ['<C-k>'] = 'move_selection_previous',
-                        ['<C-d>'] = 'preview_scrolling_down',
-                        ['<C-u>'] = 'preview_scrolling_up',
+                        ['<C-j>'] = 'preview_scrolling_down',
+                        ['<C-k>'] = 'preview_scrolling_up',
                         ['<C-h>'] = 'preview_scrolling_left',
                         ['<C-l>'] = 'preview_scrolling_right',
-                        -- ['<esc>'] = require('telescope.actions').close,
                     },
                 },
             },
@@ -47,23 +47,23 @@ return { -- Fuzzy Finder (files, lsp, etc)
                 ['ui-select'] = {
                     require('telescope.themes').get_dropdown(),
                 },
-                ['repo'] = {
-                    list = {
-                        fd_opts = {
-                            '--no-ignore-vcs',
-                        },
-                        search_dirs = {
-                            '~/projects',
-                        },
-                    },
-                },
+                -- ['repo'] = {
+                --     list = {
+                --         fd_opts = {
+                --             '--no-ignore-vcs',
+                --         },
+                --         search_dirs = {
+                --             '~/projects',
+                --         },
+                --     },
+                -- },
             },
         }
 
         -- Enable Telescope extensions if they are installed
         pcall(require('telescope').load_extension, 'fzf')
         pcall(require('telescope').load_extension, 'ui-select')
-        pcall(require('telescope').load_extension, 'repo')
+        -- pcall(require('telescope').load_extension, 'repo')
 
         -- See `:help telescope.builtin`
         local builtin = require 'telescope.builtin'
@@ -71,14 +71,14 @@ return { -- Fuzzy Finder (files, lsp, etc)
         vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
         vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
         vim.keymap.set('n', '<C-p>', builtin.find_files, { desc = '[S]earch [F]iles' })
-        vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
+        vim.keymap.set('n', '<leader>st', builtin.builtin, { desc = '[S]earch Select [T]elescope' })
         vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
         vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
         vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
         vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
         vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
         vim.keymap.set('n', '<leader>sb', builtin.buffers, { desc = '[ ] Find existing buffers' })
-        vim.keymap.set('n', '<leader>sp', ':Telescope repo list<CR>', { desc = '[S]earch [P]roject' })
+        -- vim.keymap.set('n', '<leader>sp', ':Telescope repo list<CR>', { desc = '[S]earch [P]roject' })
 
         -- Slightly advanced example of overriding default behavior and theme
         vim.keymap.set('n', '<leader>/', function()

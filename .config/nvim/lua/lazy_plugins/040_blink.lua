@@ -16,7 +16,10 @@ return { -- Autocompletion
                 end
                 return 'make install_jsregexp'
             end)(),
-            dependencies = {},
+            config = function()
+                require('luasnip.loaders.from_vscode').lazy_load()
+            end,
+            dependencies = { 'rafamadriz/friendly-snippets' },
             opts = {},
         },
         'kristijanhusak/vim-dadbod-completion',
@@ -27,10 +30,14 @@ return { -- Autocompletion
     opts = {
         keymap = {
             preset = 'default',
-            ['<C-k>'] = { 'select_prev', 'fallback_to_mappings' },
-            ['<C-j>'] = { 'select_next', 'fallback_to_mappings' },
-            ['<C-p>'] = { 'scroll_documentation_up', 'fallback' },
-            ['<C-n>'] = { 'scroll_documentation_down', 'fallback' },
+            -- ['<C-k>'] = { 'select_prev', 'fallback_to_mappings' },
+            -- ['<C-j>'] = { 'select_next', 'fallback_to_mappings' },
+            -- ['<C-p>'] = { 'scroll_documentation_up', 'fallback' },
+            -- ['<C-n>'] = { 'scroll_documentation_down', 'fallback' },
+        },
+        cmdline = {
+            keymap = { preset = 'inherit' },
+            completion = { menu = { auto_show = true } },
         },
         appearance = {
             -- 'mono' (default) for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
@@ -46,7 +53,7 @@ return { -- Autocompletion
             },
         },
         sources = {
-            default = { 'lsp', 'path', 'snippets', 'buffer', 'dadbod', 'lazydev' },
+            default = { 'lsp', 'path', 'snippets', 'dadbod', 'lazydev', 'buffer' },
             providers = {
                 lazydev = { module = 'lazydev.integrations.blink', score_offset = 100 },
                 dadbod = { name = 'Dadbod', module = 'vim_dadbod_completion.blink' },

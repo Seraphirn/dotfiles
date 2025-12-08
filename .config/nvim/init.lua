@@ -1,3 +1,4 @@
 require 'options'
-require 'keybinds'
+require 'keys'
+require 'commands'
 require 'lazy_plugin_manager'
