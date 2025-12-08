@@ -8,8 +8,8 @@ return {
     keys = {
         -- 👇 in this section, choose your own keymappings!
         {
-            '<Tab>',
-            -- "<leader>-",
+            -- '<Tab>',
+            '<leader><Tab>',
             mode = { 'n', 'v' },
             '<cmd>Yazi<cr>',
             desc = 'Open yazi at the current file',

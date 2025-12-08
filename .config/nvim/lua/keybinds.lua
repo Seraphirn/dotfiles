@@ -9,6 +9,9 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz', { desc = 'Less disoriented look up' })
 vim.keymap.set('n', '<n>', 'nzzzv', { desc = 'Less disoriented search next' })
 vim.keymap.set('n', '<N>', 'Nzzzv', { desc = 'Less disoriented search next' })
 
+vim.keymap.set('n', '<leader>p', ':pu<CR>', { desc = 'Paste in new line' })
+vim.keymap.set('n', '<leader>P', ':pu!<CR>', { desc = 'Paste in new line before' })
+
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 vim.keymap.set('n', '<leader>t', ':horizontal term<CR>:resize 15<CR>i', { desc = 'Open [T]erminal in window' })
 

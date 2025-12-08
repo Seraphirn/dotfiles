@@ -24,6 +24,7 @@ require('lazy').setup({
     -- [[ Plugins with small configs ]]
 
     'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
+    'tpope/vim-abolish', -- crc to make camelCase, crs to snake_case, etc
 
     'tpope/vim-repeat', -- repeat complicated comands with .
 
@@ -52,9 +53,10 @@ require('lazy').setup({
     { -- Easy_motion alternative. fast travel thought code
         'smoka7/hop.nvim',
         keys = {
-            -- { '\\', ':HopWord<cr>', mode = '', desc = 'Hop to word' },
             { '\\', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
             { '=', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
+            { '<Tab>', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
+            { '<Backspace>', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
         },
         opts = {
             keys = 'etovxqpdygfblzhckisuran',
@@ -70,6 +72,7 @@ require('lazy').setup({
 
     { -- ads text object like class and method for python
         'jeetsukumaran/vim-pythonsense',
+        lazy = False,
         keys = {
             { ']f', '<Plug>(PythonsenseStartOfNextPythonFunction)', mode = 'n', desc = 'Start of Next method' },
             { ']F', '<Plug>(PythonsenseEndOfPythonFunction)', mode = 'n', desc = 'End of method' },
