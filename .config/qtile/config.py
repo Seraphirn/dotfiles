@@ -12,6 +12,7 @@ TERMINAL = guess_terminal()
 EDITOR = TERMINAL + "-e nvim"
 BROWSER = "firefox"
 LOCK = "xsecurelock"
+SUSPEND = "xsecurelock & systemctl suspend"
 LAUNCHER = "ulauncher"
 
 
@@ -102,6 +103,7 @@ keys = [
         desc="Low brightness",
     ),
     Key([MOD, "shift"], "o", lazy.spawn(LOCK), desc="Lock screen"),
+    Key([MOD, "shift"], "s", lazy.spawn(SUSPEND, shell=True), desc="Suspend"),
     Key(
         [MOD, "shift"],
         "h",
