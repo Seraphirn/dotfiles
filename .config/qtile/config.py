@@ -100,26 +100,15 @@ keys = [
     # ),
 ]
 
-# Add key bindings to switch VTs in Wayland.
-# We can't check qtile.core.name in default config as it is loaded before qtile is started
-# We therefore defer the check until the key binding is run by using .when(func=...)
-for vt in range(1, 8):
-    keys.append(
-        Key(
-            ["control", "mod1"],
-            f"f{vt}",
-            lazy.core.change_vt(vt).when(func=lambda: qtile.core.name == "wayland"),
-            desc=f"Switch to VT{vt}",
-        )
-    )
-
 
 groups = [
-    Group("1", label="code", spawn=TERMINAL, screen_affinity=0),
-    Group("2", label="term", screen_affinity=0),
+    Group("1", label="vim", spawn=TERMINAL, screen_affinity=0),
+    Group("2", label="trm", screen_affinity=0),
     Group("3", label="soc", screen_affinity=0),
-    Group("4", label="media", spawn=BROWSER, screen_affinity=1),
-    Group("5", label="else", screen_affinity=0),
+    Group("4", label="web", screen_affinity=0),
+    # --
+    Group("9", label="joy", spawn=BROWSER, screen_affinity=1),
+    Group("0", label="etc", screen_affinity=1),
 ]
 
 
@@ -129,7 +118,7 @@ def go_to_group(qtile, name: str):
         qtile.groups_map[name].toscreen()
         return
 
-    if name in "1235":
+    if name in "1234":
         qtile.focus_screen(0)
         qtile.groups_map[name].toscreen()
     else:
