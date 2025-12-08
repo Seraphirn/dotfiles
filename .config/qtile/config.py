@@ -138,7 +138,13 @@ keys = [
 groups = [
     Group("1", label="vim", spawn=TERMINAL, screen_affinity=0),
     Group("2", label="trm", screen_affinity=0),
-    Group("3", label="soc", screen_affinity=0),
+    Group(
+        "3",
+        label="soc",
+        screen_affinity=0,
+        layout="monadwide",
+        layout_opts={"ratio": 0.85},
+    ),
     Group("4", label="web", screen_affinity=0),
     # --
     Group("9", label="joy", spawn=BROWSER, screen_affinity=1),
