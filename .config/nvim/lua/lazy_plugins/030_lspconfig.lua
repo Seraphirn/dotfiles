@@ -196,6 +196,7 @@ return {
         local servers = {
             -- pyright = {},
             ruff = {},
+            sqlfluff = {},
             -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
             lua_ls = {
                 settings = {
