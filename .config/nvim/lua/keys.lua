@@ -3,6 +3,11 @@ vim.keymap.set('', 'Q', 'gq', { desc = 'Replace ex mode with gq' })
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
 vim.keymap.set({ 'i', 'c' }, '<A-v>', '<C-r>+', { desc = 'Paste from clipboard' })
+vim.keymap.set('i', '<c-l>', '<Right>', { desc = 'Move right in insert mode' })
+vim.keymap.set('i', '<c-h>', '<Left>', { desc = 'Move left in insert mode' })
+vim.keymap.set('i', '<c-w>', '<C-o>w', { desc = 'Move forward word in insert mode' })
+vim.keymap.set('i', '<c-e>', '<C-o>e', { desc = 'Move forward end of word in insert mode' })
+vim.keymap.set('i', '<c-b>', '<C-o>b', { desc = 'Move backward in insert mode' })
 
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected part down' })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selected part up' })
