@@ -103,7 +103,7 @@ keys = [
         desc="Low brightness",
     ),
     Key([MOD, "shift"], "o", lazy.spawn(LOCK), desc="Lock screen"),
-    Key([MOD, "shift"], "s", lazy.spawn(SUSPEND, shell=True), desc="Suspend"),
+    Key([MOD, "shift"], "Backspace", lazy.spawn(SUSPEND, shell=True), desc="Suspend"),
     Key(
         [MOD, "shift"],
         "h",
@@ -229,7 +229,7 @@ main_widgets = [
     ),
     separator,
     widget.Prompt(padding=20),
-    widget.WindowName(),
+    widget.WindowName(max_chars=50),
     widget.CPU(format="CPU {load_percent}%"),
     widget.ThermalSensor(),
     separator,
