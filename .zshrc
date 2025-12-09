@@ -1,3 +1,10 @@
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 export ZSH="$HOME/.oh-my-zsh"
 export TERM="xterm-256color"
 export GREP_COLOR="1;32"
@@ -30,10 +37,12 @@ plugins=(
     kubectl
     docker
     docker-compose
+    zsh-syntax-highlighting
     zsh-autosuggestions
 )
 source $ZSH/oh-my-zsh.sh
-ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(vi-forward-char)
+
+ZSH_AUTOSUGGEST_PARTIAL_ACCEPT_WIDGETS+=(vi-forward-char vi-forward-word-end)
 ZSH_AUTOSUGGEST_ACCEPT_WIDGETS=""
 
 bindkey '^y' autosuggest-execute
@@ -43,6 +52,7 @@ bindkey '^k' up-line-or-history
 bindkey '^l' vi-forward-char
 bindkey '^h' vi-backward-char
 bindkey '^w' vi-forward-word
+bindkey '^e' vi-forward-word-end 
 bindkey '^b' vi-backward-word
 bindkey '^[v' vi-put-after
 
