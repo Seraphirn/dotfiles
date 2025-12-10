@@ -68,12 +68,12 @@ keys = [
     Key([MOD], "u", lazy.to_layout_index(1), desc="Wide"),
     Key([MOD], "m", lazy.to_layout_index(2), desc="max"),
     Key([MOD], "w", lazy.window.kill(), desc="Kill focused window"),
-    Key(
-        [MOD],
-        "f",
-        lazy.window.toggle_fullscreen(),
-        desc="Toggle fullscreen on the focused window",
-    ),
+    # Key(
+    #     [MOD],
+    #     "f",
+    #     lazy.window.toggle_fullscreen(),
+    #     desc="Toggle fullscreen on the focused window",
+    # ),
     # Key(
     #     [MOD],
     #     "t",
@@ -226,6 +226,7 @@ main_widgets = [
     separator,
     widget.GroupBox(
         highlight_method="line",
+        disable_drag=True,
     ),
     separator,
     widget.Prompt(padding=20),
