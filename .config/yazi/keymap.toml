@@ -1,7 +1,7 @@
 [mgr]
 prepend_keymap = [
-	# ...
 ]
 append_keymap = [
-	# ...
+    { on = "<C-j>", run = [ "seek 5"  ], desc = "Show down preview" },
+    { on = "<C-k>", run = [ "seek -5" ], desc = "Show up preview" }
 ]
