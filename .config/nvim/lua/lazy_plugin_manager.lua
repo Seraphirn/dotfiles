@@ -27,7 +27,6 @@ require('lazy').setup({
     'tpope/vim-abolish', -- crc to make camelCase, crs to snake_case, etc
 
     'tpope/vim-repeat', -- repeat complicated comands with .
-
     { -- Colorscheme
         'folke/tokyonight.nvim',
         priority = 1000, -- Make sure to load this before all the other start plugins.
@@ -59,6 +58,7 @@ require('lazy').setup({
 
     { -- ads text object like class and method for python
         'jeetsukumaran/vim-pythonsense',
+        lazy = false,
         keys = {
             { ']f', '<Plug>(PythonsenseStartOfNextPythonFunction)', mode = 'n', desc = 'Start of Next method' },
             { ']F', '<Plug>(PythonsenseEndOfPythonFunction)', mode = 'n', desc = 'End of method' },
