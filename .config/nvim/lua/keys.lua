@@ -2,6 +2,9 @@ vim.keymap.set('', 'Q', 'gq', { desc = 'Replace ex mode with gq' })
 
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+vim.keymap.set('c', '<c-n>', '<Down>', { desc = 'Next in history' })
+vim.keymap.set('c', '<c-p>', '<Up>', { desc = 'Prev in history' })
+
 vim.keymap.set({ 'i', 'c' }, '<A-v>', '<C-r>+', { desc = 'Paste from clipboard' })
 vim.keymap.set('i', '<c-l>', '<Right>', { desc = 'Move right in insert mode' })
 vim.keymap.set('i', '<c-h>', '<Left>', { desc = 'Move left in insert mode' })

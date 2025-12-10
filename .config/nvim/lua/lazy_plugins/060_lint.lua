@@ -57,6 +57,15 @@ return {
                     end
                 end,
             })
+            vim.diagnostic.config({ -- hide warnings for sqlfluff
+                underline = true,
+                virtual_text = {
+                    severity = { vim.diagnostic.severity.ERROR }, -- Only show errors in virtual text
+                },
+                signs = true,
+                severity_sort = true,
+                update_in_insert = false,
+            }, require('lint').get_namespace 'sqlfluff')
         end,
     },
 }
