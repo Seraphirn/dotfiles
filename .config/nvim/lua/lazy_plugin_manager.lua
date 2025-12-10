@@ -49,19 +49,6 @@ require('lazy').setup({
         dependencies = { 'nvim-lua/plenary.nvim' },
         opts = { signs = false },
     },
-
-    { -- Easy_motion alternative. fast travel thought code
-        'smoka7/hop.nvim',
-        keys = {
-            { '\\', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
-            { '=', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
-            { '<Tab>', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
-            { '<Backspace>', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
-        },
-        opts = {
-            keys = 'etovxqpdygfblzhckisuran',
-        },
-    },
     -- { -- Change worker directory when you open file
     --     'airblade/vim-rooter',
     --     config = function()

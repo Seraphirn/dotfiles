@@ -1,6 +1,8 @@
-vim.keymap.set('', 'Q', 'gq', { desc = 'Replace ex mode with gq' })
+vim.keymap.set('', 'Q', '<nop>', { desc = 'Replace ex mode' })
 
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
+
+vim.keymap.set('x', 'p', '"_dP', { desc = 'dont yank selected text while pasteing on it' })
 
 vim.keymap.set('c', '<c-n>', '<Down>', { desc = 'Next in history' })
 vim.keymap.set('c', '<c-p>', '<Up>', { desc = 'Prev in history' })
@@ -15,12 +17,15 @@ vim.keymap.set('i', '<c-b>', '<C-o>b', { desc = 'Move backward in insert mode' }
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected part down' })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selected part up' })
 vim.keymap.set('v', '.', ':normal .<CR>', { desc = 'Perform dot commands over visual blocks' })
+vim.keymap.set('v', ':', 'y:', { desc = 'yank selected text to maybe paste it while in command mode' })
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'J but cursor stays inplace' })
 vim.keymap.set('n', '<leader>p', ':pu<CR>', { desc = 'Paste in new line' })
 vim.keymap.set('n', '<leader>P', ':pu!<CR>', { desc = 'Paste in new line before' })
 vim.keymap.set('n', '<leader>t', ':horizontal term<CR>:resize 15<CR>i', { desc = 'Open [T]erminal in window' })
+
+vim.keymap.set('n', '<leader>rw', [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 -- vim.keymap.set('n', '<leader>rk', ':lua term<CR>:resize 15<CR>i', { desc = 'Open [T]erminal in window' })
 
 vim.keymap.set('n', '<leader>rb', ':%bd|e#|bd#', { desc = 'Remove all buffer but current' })
