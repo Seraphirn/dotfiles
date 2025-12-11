@@ -6,9 +6,7 @@ return {
         { 'nvim-lua/plenary.nvim', lazy = true },
     },
     keys = {
-        -- 👇 in this section, choose your own keymappings!
         {
-            -- '<Tab>',
             '<leader><Tab>',
             mode = { 'n', 'v' },
             '<cmd>Yazi<cr>',
@@ -22,7 +20,6 @@ return {
     },
     ---@type YaziConfig | {}
     opts = {
-        -- if you want to open yazi instead of netrw, see below for more info
         open_for_directories = false,
         keymaps = {
             -- show_help = '<C-h>',

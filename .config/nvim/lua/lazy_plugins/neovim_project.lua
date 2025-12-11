@@ -3,17 +3,14 @@ return { -- Project manager
     opts = {
         last_session_on_startup = false,
         dashboard_mode = false,
-        projects = { -- define project roots
+        projects = {
             '~/projects/*',
-            -- "~/.config/*",
         },
         picker = {
-            type = 'telescope', -- one of "telescope", "fzf-lua", or "snacks"
+            type = 'telescope',
         },
         forget_project_keys = {
-            -- insert mode: Ctrl+d
             i = '<C-d>',
-            -- normal mode: d
             n = 'd',
         },
     },

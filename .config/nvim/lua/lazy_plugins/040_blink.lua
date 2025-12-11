@@ -30,10 +30,6 @@ return { -- Autocompletion
     opts = {
         keymap = {
             preset = 'default',
-            -- ['<C-k>'] = { 'select_prev', 'fallback_to_mappings' },
-            -- ['<C-j>'] = { 'select_next', 'fallback_to_mappings' },
-            -- ['<C-p>'] = { 'scroll_documentation_up', 'fallback' },
-            -- ['<C-n>'] = { 'scroll_documentation_down', 'fallback' },
         },
         cmdline = {
             keymap = { preset = 'inherit' },
