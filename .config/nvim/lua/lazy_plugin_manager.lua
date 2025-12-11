@@ -13,10 +13,6 @@ end
 local rtp = vim.opt.rtp
 rtp:prepend(lazypath)
 
--- [[ Configure and install plugins ]]
---  To check the current status of your plugins, run :Lazy
---  You can press `?` in this menu for help. Use `:q` to close the window
---  To update plugins you can run :Lazy update
 require('lazy').setup({
     -- Plugins with large configs or with strict order of load
     { import = 'lazy_plugins' },
@@ -24,6 +20,7 @@ require('lazy').setup({
     'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
     'tpope/vim-abolish', -- crc to make camelCase, crs to snake_case, etc
     'tpope/vim-repeat', -- repeat complicated comands with .
+    'nvim-treesitter/nvim-treesitter-context',
 
     { -- Colorscheme
         'folke/tokyonight.nvim',
@@ -34,6 +31,15 @@ require('lazy').setup({
                 styles = {
                     comments = { italic = false }, -- Disable italics in comments
                 },
+                on_highlights = function(hl)
+                    hl.LineNrAbove = {
+                        fg = '#6ab8ff',
+                    }
+                    hl.LineNrBelow = {
+                        -- fg = '#ff6188',
+                        fg = '#6ab8ff',
+                    }
+                end,
             }
             -- 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
             vim.cmd.colorscheme 'tokyonight-night'
@@ -53,7 +59,6 @@ require('lazy').setup({
             vim.g.rooter_cd_cmd = 'lcd'
         end,
     },
-
 }, {
     ui = {
         -- If you are using a Nerd Font: set icons to an empty table which will use the

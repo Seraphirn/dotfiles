@@ -1,9 +1,8 @@
 return { -- Easy_motion alternative. fast travel thought code
     'smoka7/hop.nvim',
     keys = {
-        { '\\', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
-        { '=', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
-        { '<Tab>', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
+        { '\\', ':HopWord<cr>', mode = '', desc = 'Hop' },
+        { '<Tab>', ':HopChar2<cr>', mode = '', desc = 'Hop' },
         { '<Backspace>', ':HopCamelCase<cr>', mode = '', desc = 'Hop' },
     },
     -- config = function()
