@@ -1,5 +1,7 @@
 [mgr]
 prepend_keymap = [
+    { on = "<Esc>", run = [ "quit" ], desc = "Quit yazi" },
+    { on = "q", run = [ "nop" ], desc = "Demap q" }
 ]
 append_keymap = [
     { on = "<C-j>", run = [ "seek 5"  ], desc = "Show down preview" },
