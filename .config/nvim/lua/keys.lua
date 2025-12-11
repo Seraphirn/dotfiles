@@ -17,7 +17,7 @@ vim.keymap.set('i', '<c-b>', '<C-o>b', { desc = 'Move backward in insert mode' }
 vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { desc = 'Move selected part down' })
 vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { desc = 'Move selected part up' })
 vim.keymap.set('v', '.', ':normal .<CR>', { desc = 'Perform dot commands over visual blocks' })
-vim.keymap.set('v', ':', 'y:', { desc = 'yank selected text to maybe paste it while in command mode' })
+-- vim.keymap.set('v', ':', 'y:', { desc = 'yank selected text to maybe paste it while in command mode' })
 
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 vim.keymap.set('n', 'J', 'mzJ`z', { desc = 'J but cursor stays inplace' })

@@ -167,13 +167,17 @@ return {
                 source = 'if_many',
                 spacing = 2,
                 format = function(diagnostic)
-                    local diagnostic_message = {
-                        [vim.diagnostic.severity.ERROR] = diagnostic.message,
-                        [vim.diagnostic.severity.WARN] = diagnostic.message,
-                        [vim.diagnostic.severity.INFO] = diagnostic.message,
-                        [vim.diagnostic.severity.HINT] = diagnostic.message,
-                    }
-                    return diagnostic_message[diagnostic.severity]
+                    -- local diagnostic_message = {
+                    --     [vim.diagnostic.severity.ERROR] = diagnostic.message,
+                    --     [vim.diagnostic.severity.WARN] = diagnostic.message,
+                    --     [vim.diagnostic.severity.INFO] = diagnostic.message,
+                    --     [vim.diagnostic.severity.HINT] = diagnostic.message,
+                    -- }
+                    -- return diagnostic_message[diagnostic.severity]
+                    if diagnostic.code then
+                        return string.format('[%s] %s', diagnostic.code, diagnostic.message)
+                    end
+                    return diagnostic.message
                 end,
             },
         }
