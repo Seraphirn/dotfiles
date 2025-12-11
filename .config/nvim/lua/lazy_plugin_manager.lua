@@ -21,12 +21,10 @@ require('lazy').setup({
     -- Plugins with large configs or with strict order of load
     { import = 'lazy_plugins' },
 
-    -- [[ Plugins with small configs ]]
-
     'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
     'tpope/vim-abolish', -- crc to make camelCase, crs to snake_case, etc
-
     'tpope/vim-repeat', -- repeat complicated comands with .
+
     { -- Colorscheme
         'folke/tokyonight.nvim',
         priority = 1000, -- Make sure to load this before all the other start plugins.
@@ -48,24 +46,14 @@ require('lazy').setup({
         dependencies = { 'nvim-lua/plenary.nvim' },
         opts = { signs = false },
     },
-    -- { -- Change worker directory when you open file
-    --     'airblade/vim-rooter',
-    --     config = function()
-    --         -- vim.g.rooter_targets = { '~/projects' }
-    --         vim.g.rooter_cd_cmd = 'lcd'
-    --     end,
-    -- },
-
-    { -- ads text object like class and method for python
-        'jeetsukumaran/vim-pythonsense',
-        lazy = false,
-        keys = {
-            { ']f', '<Plug>(PythonsenseStartOfNextPythonFunction)', mode = 'n', desc = 'Start of Next method' },
-            { ']F', '<Plug>(PythonsenseEndOfPythonFunction)', mode = 'n', desc = 'End of method' },
-            { '[f', '<Plug>(PythonsenseStartOfPythonFunction)', mode = 'n', desc = 'Start of method' },
-            { '[F', '<Plug>(PythonsenseEndOfPreviousPythonFunction)', mode = 'n', desc = 'End of previous method' },
-        },
+    { -- Change worker directory when you open file
+        'airblade/vim-rooter',
+        config = function()
+            -- vim.g.rooter_targets = { '~/projects' }
+            vim.g.rooter_cd_cmd = 'lcd'
+        end,
     },
+
 }, {
     ui = {
         -- If you are using a Nerd Font: set icons to an empty table which will use the

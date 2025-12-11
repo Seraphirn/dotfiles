@@ -2,7 +2,7 @@ return { -- Project manager
     'coffebar/neovim-project',
     opts = {
         last_session_on_startup = false,
-        dashboard_mode = true,
+        dashboard_mode = false,
         projects = { -- define project roots
             '~/projects/*',
             -- "~/.config/*",
