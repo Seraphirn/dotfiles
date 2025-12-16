@@ -17,7 +17,7 @@ require('lazy').setup({
     'NMAC427/guess-indent.nvim', -- Detect tabstop and shiftwidth automatically
     'tpope/vim-abolish', -- crc to make camelCase, crs to snake_case, etc
     'tpope/vim-repeat', -- repeat complicated comands with .
-    'nvim-treesitter/nvim-treesitter-context',
+    -- 'nvim-treesitter/nvim-treesitter-context',
 
     { -- Colorscheme
         'folke/tokyonight.nvim',
@@ -55,6 +55,7 @@ require('lazy').setup({
         config = function()
             -- vim.g.rooter_targets = { '~/projects' }
             vim.g.rooter_cd_cmd = 'lcd'
+            vim.g.rooter_patterns = {'.git', 'Makefile'}
         end,
     },
 })

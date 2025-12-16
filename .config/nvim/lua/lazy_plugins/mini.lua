@@ -27,7 +27,7 @@ return {
                     a = '@class.outer',
                     i = '@class.inner',
                 }, {}),
-                p = ai.gen_spec.treesitter({
+                v = ai.gen_spec.treesitter({
                     a = '@parameter.outer',
                     i = '@parameter.inner',
                 }, {}),
