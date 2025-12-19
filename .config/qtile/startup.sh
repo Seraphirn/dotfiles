@@ -26,11 +26,17 @@ fi
 # screen locker
 if command -v xautolock &> /dev/null; then
     if command -v xsecurelock &> /dev/null; then
-        xautolock -corners 0-0- -detectsleep \
-            -time 20 -locker "XSECURELOCK_NO_COMPOSITE=1 XSECURELOCK_FORCE_GRAB=2 xsecurelock" \
+        xautolock -corners 0-0- \
+            -time 25 -locker "XSECURELOCK_NO_COMPOSITE=1 XSECURELOCK_FORCE_GRAB=2 xsecurelock" \
             -notify 30 -notifier "notify-send -u critical -t 10000 'Screen locking in 30 seconds!'" \
-            -killtime 20 -killer "systemctl suspend"  &>/dev/null &
+            &>/dev/null &
     fi
+    xautolock -time 60 -corners 0-0- -locker "sleep 1 && systemctl suspend" -detectsleep &>/dev/null &
+fi
+
+# Turn off standard x11 screensaver (10min) and set autooff monitor on 25 min
+if command -v xset &> /dev/null; then
+    xset s off dpms 15010 15010 15010
 fi
 
 # set minimal light of screen
