@@ -10,7 +10,7 @@ import subprocess
 
 
 class WidgetBlock:
-    """Block of widgets separated by other blocks and has condition to render"""
+    """Block of widgets separated from other blocks and is having a condition to render"""
 
     def __init__(
         self,
