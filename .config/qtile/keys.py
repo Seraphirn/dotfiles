@@ -71,9 +71,10 @@ def init_keys(groups):
 
         Key([MOD, "shift"], "h", lazy.widget["volume"].decrease_vol(), desc="Add volume"),
         Key([MOD, "shift"], "l", lazy.widget["volume"].increase_vol(), desc="Low volume"),
+        # Key([MOD, "shift"], "m", lazy.widget["volume"].mute(), desc="Mute"),
         Key([], "XF86AudioLowerVolume", lazy.widget["volume"].decrease_vol(), desc="Add volume"),
         Key([], "XF86AudioRaiseVolume", lazy.widget["volume"].increase_vol(), desc="Low volume"),
-        Key([], "XF86AudioMute", lazy.widget["volume"].mute(), desc="Mute"),
+        # Key([], "XF86AudioMute", lazy.widget["volume"].mute(), desc="Mute"),
     ]
 
     for i in groups:
