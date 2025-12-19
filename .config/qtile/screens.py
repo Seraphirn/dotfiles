@@ -116,8 +116,7 @@ def init_screens():
                     padding=5,
                     hide_crash=True,
                 ),
-                is_enabled=lambda kw: kw["screen_num"]
-                == kw["monitor_count"],  # only on last
+                is_enabled=lambda kw: kw["screen_num"] == kw["monitor_count"],  # only on last
             ),
             WidgetBlock(
                 widget.KeyboardLayout(

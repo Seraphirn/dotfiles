@@ -9,6 +9,11 @@ fi
 #     feh --bg-scale ~/wallpaper.jpg
 # fi
 
+# set 144 frame rate on home monitor
+if command -v xrandr &> /dev/null; then
+    xrandr --output HDMI-A-0 --mode 1920x1080 --rate 144
+fi
+
 # transparent terminals
 if command -v picom &> /dev/null; then
     picom -b
