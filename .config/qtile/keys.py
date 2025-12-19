@@ -83,9 +83,9 @@ def init_keys(groups):
         ])
 
     mouse = [
-        Drag([MOD], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-        Drag([MOD], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
-        Click([MOD], "Button2", lazy.window.bring_to_front()),
+        Drag([MOD, "shift"], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
+        Drag([MOD, "shift"], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+        Click([MOD, "shift"], "Button2", lazy.window.bring_to_front()),
     ]
 
     return keys, mouse
