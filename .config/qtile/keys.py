@@ -56,7 +56,7 @@ def init_keys(groups):
         Key([MOD], "m", lazy.to_layout_index(2), desc="max"),
 
         Key([MOD], "w", lazy.window.kill(), desc="Kill focused window"),
-        # Key([MOD], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
+        Key([MOD], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
         # Key([MOD], "t", lazy.window.toggle_floating(), desc="Toggle floating"),
 
         Key([MOD, "control"], "r", lazy.reload_config(), desc="Reload the config"),
