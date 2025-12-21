@@ -4,16 +4,9 @@ from const import MOD, TERMINAL, EDITOR, BROWSER, LOCK, SUSPEND, LAUNCHER
 
 @lazy.function
 def go_to_group(qtile, name: str):
-    if len(qtile.screens) == 1:
-        qtile.groups_map[name].toscreen()
-        return
-
-    if name in "123456":
-        qtile.focus_screen(0)
-        qtile.groups_map[name].toscreen()
-    else:
-        qtile.focus_screen(1)
-        qtile.groups_map[name].toscreen()
+    if len(qtile.screens) > 1:
+        qtile.focus_screen(0 if name in "123456" else 1)
+    qtile.groups_map[name].toscreen()
 
 
 
