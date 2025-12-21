@@ -58,17 +58,17 @@ def init_screens():
                 ),
             ),
             WidgetBlock(
-                widget.CurrentLayout(),
+                lambda: widget.CurrentLayout(),
             ),
             WidgetBlock(
-                widget.GroupBox(
+                lambda: widget.GroupBox(
                     highlight_method="line",
                     disable_drag=True,
                 ),
             ),
             WidgetBlock(
-                widget.Prompt(padding=20),
-                widget.WindowName(max_chars=50),
+                lambda: widget.Prompt(padding=20),
+                lambda: widget.WindowName(max_chars=50),
             ),
             ############################  RIGHT  #####################
             WidgetBlock(
