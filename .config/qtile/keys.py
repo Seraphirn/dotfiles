@@ -8,7 +8,7 @@ def go_to_group(qtile, name: str):
         qtile.groups_map[name].toscreen()
         return
 
-    if name in "1234":
+    if name in "123456":
         qtile.focus_screen(0)
         qtile.groups_map[name].toscreen()
     else:

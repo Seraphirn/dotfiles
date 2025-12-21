@@ -21,7 +21,7 @@ class WidgetBlock:
         self._widgets = widgets
         self._is_enabled = is_enabled
         if is_separated:
-            self._widgets = (widget.Sep(padding=12), ) + self._widgets
+            self._widgets = (widget.Sep(padding=12),) + self._widgets
 
     def render(self, **kwargs) -> list[_Widget]:
         if self._is_enabled is not None and not self._is_enabled(kwargs):
@@ -43,32 +43,32 @@ class WidgetRenderer:
         return result
 
 
-def init_screens():
+def init_screens(monitor_count: int) -> tuple[list[Screen], dict[str, Any]]:
     renderer = WidgetRenderer(
         [
             ############################  LEFT  #####################
             WidgetBlock(
-                lambda: widget.CurrentScreen(
-                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(LAUNCHER)},
-                )
-            ),
-            WidgetBlock(
-                widget.Redshift(
-                    temperature=3400,
+                lambda: widget.CurrentLayout(
+                    mode="icon",
                 ),
-            ),
-            WidgetBlock(
-                lambda: widget.CurrentLayout(),
+                is_separated=False,
             ),
             WidgetBlock(
                 lambda: widget.GroupBox(
-                    highlight_method="line",
+                    this_current_screen_border="#295CCC",
+                    this_screen_border="#C63966",
+                    inactive="#808080",
+                    highlight_method="block",
                     disable_drag=True,
+                    use_mouse_wheel=False,
                 ),
             ),
             WidgetBlock(
                 lambda: widget.Prompt(padding=20),
-                lambda: widget.WindowName(max_chars=50),
+                lambda: widget.WindowName(
+                    max_chars=50,
+                    mouse_callbacks={"Button1": lambda: qtile.cmd_spawn(LAUNCHER)},
+                ),
             ),
             ############################  RIGHT  #####################
             WidgetBlock(
@@ -116,7 +116,14 @@ def init_screens():
                     padding=5,
                     hide_crash=True,
                 ),
-                is_enabled=lambda kw: kw["screen_num"] == kw["monitor_count"],  # only on last
+                is_enabled=lambda kw: (
+                    kw["screen_num"] == kw["monitor_count"]
+                ),  # only on last
+            ),
+            WidgetBlock(
+                widget.Redshift(
+                    temperature=3400,
+                ),
             ),
             WidgetBlock(
                 widget.KeyboardLayout(
@@ -133,15 +140,6 @@ def init_screens():
             ),
         ]
     )
-
-    try:
-        monitor_count = int(  # Count connected monitors
-            subprocess.check_output("xrandr | grep ' connected' | wc -l", shell=True)
-            .decode("utf-8")
-            .strip()
-        )
-    except Exception:
-        monitor_count = 1
 
     screens = [
         Screen(

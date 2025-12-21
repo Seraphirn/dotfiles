@@ -10,15 +10,26 @@ from const import TERMINAL, BROWSER
 from screens import init_screens
 from keys import init_keys
 
+try:
+    monitor_count = int(  # Count connected monitors
+        subprocess.check_output("xrandr | grep ' connected' | wc -l", shell=True)
+        .decode("utf-8")
+        .strip()
+    )
+except Exception:
+    monitor_count = 1
+
 
 @hook.subscribe.startup_once
 def autostart():
     home = os.path.expanduser("~/.config/qtile/startup.sh")
     subprocess.call([home])
 
+
 @hook.subscribe.startup
 def run_every_startup():
     send_notification("qtile", "Started")
+
 
 groups = [
     Group("1", label="vim", spawn=TERMINAL, screen_affinity=0),
@@ -31,13 +42,17 @@ groups = [
         layout_opts={"ratio": 0.85},
     ),
     Group("4", label="web", screen_affinity=0),
+    Group("5", label="etc", screen_affinity=0),
     # --
-    Group("9", label="joy", spawn=BROWSER, screen_affinity=1),
-    Group("0", label="etc", screen_affinity=1),
+    Group("9", label="joy", spawn=BROWSER, screen_affinity=monitor_count - 1),
 ]
+if monitor_count > 1:
+    groups.append(
+        Group("0", label="etc2", screen_affinity=monitor_count - 1),
+    )
 
 keys, mouse = init_keys(groups)
-screens, widget_defaults = init_screens()
+screens, widget_defaults = init_screens(monitor_count=monitor_count)
 
 layouts = [
     layout.MonadTall(
