@@ -127,12 +127,7 @@ def init_screens(monitor_count: int) -> tuple[list[Screen], dict[str, Any]]:
             ),
             WidgetBlock(
                 widget.KeyboardLayout(
-                    update_interval=1,
-                    mouse_callbacks={
-                        "Button1": lambda: qtile.cmd_spawn(
-                            'setxkbmap -layout "us,ru" -option "grp:alt_space_toggle"'
-                        )
-                    },
+                    configured_keyboards=['us', 'ru'],
                 ),
             ),
             WidgetBlock(

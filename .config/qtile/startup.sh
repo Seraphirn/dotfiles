@@ -1,13 +1,19 @@
 #!/bin/sh
 
 # layout change
-if command -v setxkbmap &> /dev/null; then
-    setxkbmap -layout "us,ru" -option "grp:alt_space_toggle"
-fi
+# if command -v setxkbmap &> /dev/null; then
+#     setxkbmap -layout "us,ru" -option "grp:alt_space_toggle"
+# fi
 
 # if command -v feh &> /dev/null; then
 #     feh --bg-scale ~/wallpaper.jpg
 # fi
+
+#red light filter
+# if command -v redshift &> /dev/null; then
+#     redshift -l 55.7615902:37.60946 -t 3400:3400 -m randr -r &>/dev/null &
+# fi
+
 
 # set 144 frame rate on home monitor
 if command -v xrandr &> /dev/null; then
@@ -19,14 +25,10 @@ if command -v picom &> /dev/null; then
     picom -b
 fi
 
+# applet for wifi
 if command -v nm-applet &> /dev/null; then
     nm-applet &>/dev/null &
 fi
-
-#red light filter
-# if command -v redshift &> /dev/null; then
-#     redshift -l 55.7615902:37.60946 -t 3400:3400 -m randr -r &>/dev/null &
-# fi
 
 # screen locker
 if command -v xautolock &> /dev/null; then
