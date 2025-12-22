@@ -1,10 +1,5 @@
 #!/bin/sh
 
-# layout change
-# if command -v setxkbmap &> /dev/null; then
-#     setxkbmap -layout "us,ru" -option "grp:alt_space_toggle"
-# fi
-
 # if command -v feh &> /dev/null; then
 #     feh --bg-scale ~/wallpaper.jpg
 # fi
@@ -13,7 +8,11 @@
 # if command -v redshift &> /dev/null; then
 #     redshift -l 55.7615902:37.60946 -t 3400:3400 -m randr -r &>/dev/null &
 # fi
-
+#
+# layout change
+# if command -v setxkbmap &> /dev/null; then
+#     setxkbmap -layout "us,ru" -option "grp:alt_space_toggle"
+# fi
 
 # set 144 frame rate on home monitor
 if command -v xrandr &> /dev/null; then
@@ -34,7 +33,7 @@ fi
 if command -v xautolock &> /dev/null; then
     if command -v xsecurelock &> /dev/null; then
         xautolock -corners 0-0- \
-            -time 25 -locker "XSECURELOCK_NO_COMPOSITE=1 XSECURELOCK_FORCE_GRAB=2 xsecurelock" \
+            -time 25 -locker "XSECURELOCK_NO_COMPOSITE=1 XSECURELOCK_FORCE_GRAB=2 xsecurelock -- setxkbmap us" \
             -notify 30 -notifier "notify-send -u critical -t 10000 'Screen locking in 30 seconds!'" \
             &>/dev/null &
     fi
