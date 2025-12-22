@@ -43,13 +43,12 @@ groups = [
     ),
     Group("4", label="web", screen_affinity=0),
     Group("5", label="etc", screen_affinity=0),
-    # --
-    Group("9", label="joy", spawn=BROWSER, screen_affinity=monitor_count - 1),
+    Group("0", label="vid", spawn=BROWSER, screen_affinity=monitor_count - 1),
 ]
-if monitor_count > 1:
-    groups.append(
-        Group("0", label="etc2", screen_affinity=monitor_count - 1),
-    )
+# if monitor_count > 1:
+#     groups += [
+#         Group("0", label="etc2", screen_affinity=monitor_count - 1),
+#     ]
 
 keys, mouse = init_keys(groups)
 screens, widget_defaults = init_screens(monitor_count=monitor_count)
@@ -66,7 +65,7 @@ layouts = [
     layout.Max(),
     # layout.Stack(num_stacks=2),
     # layout.Tile(),
-    layout.TreeTab(),
+    # layout.TreeTab(),
     # layout.VerticalTile(),
 ]
 
