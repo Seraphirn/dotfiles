@@ -1,2 +1,13 @@
 [mgr]
 show_hidden = true
+
+[opener]
+vlc = [
+    { run = 'vlc "$@"', orphan = true, block = false, desc = "Open with VLC" }
+]
+
+
+[open]
+prepend_rules = [
+  { mime = "video/*", use = [ "vlc" ] },
+]

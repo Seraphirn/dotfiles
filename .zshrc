@@ -70,6 +70,7 @@ alias mv="mv -iv"
 alias q="exit"
 alias rm="rm -irv"
 alias zshrc="nvim ~/.zshrc"
+alias y="yazi"
 
 # Job specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
