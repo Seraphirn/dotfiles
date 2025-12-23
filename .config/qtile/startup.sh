@@ -51,6 +51,6 @@ if command -v light &> /dev/null; then
 fi
 
 # mouse sensetivity
-xinput set-prop 10 "libinput Accel Speed" +0.9
+xinput set-prop 11 "libinput Accel Speed" +0.85
 # tapping enabled
-xinput set-prop 10 "libinput Tapping Enabled" 1
+xinput set-prop 11 "libinput Tapping Enabled" 1
