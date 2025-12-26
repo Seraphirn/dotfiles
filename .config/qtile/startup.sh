@@ -10,9 +10,9 @@
 # fi
 #
 # layout change
-if command -v setxkbmap &> /dev/null; then
-    setxkbmap -layout "us,ru" -option "grp:alt_space_toggle"
-fi
+# if command -v setxkbmap &> /dev/null; then
+#     setxkbmap -layout "us,ru" -option "grp:alt_space_toggle"
+# fi
 
 # set 144 frame rate on home monitor
 if command -v xrandr &> /dev/null; then

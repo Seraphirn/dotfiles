@@ -6,7 +6,6 @@ from libqtile.widget.base import _Widget
 
 from const import TERMINAL, LAUNCHER
 from typing import Callable, Any
-import subprocess
 
 
 class WidgetBlock:
@@ -125,11 +124,12 @@ def init_screens(monitor_count: int) -> tuple[list[Screen], dict[str, Any]]:
                     temperature=3400,
                 ),
             ),
-            # WidgetBlock(
-            #     widget.KeyboardLayout(
-            #         configured_keyboards=['us', 'ru'],
-            #     ),
-            # ),
+            WidgetBlock(
+                widget.KeyboardLayout(
+                    configured_keyboards=['us', 'ru,us'],  # support xsecurelock layout switch
+                    option='grp:alt_space_toggle',
+                ),
+            ),
             WidgetBlock(
                 widget.Clock(format="%d %a %H:%M"),
             ),
