@@ -20,13 +20,13 @@ class WidgetBlock:
         prev_background: str | None = None
     ):
         self._widgets = widgets
-        self._is_enabled = is_enabled
+        self.is_enabled = is_enabled if is_enabled is not None else lambda kwargs: True
         self._separate_direction = separate_direction
         self.colors = colors
         self.prev_background = prev_background
 
     def render(self, **kwargs) -> list[_Widget]:
-        if self._is_enabled is not None and not self._is_enabled(kwargs):
+        if not self.is_enabled(kwargs):
             return []
 
         background, foreground = self.colors or (None, 'ffffff')
@@ -59,9 +59,11 @@ class WidgetRenderer:
     def render(self, colors: list[tuple[str]], **kwargs) -> list[_Widget]:
         result = []
 
-        colors *= round(len(self._widget_blocks) / len(colors)) + 1  # copy colors on widgets list
+        widget_blocks = [wb for wb in self._widget_blocks if wb.is_enabled(kwargs)]
 
-        for i, widget_block in enumerate(self._widget_blocks):
+        colors *= round(len(widget_blocks) / len(colors)) + 1  # copy colors on widgets list
+
+        for i, widget_block in enumerate(widget_blocks):
             if widget_block.colors is not None:
                 # previous copy make this change to not repeat
                 colors.insert(i, widget_block.colors)
@@ -86,8 +88,11 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
             ),
             WidgetBlock(
                 lambda: widget.GroupBox(
-                    this_current_screen_border=colors['current'],
-                    this_screen_border=colors['other'],
+                    this_current_screen_border=colors['thiscurrent'],
+                    other_current_screen_border=colors['noncurrent'],
+
+                    this_screen_border=colors['othercurrent'],
+                    other_screen_border=colors['noncurrent'],
                     inactive=colors['inactive'],
                     active=colors['active'],
                     disable_drag=True,

@@ -50,8 +50,10 @@ colors = {
         (tokio_night["blue7"], tokio_night["blue6"]),
         # (tokio_night["blue"], tokio_night["bg"]),
     ],
-    "current": tokio_night["blue6"],
-    "other": tokio_night["comment"],
+    "thiscurrent": tokio_night["blue6"],
+    "othercurrent": tokio_night["orange"],
+    "noncurrent": tokio_night["fg_dark"],
+
     "active": tokio_night["blue6"],
     "inactive": tokio_night["fg_dark"],
     "focus": tokio_night["blue"],
