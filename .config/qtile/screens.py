@@ -25,11 +25,11 @@ class WidgetBlock:
         self.colors = colors
         self.prev_background = prev_background
 
-    def render(self, **kwargs) -> list[_Widget]:
+    def render(self, colors: tuple[str, str], **kwargs) -> list[_Widget]:
         if not self.is_enabled(kwargs):
             return []
 
-        background, foreground = self.colors or (None, 'ffffff')
+        background, foreground = self.colors or colors or (None, 'ffffff')
 
         widgets = [
             widget_() if callable(widget_) else widget_ for widget_ in self._widgets
@@ -42,8 +42,9 @@ class WidgetBlock:
             separator = widget.TextBox(
                 text="" if self._separate_direction == 'left' else "",
                 font="DroidSansMNerdFontMono",
-                fontsize=28,
+                fontsize=30,
                 padding=0,
+                margin=0,
                 background=background if self._separate_direction == 'right' else self.prev_background,
                 foreground=self.prev_background if self._separate_direction == 'right' else background,
             )
@@ -61,17 +62,22 @@ class WidgetRenderer:
 
         widget_blocks = [wb for wb in self._widget_blocks if wb.is_enabled(kwargs)]
 
-        colors *= round(len(widget_blocks) / len(colors)) + 1  # copy colors on widgets list
+        colorsl = colors.copy()
+        colorsl *= round(len(widget_blocks) / len(colorsl)) + 1  # copy colors on widgets list
 
         for i, widget_block in enumerate(widget_blocks):
             if widget_block.colors is not None:
                 # previous copy make this change to not repeat
-                colors.insert(i, widget_block.colors)
+                colorsl.insert(i, widget_block.colors)
+                render_colors = None
             else:
-                widget_block.colors = colors[i]
-            widget_block.prev_background = colors[(i-1) % len(colors)][0]
-            result += widget_block.render(**kwargs)
+                render_colors = colorsl[i]
+            widget_block.prev_background = colorsl[(i-1) % len(colorsl)][0]
+            result += widget_block.render(colors=render_colors, **kwargs)
         return result
+
+def get_icon(suffix: str) -> str:
+    return os.path.join(os.path.dirname(__file__), "icons" , suffix)
 
 
 def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[str, Any]]:
@@ -79,26 +85,37 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
         [
             ############################  LEFT  #####################
             WidgetBlock(
+                widget.Spacer(length=5),
                 lambda: widget.CurrentLayout(
                     mode="icon",
-                    scale=0.7,
-                    padding=10,
+                    scale=0.8,
+                    padiing_x=10,
                 ),
                 separate_direction=None,
             ),
             WidgetBlock(
+                lambda: widget.WindowCount(),
+                separate_direction="right",
+            ),
+            WidgetBlock(
+                widget.Spacer(length=5),
                 lambda: widget.GroupBox(
                     this_current_screen_border=colors['thiscurrent'],
                     other_current_screen_border=colors['noncurrent'],
-
                     this_screen_border=colors['othercurrent'],
                     other_screen_border=colors['noncurrent'],
                     inactive=colors['inactive'],
                     active=colors['active'],
                     disable_drag=True,
                     use_mouse_wheel=False,
-                    padding=6,
+                    margin=2,
+                    padding=0,
+                    padding_x=6,
+                    spacing=2,
+                    fontsize=25,
+                    borderwidth=3,
                 ),
+                separate_direction="right",
             ),
             WidgetBlock(
                 lambda: widget.Prompt(padding=20),
@@ -110,13 +127,37 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
             ),
             ############################  RIGHT  #####################
             WidgetBlock(
-                widget.CPU(format="CPU {load_percent:.0f}%"),
-                widget.ThermalSensor(format='{temp:.0f}{unit}'),
+                widget.Net(
+                    format='{down:02.0f} {down_suffix}s',
+                    use_bits=True,
+                    prefix='M',
+                ),
+                widget.TextBox(
+                    text="",
+                    fontsize=36,
+                ),
+                widget.Net(
+                    format='{up:02.0f} {up_suffix}s',
+                    use_bits=True,
+                    prefix='M',
+                ),
             ),
             WidgetBlock(
+                widget.CPU(format="{load_percent:02.0f}%"),
+                widget.TextBox(
+                    text="",
+                    fontsize=36,
+                ),
+                widget.ThermalSensor(format='{temp:02.0f}{unit}'),
+            ),
+            WidgetBlock(
+                widget.TextBox(
+                    text="",
+                    fontsize=36,
+                ),
                 widget.Memory(
                     measure_mem="G",
-                    format="MEM {MemUsed:.1f}{mm}",
+                    format="{MemUsed:.1f}{mm}",
                     mouse_callbacks={
                         "Button1": lambda: qtile.cmd_spawn(TERMINAL + " -e htop")
                     },
@@ -138,14 +179,19 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
                 is_enabled=lambda kw: os.path.isdir("/sys/class/power_supply/BAT0"),
             ),
             WidgetBlock(
+                # widget.Image(
+                #     filename=get_icon('volume-icons/volume_light_bold.png'),
+                #     margin=5,
+                #     scale=True,
+                #     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
+                # ),
                 widget.TextBox(
-                    # text="",
-                    text="SND ",
+                    text="",
                     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
-                    padding=0,
+                    fontsize=32,
                 ),
                 widget.Volume(
-                    padding=0,
+                    padding=8,
                 ),
             ),
             WidgetBlock(
@@ -164,18 +210,20 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
 
             ),
             WidgetBlock(
-                widget.KeyboardLayout(
+                lambda: widget.KeyboardLayout(
                     configured_keyboards=['us', 'ru,us'],  # support xsecurelock layout switch
                     option='grp:alt_space_toggle',
                 ),
             ),
             WidgetBlock(
-                widget.Clock(format="%d %a %H:%M"),
+                lambda: widget.Clock(format="%d %a %H:%M"),
+                lambda: widget.Spacer(length=5),
             ),
         ]
     )
     widget_defaults = dict(
         font="DroidSansMNerdFontMono",
+        center_aligned=True,            # center-aligned group box.
         fontsize=16,
         padding=5,
     )

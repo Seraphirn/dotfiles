@@ -44,16 +44,15 @@ tokio_night = dict(
 )
 colors = {
     "widgets": [
-        # (tokio_night["blue7"], tokio_night["blue6"]),
+        (tokio_night["blue7"], tokio_night["blue6"]),
         (tokio_night["bg"], tokio_night["blue"]),
         # (tokio_night["bg_highlight"], tokio_night["blue5"]),
-        (tokio_night["blue7"], tokio_night["blue6"]),
         # (tokio_night["blue"], tokio_night["bg"]),
     ],
-    "thiscurrent": tokio_night["blue6"],
+    "thiscurrent": tokio_night["green"],
     "othercurrent": tokio_night["orange"],
-    "noncurrent": tokio_night["fg_dark"],
-
+    # "noncurrent": tokio_night["fg_dark"],
+    "noncurrent": None,
     "active": tokio_night["blue6"],
     "inactive": tokio_night["fg_dark"],
     "focus": tokio_night["blue"],
@@ -96,50 +95,49 @@ def run_every_startup():
 
 
 groups = [
-    Group("1", label="vim", spawn=TERMINAL, screen_affinity=0),
-    Group("2", label="trm", screen_affinity=0),
+    Group("1", label="", spawn=TERMINAL, screen_affinity=0),
+    Group("2", label="", screen_affinity=0),
     Group(
         "3",
-        label="soc",
+        label="",
         screen_affinity=0,
-        layout="monadwide",
+        layout="max",
         layout_opts={"ratio": 0.85},
     ),
-    Group("4", label="web", screen_affinity=0),
-    Group("5", label="etc", screen_affinity=0),
-    Group("0", label="vid", spawn=BROWSER, layout="max", screen_affinity=monitor_count - 1),
+    Group("4", label="󰈹", screen_affinity=0),
+    Group(
+        "5", label="", spawn=BROWSER, layout="max", screen_affinity=monitor_count - 1
+    ),
+    Group("6", label="", screen_affinity=monitor_count - 1),
 ]
 # if monitor_count > 1:
 #     groups += [
-#         Group("0", label="etc2", screen_affinity=monitor_count - 1),
+#         Group("0", label="", screen_affinity=monitor_count - 1),
 #     ]
 
 keys, mouse = init_keys(groups)
 screens, widget_defaults = init_screens(monitor_count=monitor_count, colors=colors)
 
 layout_defaults = dict(
-    border_focus=colors["focus"],  # Border colour(s) for the focused window.
-    border_normal=colors["inactive"],  # Border colour(s) for un-focused windows.
-    border_width=3,  # Border width.
-    change_ratio=0.02,  # Resize ratio.
-    change_size=20,  # Resize change in pixels.
-    margin=10,  # Margin of the layout.
-    max_ratio=0.95,  # The percent of the screen-space the master pane should occupy at maximum.
-    min_ratio=0.1,  # The percent of the screen-space the master pane should occupy at minimum.
-    min_secondary_size=50,  # Minimum size in pixel for a secondary pane window.
-    new_client_position="after",  # Place new windows: after_current - after the active window. before_current - before the active window, top - at the top of the stack, bottom - at the bottom of the stack.
-    ratio=0.65,  # The percent of the screen-space the master pane should occupy by default.
-    single_border_width=None,  # Border width for single window.
-    single_margin=None,  # Margin size for single window.
+    border_focus=colors["focus"],
+    border_normal=colors["inactive"],
+    border_width=3,
+    change_ratio=0.02,
+    change_size=20,
+    margin=5,
+    max_ratio=0.95,
+    min_ratio=0.1,
+    min_secondary_size=50,
+    new_client_position="after",
+    ratio=0.65,
+    single_border_width=None,
+    single_margin=None,
 )
 
 layouts = [
-    layout.MonadTall(
-        **layout_defaults
-        # border_focus="#295ccc",
-    ),
+    layout.MonadTall(**layout_defaults),
     layout.MonadWide(**layout_defaults),
-    layout.Max(),
+    layout.Max(margin=5),
     # layout.Stack(num_stacks=2),
     # layout.Tile(),
     # layout.TreeTab(),
