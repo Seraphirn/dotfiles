@@ -10,6 +10,20 @@ from const import TERMINAL, BROWSER
 from screens import init_screens
 from keys import init_keys
 
+colors = {
+    "pure_black": "000000",
+    "black": "#264653",
+    "purple": "#9B59B6",
+    "blue": "#3498DB",
+    "green": "#2ECC71",
+    "cyan": "#1ABC9C",
+    "yellow": "#F1C40F",
+    "orange": "#E67E22",
+    "red": "#E74C3C",
+    "white": "#ECF0F1",
+    "grey": "#56c3b7",
+}
+
 try:
     monitor_count = int(  # Count connected monitors
         subprocess.check_output("xrandr | grep ' connected' | wc -l", shell=True)
@@ -29,6 +43,7 @@ def autostart():
 @hook.subscribe.startup
 def run_every_startup():
     send_notification("qtile", "Started")
+
 
 groups = [
     Group("1", label="vim", spawn=TERMINAL, screen_affinity=0),
@@ -50,17 +65,30 @@ groups = [
 #     ]
 
 keys, mouse = init_keys(groups)
-screens, widget_defaults = init_screens(monitor_count=monitor_count)
+screens, widget_defaults = init_screens(monitor_count=monitor_count, colors=colors)
+
+layout_defaults = dict(
+    border_focus=colors["grey"],  # Border colour(s) for the focused window.
+    border_normal=colors["black"],  # Border colour(s) for un-focused windows.
+    border_width=4,  # Border width.
+    change_ratio=0.02,  # Resize ratio.
+    change_size=20,  # Resize change in pixels.
+    margin=12,  # Margin of the layout.
+    max_ratio=0.95,  # The percent of the screen-space the master pane should occupy at maximum.
+    min_ratio=0.1,  # The percent of the screen-space the master pane should occupy at minimum.
+    min_secondary_size=50,  # Minimum size in pixel for a secondary pane window.
+    new_client_position="after",  # Place new windows: after_current - after the active window. before_current - before the active window, top - at the top of the stack, bottom - at the bottom of the stack.
+    ratio=0.65,  # The percent of the screen-space the master pane should occupy by default.
+    single_border_width=None,  # Border width for single window.
+    single_margin=None,  # Margin size for single window.
+)
 
 layouts = [
     layout.MonadTall(
-        single_border_width=0,
-        border_focus="#295ccc",
+        **layout_defaults
+        # border_focus="#295ccc",
     ),
-    layout.MonadWide(
-        single_border_width=0,
-        border_focus="#295ccc",
-    ),
+    layout.MonadWide(**layout_defaults),
     layout.Max(),
     # layout.Stack(num_stacks=2),
     # layout.Tile(),
