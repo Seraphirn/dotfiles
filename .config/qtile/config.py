@@ -10,19 +10,66 @@ from const import TERMINAL, BROWSER
 from screens import init_screens
 from keys import init_keys
 
+tokio_night = dict(
+    bg="#1a1b26",
+    bg_dark="#16161e",
+    bg_dark1="#0C0E14",
+    bg_highlight="#292e42",
+    blue="#7aa2f7",
+    blue0="#3d59a1",
+    blue1="#2ac3de",
+    blue2="#0db9d7",
+    blue5="#89ddff",
+    blue6="#b4f9f8",
+    blue7="#394b70",
+    comment="#565f89",
+    cyan="#7dcfff",
+    dark3="#545c7e",
+    dark5="#737aa2",
+    fg="#c0caf5",
+    fg_dark="#a9b1d6",
+    fg_gutter="#3b4261",
+    green="#9ece6a",
+    green1="#73daca",
+    green2="#41a6b5",
+    magenta="#bb9af7",
+    magenta2="#ff007c",
+    orange="#ff9e64",
+    purple="#9d7cd8",
+    red="#f7768e",
+    red1="#db4b4b",
+    teal="#1abc9c",
+    terminal_black="#414868",
+    yellow="#e0af68",
+)
 colors = {
-    "pure_black": "000000",
-    "black": "#264653",
-    "purple": "#9B59B6",
-    "blue": "#3498DB",
-    "green": "#2ECC71",
-    "cyan": "#1ABC9C",
-    "yellow": "#F1C40F",
-    "orange": "#E67E22",
-    "red": "#E74C3C",
-    "white": "#ECF0F1",
-    "grey": "#56c3b7",
+    "widgets": [
+        (tokio_night["bg"], tokio_night["blue"]),
+        (tokio_night["bg_highlight"], tokio_night["blue5"]),
+        # (tokio_night["blue"], tokio_night["bg"]),
+    ],
+    "current": tokio_night['blue5'],
+    "other": tokio_night['comment'],
+    "active": tokio_night['blue5'],
+    "inactive": tokio_night['comment'],
+
+    "focus": tokio_night['blue'],
 }
+
+
+# colors = {
+#     "pure_black": "000000",
+#     "black": "#264653",
+#     "purple": "#9B59B6",
+#     "blue": "#3498DB",
+#     "green": "#2ECC71",
+#     "cyan": "#1ABC9C",
+#     "yellow": "#F1C40F",
+#     "orange": "#E67E22",
+#     "red": "#E74C3C",
+#     "white": "#ECF0F1",
+#     "grey": "#56c3b7",
+# }
 
 try:
     monitor_count = int(  # Count connected monitors
@@ -68,12 +115,12 @@ keys, mouse = init_keys(groups)
 screens, widget_defaults = init_screens(monitor_count=monitor_count, colors=colors)
 
 layout_defaults = dict(
-    border_focus=colors["grey"],  # Border colour(s) for the focused window.
-    border_normal=colors["black"],  # Border colour(s) for un-focused windows.
-    border_width=4,  # Border width.
+    border_focus=colors["focus"],  # Border colour(s) for the focused window.
+    border_normal=colors["inactive"],  # Border colour(s) for un-focused windows.
+    border_width=3,  # Border width.
     change_ratio=0.02,  # Resize ratio.
     change_size=20,  # Resize change in pixels.
-    margin=12,  # Margin of the layout.
+    margin=10,  # Margin of the layout.
     max_ratio=0.95,  # The percent of the screen-space the master pane should occupy at maximum.
     min_ratio=0.1,  # The percent of the screen-space the master pane should occupy at minimum.
     min_secondary_size=50,  # Minimum size in pixel for a secondary pane window.

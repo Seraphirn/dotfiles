@@ -86,11 +86,10 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
             ),
             WidgetBlock(
                 lambda: widget.GroupBox(
-                    this_current_screen_border=colors['blue'],
-                    this_screen_border=colors['purple'],
-                    inactive=colors['black'],
-                    active=colors['white'],
-                    highlight_method="block",
+                    this_current_screen_border=colors['current'],
+                    this_screen_border=colors['other'],
+                    inactive=colors['inactive'],
+                    active=colors['active'],
                     disable_drag=True,
                     use_mouse_wheel=False,
                     padding=6,
@@ -145,6 +144,11 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
                 ),
             ),
             WidgetBlock(
+                widget.Redshift(
+                    temperature=3400,
+                ),
+            ),
+            WidgetBlock(
                 widget.Systray(
                     padding=5,
                     hide_crash=True,
@@ -152,13 +156,7 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
                 is_enabled=lambda kw: (
                     kw["screen_num"] == kw["monitor_count"]
                 ),  # only on last
-                colors=(colors['pure_black'], colors['grey']),
 
-            ),
-            WidgetBlock(
-                widget.Redshift(
-                    temperature=3400,
-                ),
             ),
             WidgetBlock(
                 widget.KeyboardLayout(
@@ -183,10 +181,7 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
                 widgets=renderer.render(
                     screen_num=i,
                     monitor_count=monitor_count,
-                    colors=[
-                        (colors['black'], colors['grey']),
-                        (colors['grey'], colors['black']),
-                    ]
+                    colors=colors['widgets'],
                 ),
                 size=32,
             ),
