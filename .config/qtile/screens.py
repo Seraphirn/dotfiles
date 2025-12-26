@@ -125,11 +125,11 @@ def init_screens(monitor_count: int) -> tuple[list[Screen], dict[str, Any]]:
                     temperature=3400,
                 ),
             ),
-            WidgetBlock(
-                widget.KeyboardLayout(
-                    configured_keyboards=['us', 'ru'],
-                ),
-            ),
+            # WidgetBlock(
+            #     widget.KeyboardLayout(
+            #         configured_keyboards=['us', 'ru'],
+            #     ),
+            # ),
             WidgetBlock(
                 widget.Clock(format="%d %a %H:%M"),
             ),

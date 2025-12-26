@@ -30,7 +30,6 @@ def autostart():
 def run_every_startup():
     send_notification("qtile", "Started")
 
-
 groups = [
     Group("1", label="vim", spawn=TERMINAL, screen_affinity=0),
     Group("2", label="trm", screen_affinity=0),

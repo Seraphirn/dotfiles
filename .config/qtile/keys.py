@@ -60,7 +60,7 @@ def init_keys(groups):
         Key([MOD, "shift"], "u", lazy.widget["redshift"].increase_brightness(), desc="+brightness"),
         Key([MOD, "shift"], "d", lazy.widget["redshift"].decrease_brightness(), desc="-brightness"),
 
-        Key([MOD, "shift"], "o", lazy.spawn(LOCK), desc="Lock screen"),
+        Key([MOD, "shift"], "o", lazy.spawn(LOCK, shell=True), desc="Lock screen"),
         Key([MOD, "shift"], "Backspace", lazy.spawn(SUSPEND, shell=True), desc="Suspend"),
 
         Key([MOD, "shift"], "h", lazy.widget["volume"].decrease_vol(), desc="Add volume"),
