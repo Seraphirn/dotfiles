@@ -43,7 +43,7 @@ groups = [
     ),
     Group("4", label="web", screen_affinity=0),
     Group("5", label="etc", screen_affinity=0),
-    Group("0", label="vid", spawn=BROWSER, screen_affinity=monitor_count - 1),
+    Group("0", label="vid", spawn=BROWSER, layout="max", screen_affinity=monitor_count - 1),
 ]
 # if monitor_count > 1:
 #     groups += [
