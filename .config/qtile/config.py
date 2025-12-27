@@ -44,8 +44,8 @@ tokio_night = dict(
 )
 colors = {
     "widgets": [
-        (tokio_night["blue7"], tokio_night["blue6"]),
         (tokio_night["bg"], tokio_night["blue"]),
+        (tokio_night["blue7"], tokio_night["blue6"]),
         # (tokio_night["bg_highlight"], tokio_night["blue5"]),
         # (tokio_night["blue"], tokio_night["bg"]),
     ],
@@ -56,6 +56,7 @@ colors = {
     "active": tokio_night["blue6"],
     "inactive": tokio_night["fg_dark"],
     "focus": tokio_night["blue"],
+    "low": tokio_night['red1'],
 }
 
 
