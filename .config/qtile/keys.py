@@ -61,9 +61,19 @@ def init_keys(groups):
         Key([MOD, "shift"], "u", lazy.widget["redshift"].increase_brightness(), desc="+brightness"),
         Key([MOD, "shift"], "d", lazy.widget["redshift"].decrease_brightness(), desc="-brightness"),
 
-        Key([MOD, "shift"], "o", lazy.spawn(LOCK, shell=True), desc="Lock screen"),
-        Key([MOD, "shift"], "Backspace", lazy.spawn(SUSPEND, shell=True), desc="Suspend"),
-
+        Key(
+            [MOD, "shift"],
+            "o",
+            lazy.spawn(LOCK, shell=True),
+            # lazy.spawn(LOCK, shell=True, env={'XSECURELOCK_NO_COMPOSITE': '0','XSECURELOCK_FORCE_GRAB': '2'}),
+            desc="Lock screen"
+        ),
+        Key(
+            [MOD, "shift"],
+            "Backspace",
+            lazy.spawn(SUSPEND, shell=True),
+            desc="Suspend"
+        ),
         Key([MOD, "shift"], "h", lazy.widget["volume"].decrease_vol(), desc="Add volume"),
         Key([MOD, "shift"], "l", lazy.widget["volume"].increase_vol(), desc="Low volume"),
         # Key([MOD, "shift"], "m", lazy.widget["volume"].mute(), desc="Mute"),
