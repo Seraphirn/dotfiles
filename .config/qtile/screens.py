@@ -91,11 +91,8 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
                     scale=0.8,
                     padiing_x=10,
                 ),
-                separate_direction=None,
-            ),
-            WidgetBlock(
                 lambda: widget.WindowCount(show_zero=True),
-                separate_direction="right",
+                separate_direction=None,
             ),
             WidgetBlock(
                 widget.Spacer(length=5),
@@ -115,7 +112,6 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
                     fontsize=25,
                     borderwidth=3,
                 ),
-                separate_direction="right",
             ),
             WidgetBlock(
                 lambda: widget.Prompt(padding=20),
@@ -165,41 +161,46 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
             ),
             WidgetBlock(
                 widget.Battery(
-                    charge_char="🔌",
-                    discharge_char="🔋",
+                    charge_char="",
+                    discharge_char="󰂍",
                     error_message="error",
-                    empty_char="🛑",
-                    full_char="⚡",
-                    not_charging_char="",
-                    # format="{percent:2.0%}{char} ({hour:d}:{min:02d})",
-                    format="PWR {percent:2.0%}{char}",
+                    empty_char="󰂎",
+                    full_char="󱊦",
+                    not_charging_char="󱞜",
+                    format="{char}",
                     update_interval=10,
                     hide_crash=True,
+                    fontsize=40,
+                    show_short_text=False,
+                    low_foreground=colors['low'],
+                    low_percentage=0.3,
+                ),
+                widget.Battery(
+                    format="{percent:2.0%}",
+                    update_interval=10,
+                    hide_crash=True,
+                    show_short_text=False,
+                    low_foreground=colors['low'],
+                    low_percentage=0.3,
+                    hide_threshold=0.99,
                 ),
                 is_enabled=lambda kw: os.path.isdir("/sys/class/power_supply/BAT0"),
             ),
             WidgetBlock(
-                # widget.Image(
-                #     filename=get_icon('volume-icons/volume_light_bold.png'),
-                #     margin=5,
-                #     scale=True,
-                #     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
-                # ),
                 widget.TextBox(
                     text="",
                     mouse_callbacks={"Button1": lambda: qtile.cmd_spawn("pavucontrol")},
                     fontsize=32,
+                    padding=0,
                 ),
                 widget.Volume(
-                    padding=8,
+                    padding=6,
                 ),
             ),
             WidgetBlock(
                 widget.Redshift(
                     temperature=3400,
                 ),
-            ),
-            WidgetBlock(
                 widget.Systray(
                     padding=5,
                     hide_crash=True,
