@@ -94,7 +94,7 @@ def init_screens(monitor_count: int, colors: dict) -> tuple[list[Screen], dict[s
                 separate_direction=None,
             ),
             WidgetBlock(
-                lambda: widget.WindowCount(),
+                lambda: widget.WindowCount(show_zero=True),
                 separate_direction="right",
             ),
             WidgetBlock(
