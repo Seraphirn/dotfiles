@@ -5,7 +5,7 @@ from const import MOD, TERMINAL, EDITOR, BROWSER, LOCK, SUSPEND, LAUNCHER
 @lazy.function
 def go_to_group(qtile, name: str):
     if len(qtile.screens) > 1:
-        qtile.focus_screen(0 if name in "1234" else 1)
+        qtile.focus_screen(0 if name in "qwer" else 1)
     qtile.groups_map[name].toscreen()
 
 
@@ -45,11 +45,11 @@ def init_keys(groups):
         Key([MOD], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Keyboard layout"),
 
         Key([MOD], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
-        Key([MOD], "t", lazy.to_layout_index(0), desc="Tall"),
+        Key([MOD], "i", lazy.to_layout_index(0), desc="Tall"),
         Key([MOD], "u", lazy.to_layout_index(1), desc="Wide"),
         Key([MOD], "m", lazy.to_layout_index(2), desc="max"),
 
-        Key([MOD], "w", lazy.window.kill(), desc="Kill focused window"),
+        Key([MOD], "v", lazy.window.kill(), desc="Kill focused window"),
         Key([MOD], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
         # Key([MOD], "f", lazy.hide_show_bar(), desc="Hide show bar"),
         # Key([MOD], "t", lazy.window.toggle_floating(), desc="Toggle floating"),

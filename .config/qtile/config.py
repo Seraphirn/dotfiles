@@ -96,20 +96,20 @@ def run_every_startup():
 
 
 groups = [
-    Group("1", label="", spawn=TERMINAL, screen_affinity=0),
-    Group("2", label="", screen_affinity=0),
+    Group("q", label="", spawn=TERMINAL, screen_affinity=0),
+    Group("w", label="", screen_affinity=0),
     Group(
-        "3",
+        "e",
         label="",
         screen_affinity=0,
         layout="max",
         layout_opts={"ratio": 0.85},
     ),
-    Group("4", label="󰈹", screen_affinity=0),
+    Group("r", label="󰈹", screen_affinity=0),
     Group(
-        "5", label="", spawn=BROWSER, layout="max", screen_affinity=monitor_count - 1
+        "t", label="", spawn=BROWSER, layout="max", screen_affinity=monitor_count - 1
     ),
-    Group("6", label="", screen_affinity=monitor_count - 1),
+    Group("y", label="", screen_affinity=monitor_count - 1),
 ]
 # if monitor_count > 1:
 #     groups += [
