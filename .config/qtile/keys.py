@@ -39,7 +39,7 @@ def init_keys(groups):
 
         # Key([MOD], "p", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
         Key([MOD], "p", lazy.spawn(LAUNCHER), desc="Opens app launcher"),
-        Key([MOD, "shift"], "Return", lazy.spawn(TERMINAL), desc="Launch terminal"),
+        Key([MOD, "shift"], "c", lazy.spawn(TERMINAL), desc="Launch terminal"),
         Key([MOD, "shift"], "f", lazy.spawn(BROWSER), desc="Launch firefox"),
         Key([MOD, "shift"], "e", lazy.spawn(EDITOR), desc="Launch editor"),
         Key([MOD], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Keyboard layout"),
@@ -49,7 +49,7 @@ def init_keys(groups):
         Key([MOD], "u", lazy.to_layout_index(1), desc="Wide"),
         Key([MOD], "m", lazy.to_layout_index(2), desc="max"),
 
-        Key([MOD], "v", lazy.window.kill(), desc="Kill focused window"),
+        Key([MOD], "a", lazy.window.kill(), desc="Kill focused window"),
         Key([MOD], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
         # Key([MOD], "f", lazy.hide_show_bar(), desc="Hide show bar"),
         # Key([MOD], "t", lazy.window.toggle_floating(), desc="Toggle floating"),
