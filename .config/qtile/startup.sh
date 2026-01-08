@@ -19,6 +19,10 @@ if command -v xrandr &> /dev/null; then
     xrandr --output HDMI-A-0 --mode 1920x1080 --rate 144
 fi
 
+if command -v blueman-applet &> /dev/null; then
+    blueman-applet &>/dev/null &
+fi
+
 # transparent terminals
 if command -v picom &> /dev/null; then
     picom -b
