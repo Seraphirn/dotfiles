@@ -43,6 +43,7 @@ def init_keys(groups):
         Key([MOD, "shift"], "f", lazy.spawn(BROWSER), desc="Launch firefox"),
         Key([MOD, "shift"], "e", lazy.spawn(EDITOR), desc="Launch editor"),
         Key([MOD], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Keyboard layout"),
+        Key(["control"], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Keyboard layout"),
 
         Key([MOD], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
         Key([MOD], "i", lazy.to_layout_index(0), desc="Tall"),
