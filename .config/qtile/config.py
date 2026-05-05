@@ -96,7 +96,7 @@ def run_every_startup():
 
 
 groups = [
-    Group("q", label="", spawn=TERMINAL, screen_affinity=0),
+    Group("q", label="", layout="max", spawn=TERMINAL, screen_affinity=0),
     Group("w", label="", screen_affinity=0),
     Group(
         "e",
@@ -105,11 +105,15 @@ groups = [
         layout="max",
         layout_opts={"ratio": 0.85},
     ),
-    Group("r", label="󰈹", screen_affinity=0),
+    Group("r", label="󰈹", layout="max", screen_affinity=0),
     Group(
         "t", label="", spawn=BROWSER, layout="max", screen_affinity=monitor_count - 1
     ),
-    Group("y", label="", screen_affinity=monitor_count - 1),
+    Group(
+        "y",
+        label="",
+        screen_affinity=monitor_count - 1,
+    ),
 ]
 # if monitor_count > 1:
 #     groups += [
