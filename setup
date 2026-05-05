@@ -89,7 +89,7 @@ case $option in
     ;;
 "7")echo -e "\u001b[7m Setuping qtile... \u001b[0m"
     # Ubuntu setup
-    sudo apt install xsecurelock xautolock redshift feh picom
+    sudo apt install xsecurelock xautolock redshift feh picom flameshot
     sudo apt install xserver-xorg xinit python3-dev python3-cffi python3-cairocffi libpangocairo-1.0-0 python3-xcffib libiw-dev
     # app launcher
     sudo add-apt-repository universe -y && sudo add-apt-repository ppa:agornostal/ulauncher -y && sudo apt update && sudo apt install ulauncher
