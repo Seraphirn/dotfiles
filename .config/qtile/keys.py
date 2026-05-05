@@ -52,7 +52,7 @@ def init_keys(groups):
 
         Key([MOD], "a", lazy.window.kill(), desc="Kill focused window"),
         Key([MOD], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
-        # Key([MOD], "f", lazy.hide_show_bar(), desc="Hide show bar"),
+        Key([MOD], "b", lazy.hide_show_bar(), desc="Hide show bar"),
         # Key([MOD], "t", lazy.window.toggle_floating(), desc="Toggle floating"),
 
         Key([MOD, "control"], "r", lazy.reload_config(), desc="Reload the config"),

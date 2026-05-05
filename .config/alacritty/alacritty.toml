@@ -1,0 +1,21 @@
+[font]
+size = 13
+
+[font.bold]
+family = "DejaVuSansMono"
+style = "Bold"
+
+[font.bold_italic]
+family = "DejaVuSansMono"
+style = "Bold Oblique"
+
+[font.italic]
+family = "DejaVuSansMono"
+style = "Oblique"
+
+[font.normal]
+family = "DejaVuSansMono"
+style = "Regular"
+
+[window]
+opacity = 0.8
