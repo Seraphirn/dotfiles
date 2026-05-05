@@ -28,6 +28,11 @@ if command -v picom &> /dev/null; then
     picom -b
 fi
 
+# screenshot tool
+if command -v flameshot &> /dev/null; then
+    flameshot &>/dev/null &
+fi
+
 # applet for wifi
 if command -v nm-applet &> /dev/null; then
     nm-applet &>/dev/null &

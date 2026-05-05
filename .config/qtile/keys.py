@@ -1,11 +1,11 @@
 from libqtile.config import Key, Drag, Click
 from libqtile.lazy import lazy
-from const import MOD, TERMINAL, EDITOR, BROWSER, LOCK, SUSPEND, LAUNCHER
+from const import MOD, TERMINAL, EDITOR, BROWSER, LOCK, SUSPEND, LAUNCHER, SCREENSHOT
 
 @lazy.function
 def go_to_group(qtile, name: str):
     if len(qtile.screens) > 1:
-        qtile.focus_screen(0 if name in "qwer" else 1)
+        qtile.focus_screen(0 if name in "qwer1234" else 1)
     qtile.groups_map[name].toscreen()
 
 
@@ -40,6 +40,7 @@ def init_keys(groups):
         # Key([MOD], "p", lazy.spawncmd(), desc="Spawn a command using a prompt widget"),
         Key([MOD], "p", lazy.spawn(LAUNCHER), desc="Opens app launcher"),
         Key([MOD, "shift"], "c", lazy.spawn(TERMINAL), desc="Launch terminal"),
+        Key([MOD, "shift"], "Return", lazy.spawn(TERMINAL), desc="Launch terminal"),
         Key([MOD, "shift"], "f", lazy.spawn(BROWSER), desc="Launch firefox"),
         Key([MOD, "shift"], "e", lazy.spawn(EDITOR), desc="Launch editor"),
         Key([MOD], "space", lazy.widget["keyboardlayout"].next_keyboard(), desc="Keyboard layout"),
@@ -50,10 +51,10 @@ def init_keys(groups):
         Key([MOD], "u", lazy.to_layout_index(1), desc="Wide"),
         Key([MOD], "m", lazy.to_layout_index(2), desc="max"),
 
-        Key([MOD], "a", lazy.window.kill(), desc="Kill focused window"),
+        Key([MOD], "1", lazy.window.kill(), desc="Kill focused window"),
         Key([MOD], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
         Key([MOD], "b", lazy.hide_show_bar(), desc="Hide show bar"),
-        # Key([MOD], "t", lazy.window.toggle_floating(), desc="Toggle floating"),
+        Key([MOD], "g", lazy.window.toggle_floating(), desc="Toggle floating"),
 
         Key([MOD, "control"], "r", lazy.reload_config(), desc="Reload the config"),
         Key([MOD, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
@@ -62,6 +63,12 @@ def init_keys(groups):
         Key([MOD, "shift"], "u", lazy.widget["redshift"].increase_brightness(), desc="+brightness"),
         Key([MOD, "shift"], "d", lazy.widget["redshift"].decrease_brightness(), desc="-brightness"),
 
+        Key(
+            [MOD],
+            "s",
+            lazy.spawn(SCREENSHOT, shell=True),
+            desc="Make screenshot"
+        ),
         Key(
             [MOD, "shift"],
             "o",

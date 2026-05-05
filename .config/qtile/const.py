@@ -8,3 +8,4 @@ LOCK = "xsecurelock"
 # LOCK = "XSECURELOCK_NO_COMPOSITED=1 xsecurelock"
 SUSPEND = "systemctl suspend && " + LOCK
 LAUNCHER = "ulauncher"
+SCREENSHOT = "flameshot gui -c"
