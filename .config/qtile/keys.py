@@ -51,7 +51,7 @@ def init_keys(groups):
         Key([MOD], "u", lazy.to_layout_index(1), desc="Wide"),
         Key([MOD], "m", lazy.to_layout_index(2), desc="max"),
 
-        Key([MOD], "1", lazy.window.kill(), desc="Kill focused window"),
+        Key([MOD, "shift"], "1", lazy.window.kill(), desc="Kill focused window"),
         Key([MOD], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
         Key([MOD], "b", lazy.hide_show_bar(), desc="Hide show bar"),
         Key([MOD], "g", lazy.window.toggle_floating(), desc="Toggle floating"),

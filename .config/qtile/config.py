@@ -112,6 +112,7 @@ groups = [
     Group(
         "y",
         label="",
+        spawn="AmneziaVPN",
         screen_affinity=monitor_count - 1,
     ),
 ]
